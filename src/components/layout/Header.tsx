@@ -1,14 +1,33 @@
 import { Link, NavLink } from "react-router-dom";
-import { FileText, Menu, X } from "lucide-react";
+import { FileText, Menu, X, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-const tools = [
+const primaryTools = [
   { to: "/merge-pdf", label: "Merge PDF" },
   { to: "/split-pdf", label: "Split PDF" },
   { to: "/compress-pdf", label: "Compress PDF" },
   { to: "/pdf-to-word", label: "PDF to Word" },
 ];
+
+const moreTools = [
+  { to: "/rotate-pdf", label: "Rotate PDF" },
+  { to: "/delete-pages", label: "Delete Pages" },
+  { to: "/page-numbers", label: "Page Numbers" },
+  { to: "/watermark-pdf", label: "Watermark PDF" },
+  { to: "/protect-pdf", label: "Protect PDF" },
+  { to: "/unlock-pdf", label: "Unlock PDF" },
+  { to: "/jpg-to-pdf", label: "JPG to PDF" },
+  { to: "/pdf-to-jpg", label: "PDF to JPG" },
+];
+
+const allTools = [...primaryTools, ...moreTools];
 
 export const Header = () => {
   const [open, setOpen] = useState(false);
