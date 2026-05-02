@@ -39,6 +39,16 @@ export default {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
+        tool: {
+          merge: "hsl(var(--tool-merge))",
+          split: "hsl(var(--tool-split))",
+          compress: "hsl(var(--tool-compress))",
+          convert: "hsl(var(--tool-convert))",
+        },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",

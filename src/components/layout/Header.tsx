@@ -1,0 +1,78 @@
+import { Link, NavLink } from "react-router-dom";
+import { FileText, Menu, X } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+
+const tools = [
+  { to: "/merge-pdf", label: "Merge PDF" },
+  { to: "/split-pdf", label: "Split PDF" },
+  { to: "/compress-pdf", label: "Compress PDF" },
+  { to: "/pdf-to-word", label: "PDF to Word" },
+];
+
+export const Header = () => {
+  const [open, setOpen] = useState(false);
+  return (
+    <header className="sticky top-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur-md">
+      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+        <Link to="/" className="flex items-center gap-2 font-bold text-lg">
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+            <FileText className="h-5 w-5" />
+          </span>
+          <span>PDFMaster<span className="text-primary"> Tools</span></span>
+        </Link>
+
+        <nav className="hidden md:flex items-center gap-1">
+          {tools.map((t) => (
+            <NavLink
+              key={t.to}
+              to={t.to}
+              className={({ isActive }) =>
+                `px-3 py-2 text-sm font-medium rounded-md transition-colors hover:text-primary ${
+                  isActive ? "text-primary" : "text-foreground/70"
+                }`
+              }
+            >
+              {t.label}
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="hidden md:block">
+          <Button asChild variant="default" size="sm">
+            <Link to="/merge-pdf">Get Started</Link>
+          </Button>
+        </div>
+
+        <button
+          className="md:hidden p-2"
+          onClick={() => setOpen(!open)}
+          aria-label="Toggle menu"
+        >
+          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+      </div>
+
+      {open && (
+        <div className="md:hidden border-t border-border bg-background">
+          <nav className="container mx-auto px-4 py-3 flex flex-col gap-1">
+            {tools.map((t) => (
+              <NavLink
+                key={t.to}
+                to={t.to}
+                onClick={() => setOpen(false)}
+                className={({ isActive }) =>
+                  `px-3 py-2 text-sm font-medium rounded-md ${
+                    isActive ? "bg-accent text-primary" : "text-foreground/80"
+                  }`
+                }
+              >
+                {t.label}
+              </NavLink>
+            ))}
+          </nav>
+        </div>
+      )}
+    </header>
+  );
+};
