@@ -100,7 +100,7 @@ const Index = () => (
           Merge, Split, Compress & Convert PDFs instantly — right in your browser.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
-          {tools.map((t) => (
+          {tools.slice(0, 4).map((t) => (
             <Button key={t.to} asChild variant="outline" size="lg">
               <Link to={t.to}>
                 <t.icon className="h-4 w-4" />
