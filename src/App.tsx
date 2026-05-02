@@ -17,6 +17,12 @@ import WatermarkPdf from "./pages/WatermarkPdf.tsx";
 import JpgToPdf from "./pages/JpgToPdf.tsx";
 import PdfToJpg from "./pages/PdfToJpg.tsx";
 import DeletePages from "./pages/DeletePages.tsx";
+import OrganizePdf from "./pages/OrganizePdf.tsx";
+import CropPdf from "./pages/CropPdf.tsx";
+import Grayscale from "./pages/Grayscale.tsx";
+import ExtractText from "./pages/ExtractText.tsx";
+import HtmlToPdf from "./pages/HtmlToPdf.tsx";
+import SignPdf from "./pages/SignPdf.tsx";
 import About from "./pages/About.tsx";
 import Privacy from "./pages/Privacy.tsx";
 import Terms from "./pages/Terms.tsx";
@@ -46,6 +52,12 @@ const App = () => (
             <Route path="/jpg-to-pdf" element={<JpgToPdf />} />
             <Route path="/pdf-to-jpg" element={<PdfToJpg />} />
             <Route path="/delete-pages" element={<DeletePages />} />
+            <Route path="/organize-pdf" element={<OrganizePdf />} />
+            <Route path="/crop-pdf" element={<CropPdf />} />
+            <Route path="/grayscale-pdf" element={<Grayscale />} />
+            <Route path="/extract-text" element={<ExtractText />} />
+            <Route path="/html-to-pdf" element={<HtmlToPdf />} />
+            <Route path="/sign-pdf" element={<SignPdf />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />

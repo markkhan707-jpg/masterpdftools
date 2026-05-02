@@ -17,14 +17,20 @@ const primaryTools = [
 ];
 
 const moreTools = [
+  { to: "/organize-pdf", label: "Organize PDF" },
   { to: "/rotate-pdf", label: "Rotate PDF" },
   { to: "/delete-pages", label: "Delete Pages" },
+  { to: "/crop-pdf", label: "Crop PDF" },
   { to: "/page-numbers", label: "Page Numbers" },
   { to: "/watermark-pdf", label: "Watermark PDF" },
+  { to: "/sign-pdf", label: "Sign PDF" },
   { to: "/protect-pdf", label: "Protect PDF" },
   { to: "/unlock-pdf", label: "Unlock PDF" },
   { to: "/jpg-to-pdf", label: "JPG to PDF" },
   { to: "/pdf-to-jpg", label: "PDF to JPG" },
+  { to: "/grayscale-pdf", label: "Grayscale PDF" },
+  { to: "/extract-text", label: "Extract Text" },
+  { to: "/html-to-pdf", label: "HTML to PDF" },
 ];
 
 const allTools = [...primaryTools, ...moreTools];
