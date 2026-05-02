@@ -9,6 +9,14 @@ import {
   Scissors,
   Minimize2,
   FileType2,
+  RotateCw,
+  Trash2,
+  Hash,
+  Stamp,
+  Lock,
+  Unlock,
+  Image as ImageIcon,
+  FileImage,
   Zap,
   ShieldCheck,
   Heart,
@@ -16,34 +24,18 @@ import {
 } from "lucide-react";
 
 const tools = [
-  {
-    to: "/merge-pdf",
-    icon: Combine,
-    title: "Merge PDF",
-    description: "Combine multiple PDFs into one file in seconds.",
-    color: "tool-merge",
-  },
-  {
-    to: "/split-pdf",
-    icon: Scissors,
-    title: "Split PDF",
-    description: "Extract pages or split a PDF into multiple files.",
-    color: "tool-split",
-  },
-  {
-    to: "/compress-pdf",
-    icon: Minimize2,
-    title: "Compress PDF",
-    description: "Reduce PDF file size while keeping quality.",
-    color: "tool-compress",
-  },
-  {
-    to: "/pdf-to-word",
-    icon: FileType2,
-    title: "PDF to Word",
-    description: "Extract PDF text into an editable .docx file.",
-    color: "tool-convert",
-  },
+  { to: "/merge-pdf", icon: Combine, title: "Merge PDF", description: "Combine multiple PDFs into one file in seconds.", color: "tool-merge" },
+  { to: "/split-pdf", icon: Scissors, title: "Split PDF", description: "Extract pages or split a PDF into multiple files.", color: "tool-split" },
+  { to: "/compress-pdf", icon: Minimize2, title: "Compress PDF", description: "Reduce PDF file size while keeping quality.", color: "tool-compress" },
+  { to: "/pdf-to-word", icon: FileType2, title: "PDF to Word", description: "Extract PDF text into an editable .docx file.", color: "tool-convert" },
+  { to: "/rotate-pdf", icon: RotateCw, title: "Rotate PDF", description: "Rotate PDF pages 90, 180, or 270 degrees.", color: "tool-merge" },
+  { to: "/delete-pages", icon: Trash2, title: "Delete Pages", description: "Remove unwanted pages from your PDF.", color: "tool-split" },
+  { to: "/page-numbers", icon: Hash, title: "Page Numbers", description: "Add page numbers to every page of your PDF.", color: "tool-compress" },
+  { to: "/watermark-pdf", icon: Stamp, title: "Watermark PDF", description: "Stamp your PDF with a custom text watermark.", color: "tool-convert" },
+  { to: "/protect-pdf", icon: Lock, title: "Protect PDF", description: "Add a password to keep your PDF private.", color: "tool-merge" },
+  { to: "/unlock-pdf", icon: Unlock, title: "Unlock PDF", description: "Remove restrictions from a protected PDF.", color: "tool-split" },
+  { to: "/jpg-to-pdf", icon: FileImage, title: "JPG to PDF", description: "Convert JPG or PNG images into a single PDF.", color: "tool-compress" },
+  { to: "/pdf-to-jpg", icon: ImageIcon, title: "PDF to JPG", description: "Turn each PDF page into a high-quality JPG image.", color: "tool-convert" },
 ];
 
 const features = [
