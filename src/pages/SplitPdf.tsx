@@ -97,7 +97,7 @@ const SplitPdf = () => {
         const copied = await out.copyPages(src, groups[i]);
         copied.forEach((p) => out.addPage(p));
         const data = await out.save();
-        const blob = new Blob([data], { type: "application/pdf" });
+        const blob = new Blob([data as BlobPart], { type: "application/pdf" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         const label = ranges.split(",")[i]?.trim().replace(/\s/g, "") || `${i + 1}`;

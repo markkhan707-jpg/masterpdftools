@@ -64,7 +64,7 @@ const MergePdf = () => {
       }
       const out = await merged.save();
       setProgress(95);
-      const blob = new Blob([out], { type: "application/pdf" });
+      const blob = new Blob([out as BlobPart], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;

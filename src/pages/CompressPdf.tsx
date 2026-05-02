@@ -95,7 +95,7 @@ const CompressPdf = () => {
 
       // If compression made it bigger, fall back to original
       const finalBytes = compressed.byteLength < bytes.byteLength ? compressed : new Uint8Array(bytes);
-      const blob = new Blob([finalBytes], { type: "application/pdf" });
+      const blob = new Blob([finalBytes as BlobPart], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
