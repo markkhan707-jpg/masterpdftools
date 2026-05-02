@@ -1,14 +1,33 @@
 import { Link, NavLink } from "react-router-dom";
-import { FileText, Menu, X } from "lucide-react";
+import { FileText, Menu, X, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-const tools = [
+const primaryTools = [
   { to: "/merge-pdf", label: "Merge PDF" },
   { to: "/split-pdf", label: "Split PDF" },
   { to: "/compress-pdf", label: "Compress PDF" },
   { to: "/pdf-to-word", label: "PDF to Word" },
 ];
+
+const moreTools = [
+  { to: "/rotate-pdf", label: "Rotate PDF" },
+  { to: "/delete-pages", label: "Delete Pages" },
+  { to: "/page-numbers", label: "Page Numbers" },
+  { to: "/watermark-pdf", label: "Watermark PDF" },
+  { to: "/protect-pdf", label: "Protect PDF" },
+  { to: "/unlock-pdf", label: "Unlock PDF" },
+  { to: "/jpg-to-pdf", label: "JPG to PDF" },
+  { to: "/pdf-to-jpg", label: "PDF to JPG" },
+];
+
+const allTools = [...primaryTools, ...moreTools];
 
 export const Header = () => {
   const [open, setOpen] = useState(false);
@@ -23,7 +42,7 @@ export const Header = () => {
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
-          {tools.map((t) => (
+          {primaryTools.map((t) => (
             <NavLink
               key={t.to}
               to={t.to}
@@ -36,6 +55,18 @@ export const Header = () => {
               {t.label}
             </NavLink>
           ))}
+          <DropdownMenu>
+            <DropdownMenuTrigger className="px-3 py-2 text-sm font-medium rounded-md text-foreground/70 hover:text-primary inline-flex items-center gap-1 outline-none">
+              More <ChevronDown className="h-3.5 w-3.5" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              {moreTools.map((t) => (
+                <DropdownMenuItem key={t.to} asChild>
+                  <Link to={t.to}>{t.label}</Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </nav>
 
         <div className="hidden md:block">
@@ -56,7 +87,7 @@ export const Header = () => {
       {open && (
         <div className="md:hidden border-t border-border bg-background">
           <nav className="container mx-auto px-4 py-3 flex flex-col gap-1">
-            {tools.map((t) => (
+            {allTools.map((t) => (
               <NavLink
                 key={t.to}
                 to={t.to}
