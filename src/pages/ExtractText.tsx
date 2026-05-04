@@ -84,10 +84,11 @@ const ExtractText = () => {
 
   return (
     <ToolPageShell
-      title="Extract Text from PDF — Free Online .txt Export | PDFMaster Tools"
-      description="Extract text content from any PDF and copy or download as .txt. Browser-based, secure, no signup."
-      h1="Extract Text from PDF"
-      intro="Pull all text from your PDF into a clean .txt file you can copy, search, or process."
+      title="Extract Text from PDF Online — Free .txt Export | PDFMaster Tools"
+      description="Extract text content from any PDF and copy or download as .txt. Browser-based, secure, no signup. Perfect for AI workflows and content migration."
+      keywords="extract text from pdf, pdf to text, pdf to txt, copy text from pdf, pdf text extractor"
+      h1="Extract Text from PDF — Free Online .txt Export"
+      intro="Pull all text from your PDF into a clean .txt file you can copy, search, translate, or feed into AI tools."
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
@@ -137,12 +138,38 @@ const ExtractText = () => {
       }
       seoContent={
         <>
-          <h2>How to Extract Text from a PDF</h2>
+          <h2>How to Extract Text from a PDF — Complete Guide</h2>
           <p>
             Extracting plain text from a PDF is useful for keyword search, feeding
-            content into AI tools, copying quotations, or repurposing material into
-            other documents. This tool reads the embedded text layer of your PDF and
-            outputs it as a clean .txt file with page markers preserved.
+            content into AI tools and chatbots, copying quotations into documents,
+            building search indexes, or repurposing material into other formats. This
+            tool reads the embedded text layer of your PDF and outputs it as a clean
+            .txt file with page markers preserved so you can navigate by page.
+          </p>
+
+          <h3>Step-by-Step: How to Extract Text from a PDF</h3>
+          <ol>
+            <li><strong>Upload your PDF</strong> using the dropzone above.</li>
+            <li><strong>Click Extract Text.</strong> The tool reads each page's text layer.</li>
+            <li><strong>Copy or download</strong> the extracted text as a .txt file.</li>
+          </ol>
+
+          <h3>Common Use Cases</h3>
+          <ul>
+            <li>Feeding PDF content into ChatGPT, Claude, or other AI tools</li>
+            <li>Building a searchable text database from a PDF library</li>
+            <li>Quoting passages from research papers or articles</li>
+            <li>Translating text using external translation tools</li>
+            <li>Counting words for editing, billing, or compliance</li>
+            <li>Migrating content into a CMS, blog, or knowledge base</li>
+          </ul>
+
+          <h3>Why Some PDFs Don't Extract Well</h3>
+          <p>
+            Scanned PDFs (where pages are images of text rather than real text) can't be
+            extracted with this tool because there is no text layer to read — they
+            require OCR (optical character recognition) processing first. PDFs with
+            unusual fonts or copy-protection may also produce garbled output.
           </p>
         </>
       }

@@ -81,10 +81,11 @@ const PageNumbers = () => {
 
   return (
     <ToolPageShell
-      title="Add Page Numbers to PDF — Free Online | PDFMaster Tools"
-      description="Add page numbers to PDF files online for free. Choose position and download instantly. Browser-based and private."
-      h1="Add Page Numbers to PDF"
-      intro="Number every page of your PDF in the position you choose."
+      title="Add Page Numbers to PDF Online — Free Page Numbering | PDFMaster Tools"
+      description="Add page numbers to PDF files online for free. Choose position (top/bottom, left/center/right) and download instantly. Browser-based, private, no signup."
+      keywords="add page numbers to pdf, pdf page numbers, number pdf pages, pdf pagination, page numbering pdf"
+      h1="Add Page Numbers to PDF — Free Online Tool"
+      intro="Number every page of your PDF in the position you choose — top or bottom, left, center, or right."
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
@@ -133,13 +134,38 @@ const PageNumbers = () => {
         <>
           <h2>Why Add Page Numbers to a PDF</h2>
           <p>
-            Page numbers are essential for reports, theses, contracts, and any
-            multi-page document where readers need to reference specific sections.
-            Adding them after the fact — when your source file didn't include them —
-            normally requires opening Word, Adobe Acrobat, or another paid editor.
-            With this tool you can do it in seconds, right in your browser, with zero
-            uploads. The numbers appear in a clean grey "current / total" format.
+            Page numbers are essential for reports, theses, contracts, manuals, ebooks,
+            and any multi-page document where readers need to reference specific
+            sections. Adding them after the fact — when your source file didn't include
+            them — normally requires opening Word, Adobe Acrobat, or another paid
+            editor. With this tool you can do it in seconds, right in your browser, with
+            zero uploads. The numbers appear in a clean grey "current / total" format
+            that works with any document style.
           </p>
+
+          <h3>Step-by-Step: How to Add Page Numbers to a PDF</h3>
+          <ol>
+            <li><strong>Upload your PDF</strong> using the dropzone above.</li>
+            <li><strong>Choose a position</strong> — bottom center is standard for reports; top right is common for legal documents.</li>
+            <li><strong>Click Add Page Numbers</strong> and the numbered PDF downloads automatically.</li>
+          </ol>
+
+          <h3>Choosing the Right Page Number Position</h3>
+          <ul>
+            <li><strong>Bottom center:</strong> The traditional choice for books, reports, and academic papers.</li>
+            <li><strong>Bottom right:</strong> Common in business documents and proposals.</li>
+            <li><strong>Top right:</strong> Standard for legal documents, court filings, and contracts.</li>
+            <li><strong>Top left / Bottom left:</strong> Useful when content is right-aligned or for double-sided printing.</li>
+          </ul>
+
+          <h3>Common Use Cases</h3>
+          <ul>
+            <li>Numbering pages in a printed thesis or dissertation</li>
+            <li>Preparing a contract or agreement for signature</li>
+            <li>Adding pagination to a scanned multi-page document</li>
+            <li>Compiling a printed booklet, manual, or training guide</li>
+            <li>Helping reviewers reference specific pages in a long report</li>
+          </ul>
         </>
       }
       faqSection={<FAQ items={faqs} />}

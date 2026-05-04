@@ -107,10 +107,11 @@ const OrganizePdf = () => {
 
   return (
     <ToolPageShell
-      title="Organize PDF — Reorder, Rotate, Delete Pages | PDFMaster Tools"
-      description="Visually organize PDF pages: reorder, rotate, and delete pages in your browser. Free and private."
-      h1="Organize PDF Pages"
-      intro="Reorder, rotate, and delete pages — then download the rearranged file."
+      title="Organize PDF Online — Reorder, Rotate & Delete Pages Free | PDFMaster Tools"
+      description="Visually organize PDF pages: reorder, rotate, and delete pages in one workspace. Free, browser-based, and private — no upload required."
+      keywords="organize pdf, reorder pdf pages, rearrange pdf, pdf page organizer, sort pdf pages"
+      h1="Organize PDF Pages — Reorder, Rotate, Delete"
+      intro="Reorder, rotate, and delete pages in a single workspace — then download the rearranged file."
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
@@ -177,13 +178,32 @@ const OrganizePdf = () => {
       }
       seoContent={
         <>
-          <h2>Organize PDF Pages Online</h2>
+          <h2>Organize PDF Pages Online — Reorder, Rotate, Delete in One Tool</h2>
           <p>
-            The Organize PDF tool combines reorder, rotate, and delete operations into
-            a single workspace. Upload a PDF and you'll see every page listed — drag
-            them into the order you want, rotate misaligned ones, and remove what you
-            don't need. When you're satisfied, download the rearranged file.
+            The Organize PDF tool combines reorder, rotate, and delete operations into a
+            single workspace so you can fully restructure a document without bouncing
+            between separate utilities. Upload a PDF and you'll see every page listed —
+            move them into the order you want, rotate misaligned ones, and remove what
+            you don't need. When you're satisfied, download the rearranged file.
           </p>
+
+          <h3>Step-by-Step: How to Organize a PDF</h3>
+          <ol>
+            <li><strong>Upload your PDF</strong> using the dropzone above.</li>
+            <li><strong>Use the arrows</strong> to move pages up or down.</li>
+            <li><strong>Click ↻</strong> to rotate a page 90° (repeat for 180° or 270°).</li>
+            <li><strong>Click ×</strong> to remove pages you no longer need.</li>
+            <li><strong>Click Save Organized PDF</strong> to download the result.</li>
+          </ol>
+
+          <h3>When to Use Organize PDF</h3>
+          <ul>
+            <li>Restructuring a scanned document where pages were captured out of order</li>
+            <li>Building a custom reading sequence from an existing PDF</li>
+            <li>Removing draft or internal pages before sending externally</li>
+            <li>Fixing individual sideways pages without rotating the whole document</li>
+            <li>Combining reorder + delete + rotate into a single saved workflow</li>
+          </ul>
         </>
       }
       faqSection={<FAQ items={faqs} />}

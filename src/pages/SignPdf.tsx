@@ -126,10 +126,11 @@ const SignPdf = () => {
 
   return (
     <ToolPageShell
-      title="Sign PDF — Add Signature to PDF Online Free | PDFMaster Tools"
-      description="Draw your signature and add it to a PDF online. Browser-based, secure, no upload."
-      h1="Sign a PDF Document"
-      intro="Draw your signature and stamp it onto any page of your PDF."
+      title="Sign PDF Online — Add Signature to PDF Free | PDFMaster Tools"
+      description="Draw your signature and add it to a PDF online for free. Browser-based e-signing — no upload, no signup, no watermark."
+      keywords="sign pdf, e-signature pdf, pdf signature, electronic signature, sign pdf online free, draw signature pdf"
+      h1="Sign a PDF Online — Free E-Signature Tool"
+      intro="Draw your signature and stamp it onto any page of your PDF — fully in your browser, no account required."
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
@@ -208,13 +209,40 @@ const SignPdf = () => {
       }
       seoContent={
         <>
-          <h2>How to Sign a PDF Online</h2>
+          <h2>How to Sign a PDF Online — Complete Guide</h2>
           <p>
             Drawing your signature and adding it to a PDF takes seconds — upload the
-            file, draw your signature on the pad, pick the page and corner, then
-            download. Because everything happens in your browser, this is the safest
-            way to sign sensitive documents like NDAs, contracts, and authorizations.
+            file, draw your signature on the pad with your mouse or finger, pick the
+            page and corner, then download the signed document. Because everything
+            happens in your browser, this is one of the safest ways to sign sensitive
+            documents like NDAs, contracts, authorizations, and consent forms.
           </p>
+
+          <h3>Step-by-Step: How to Sign a PDF</h3>
+          <ol>
+            <li><strong>Upload the PDF</strong> you need to sign.</li>
+            <li><strong>Draw your signature</strong> in the signature pad — works with mouse, trackpad, or touchscreen.</li>
+            <li><strong>Pick the target page</strong> and corner where the signature should appear.</li>
+            <li><strong>Adjust the width</strong> to set how large your signature appears (in points).</li>
+            <li><strong>Click Sign &amp; Download</strong> and your signed PDF arrives instantly.</li>
+          </ol>
+
+          <h3>Are Drawn Signatures Legally Binding?</h3>
+          <p>
+            In most jurisdictions (US under the ESIGN Act, EU under eIDAS as a "simple
+            electronic signature"), drawn or image-based signatures are accepted for
+            many contracts and consents. However, certain documents — wills, real
+            estate transfers, court filings — may require notarization or a qualified
+            e-signature provider. When in doubt, consult a lawyer.
+          </p>
+
+          <h3>Tips for a Great Digital Signature</h3>
+          <ul>
+            <li>Use a touchscreen or stylus for the most natural-looking signature.</li>
+            <li>Sign slowly and steadily for cleaner lines.</li>
+            <li>Keep your signature simple — overly complex strokes don't render well at small sizes.</li>
+            <li>Use the Clear button if your first attempt isn't right.</li>
+          </ul>
         </>
       }
       faqSection={<FAQ items={faqs} />}

@@ -114,10 +114,11 @@ const DeletePages = () => {
 
   return (
     <ToolPageShell
-      title="Delete PDF Pages — Remove Pages from PDF Free | PDFMaster Tools"
-      description="Delete unwanted pages from a PDF online for free. Browser-based, secure, no signup required."
-      h1="Delete Pages from PDF"
-      intro="Remove specific pages from your PDF and download the trimmed file."
+      title="Delete PDF Pages Online — Remove Pages from PDF Free | PDFMaster Tools"
+      description="Delete unwanted pages from a PDF online for free. Specify single pages or ranges to remove. Browser-based, secure, no signup or watermark."
+      keywords="delete pdf pages, remove pdf pages, pdf page remover, trim pdf, delete pages from pdf"
+      h1="Delete Pages from PDF Online"
+      intro="Remove specific pages from your PDF using simple range syntax and download the trimmed file instantly."
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
@@ -165,14 +166,39 @@ const DeletePages = () => {
       }
       seoContent={
         <>
-          <h2>How to Delete Pages from a PDF</h2>
+          <h2>How to Delete Pages from a PDF — Complete Guide</h2>
           <p>
-            Need to remove a blank scan, a draft page, or confidential information
-            before sharing a PDF? The Delete PDF Pages tool lets you specify exactly
-            which pages to remove using simple range syntax. The tool keeps everything
-            else intact — fonts, images, formatting, and embedded media are preserved
-            in the downloaded file. Your original PDF stays untouched on your device.
+            Need to remove a blank scan, a draft page, sensitive information, or
+            irrelevant content before sharing a PDF? The Delete PDF Pages tool lets you
+            specify exactly which pages to remove using simple range syntax. The tool
+            keeps everything else intact — fonts, images, formatting, and embedded
+            media are all preserved in the downloaded file. Your original PDF stays
+            untouched on your device as a backup.
           </p>
+
+          <h3>Step-by-Step: How to Delete Pages from a PDF</h3>
+          <ol>
+            <li><strong>Upload your PDF.</strong> The tool reads it locally and shows the page count.</li>
+            <li><strong>Enter pages to delete</strong> as a comma-separated list — single pages, ranges, or both.</li>
+            <li><strong>Click Delete &amp; Download.</strong> The trimmed PDF downloads automatically.</li>
+          </ol>
+
+          <h3>Range Syntax Examples</h3>
+          <ul>
+            <li><code>3</code> — delete just page 3</li>
+            <li><code>1, 5, 10</code> — delete pages 1, 5, and 10</li>
+            <li><code>2-4</code> — delete pages 2 through 4</li>
+            <li><code>1, 3-5, 8</code> — delete page 1, pages 3-5, and page 8</li>
+          </ul>
+
+          <h3>Common Use Cases</h3>
+          <ul>
+            <li>Removing blank pages from a scan</li>
+            <li>Stripping cover sheets, fax cover pages, or footers</li>
+            <li>Redacting sensitive pages before sharing externally</li>
+            <li>Deleting draft notes or markup pages from a finalized report</li>
+            <li>Trimming an ebook to share just specific chapters</li>
+          </ul>
         </>
       }
       faqSection={<FAQ items={faqs} />}

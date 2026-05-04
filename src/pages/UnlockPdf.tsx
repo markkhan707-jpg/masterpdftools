@@ -72,10 +72,11 @@ const UnlockPdf = () => {
 
   return (
     <ToolPageShell
-      title="Unlock PDF — Remove PDF Restrictions Free | PDFMaster Tools"
-      description="Remove PDF owner password and restrictions online for free. Unlock printing, copying, and editing limits in your browser."
-      h1="Unlock PDF Restrictions"
-      intro="Remove owner restrictions on your PDF so you can print, copy, and edit freely."
+      title="Unlock PDF Online — Remove PDF Restrictions Free | PDFMaster Tools"
+      description="Remove PDF owner password and restrictions online for free. Unlock printing, copying, and editing limits in your browser — secure, no upload, no signup."
+      keywords="unlock pdf, remove pdf password, remove pdf restrictions, pdf unlocker, decrypt pdf, unlock pdf online free"
+      h1="Unlock PDF Restrictions Online"
+      intro="Remove owner restrictions on your PDF so you can print, copy text, and edit freely — all in your browser."
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
@@ -118,18 +119,34 @@ const UnlockPdf = () => {
         <>
           <h2>How to Unlock a Password-Protected PDF</h2>
           <p>
-            PDFs can be locked in two ways: a <strong>user password</strong> required
-            to open the file, and an <strong>owner password</strong> that restricts
-            actions like printing, copying text, or editing. This tool removes owner
-            restrictions so you can use the PDF freely. You must own the file or have
-            permission to unlock it — never use this tool on documents you don't have
-            the right to modify.
+            PDFs can be locked in two distinct ways: a <strong>user password</strong>{" "}
+            required to open the file at all, and an <strong>owner password</strong>{" "}
+            that restricts actions like printing, copying text, or editing the document.
+            This tool removes owner restrictions so you can use the PDF freely. You must
+            own the file or have permission to unlock it — never use this tool on
+            documents you don't have the right to modify.
           </p>
+
+          <h3>User Password vs Owner Password</h3>
+          <ul>
+            <li><strong>User password:</strong> required just to open and view the PDF. Without it, the document cannot be read.</li>
+            <li><strong>Owner password:</strong> allows opening but restricts actions — printing, text selection, copying, editing, form filling, or annotation.</li>
+          </ul>
+
+          <h3>Step-by-Step: How to Unlock a PDF</h3>
+          <ol>
+            <li><strong>Upload your locked PDF</strong> using the dropzone above.</li>
+            <li><strong>Enter the open password</strong> (only if the file requires one to open). Leave blank for restriction-only PDFs.</li>
+            <li><strong>Click Unlock &amp; Download.</strong> The unlocked file downloads instantly.</li>
+          </ol>
+
           <h3>Privacy &amp; Legal Note</h3>
           <p>
             All processing happens locally in your browser. Neither the PDF nor your
             password is uploaded anywhere. This is not a password-cracking tool — for
-            files that require a password to open, you must know the correct one.
+            files that require a password to open, you must know the correct one. Using
+            this tool on documents you don't own or have rights to modify may violate
+            laws and terms of service.
           </p>
         </>
       }
