@@ -70,10 +70,11 @@ const CropPdf = () => {
 
   return (
     <ToolPageShell
-      title="Crop PDF — Trim PDF Margins Online Free | PDFMaster Tools"
-      description="Crop PDF pages by removing equal margins from every side. Free and browser-based."
-      h1="Crop PDF Margins"
-      intro="Trim equal margins from every page of your PDF."
+      title="Crop PDF Online — Trim PDF Margins Free | PDFMaster Tools"
+      description="Crop PDF pages by removing equal margins from every side. Free, browser-based, and secure — no upload, no signup."
+      keywords="crop pdf, trim pdf, pdf cropper, remove pdf margins, cut pdf pages, crop pdf online free"
+      h1="Crop PDF Margins Online"
+      intro="Trim equal margins from every page of your PDF — perfect for cleaning up scans and removing unwanted whitespace."
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
@@ -113,13 +114,37 @@ const CropPdf = () => {
       }
       seoContent={
         <>
-          <h2>How to Crop a PDF</h2>
+          <h2>How to Crop a PDF — Complete Guide</h2>
           <p>
             Cropping is useful when scanned PDFs include excessive white space, when
-            you want to remove headers or footers, or when you're preparing pages for
-            printing on a smaller paper size. This tool sets a uniform crop box on
-            every page so the visible region is reduced by the margin you specify.
+            you want to remove headers or footers from a printout, or when you're
+            preparing pages for printing on a smaller paper size. This tool sets a
+            uniform crop box on every page so the visible region is reduced by the
+            margin you specify, without permanently removing the underlying content.
           </p>
+
+          <h3>Step-by-Step: How to Crop a PDF</h3>
+          <ol>
+            <li><strong>Upload your PDF</strong> using the dropzone above.</li>
+            <li><strong>Set the margin</strong> to remove on each side (in points — 72 = 1 inch).</li>
+            <li><strong>Click Crop &amp; Download.</strong> The cropped PDF downloads instantly.</li>
+          </ol>
+
+          <h3>Understanding Points and Margins</h3>
+          <ul>
+            <li><strong>72 points = 1 inch</strong> = 25.4 mm</li>
+            <li><strong>36 points = 0.5 inch</strong> (default) — typical for trimming light scan borders</li>
+            <li><strong>18 points = 0.25 inch</strong> — for very subtle cropping</li>
+            <li><strong>108 points = 1.5 inches</strong> — for aggressive header/footer removal</li>
+          </ul>
+
+          <h3>Common Use Cases</h3>
+          <ul>
+            <li>Cleaning up scanned documents with thick black or white borders</li>
+            <li>Removing repeating headers or footers from a long report</li>
+            <li>Preparing pages for printing on smaller paper</li>
+            <li>Standardizing margins across mixed-source PDFs before merging</li>
+          </ul>
         </>
       }
       faqSection={<FAQ items={faqs} />}

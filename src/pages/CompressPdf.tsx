@@ -127,10 +127,11 @@ const CompressPdf = () => {
 
   return (
     <ToolPageShell
-      title="Compress PDF — Reduce PDF File Size Online Free | PDFMaster Tools"
-      description="Compress PDF files online for free. Reduce PDF size with three quality levels. Fast, secure, browser-based."
-      h1="Compress PDF Files Online"
-      intro="Reduce PDF size with smart image downsampling. Choose your compression level and download instantly."
+      title="Compress PDF Online — Reduce PDF File Size Free | PDFMaster Tools"
+      description="Compress PDF files online for free. Reduce PDF size up to 70% with smart image downsampling and three quality levels. Fast, secure, browser-based — no signup."
+      keywords="compress pdf, reduce pdf size, pdf compressor, shrink pdf, compress pdf online free, optimize pdf, make pdf smaller"
+      h1="Compress PDF Online — Reduce File Size up to 70%"
+      intro="Reduce PDF size with smart image downsampling. Choose Low, Medium, or High compression and download instantly — all in your browser."
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
@@ -186,37 +187,69 @@ const CompressPdf = () => {
       }
       seoContent={
         <>
-          <h2>How to Compress PDFs Online Without Losing Quality</h2>
+          <h2>How to Compress PDF Files Online Without Losing Quality</h2>
           <p>
-            Large PDF files cause real problems: emails bounce because attachments are too
-            big, cloud storage fills up faster than expected, and uploads on slow
-            connections take forever. PDFMaster's free Compress PDF tool reduces file size
-            by intelligently downsampling embedded images and re-encoding pages, often
+            Large PDF files cause real, everyday problems: emails bounce because
+            attachments are too big, cloud storage fills up faster than expected, uploads
+            on slow connections take forever, and shared drives charge premiums for
+            extra space. PDFMaster Tools' free Compress PDF utility reduces file size by
+            intelligently downsampling embedded images and re-encoding pages, often
             cutting size by 40–70% while keeping documents perfectly readable.
           </p>
-          <h3>Choosing a Compression Level</h3>
+
+          <h3>Step-by-Step: How to Compress a PDF</h3>
+          <ol>
+            <li><strong>Upload your PDF</strong> by dragging it into the dropzone or clicking to browse.</li>
+            <li><strong>Choose a compression level</strong> — Low, Medium, or High — based on how you'll use the file.</li>
+            <li><strong>Click Compress &amp; Download.</strong> Your optimized PDF downloads automatically with the size summary shown on screen.</li>
+          </ol>
+
+          <h3>Choosing the Right Compression Level</h3>
+          <h4>Low — Best Quality</h4>
           <p>
-            <strong>Low</strong> preserves the highest quality with modest size reduction —
-            ideal for documents you'll print or archive. <strong>Medium</strong> offers a
-            balanced trade-off perfect for emailing reports, sharing scans, or uploading
-            forms. <strong>High</strong> aggressively reduces size for documents you only
-            need to view on screen, like reference material or quick-share copies.
+            Preserves the highest visual fidelity with modest size reduction (typically
+            10–30%). Ideal for documents you'll print, archive, or present on large
+            screens. Use this when image clarity is critical, such as portfolios,
+            brochures, and product catalogs.
           </p>
-          <h3>How It Works</h3>
+          <h4>Medium — Balanced (Recommended)</h4>
           <p>
-            The tool renders each page of your PDF to a canvas at the chosen resolution,
-            re-encodes it as a quality-adjusted JPEG, then assembles those images into a
-            fresh PDF. This approach drastically reduces size for image-heavy and scanned
-            documents. The compression runs entirely in your browser using
+            The best general-purpose setting. Offers a balanced trade-off between file
+            size and quality (typically 40–60% reduction) — perfect for emailing
+            reports, sharing scans, uploading to cloud drives, or attaching to web
+            forms.
+          </p>
+          <h4>High — Smallest Size</h4>
+          <p>
+            Aggressively reduces size (often 60–80%) for documents you only need to view
+            on screen, like reference material or quick-share copies. Some image detail
+            and text crispness will be sacrificed in exchange for the tiniest file.
+          </p>
+
+          <h3>How PDF Compression Works</h3>
+          <p>
+            The tool renders each page of your PDF to a canvas at a chosen resolution,
+            re-encodes it as a quality-adjusted JPEG image, then assembles those images
+            into a fresh PDF. This approach drastically reduces size for image-heavy and
+            scanned documents. The compression runs entirely in your browser using
             <code> pdf.js</code> and <code>pdf-lib</code> — no upload, no waiting, no
             privacy compromise.
           </p>
-          <h3>When Compression Won't Help</h3>
+
+          <h3>When PDF Compression Won't Help (and What to Do)</h3>
           <p>
-            PDFs that are already heavily optimized (small files, mostly text) may not get
-            smaller. In that case, the tool detects no improvement and downloads your
-            original file unchanged so you never lose quality unnecessarily.
+            PDFs that are already heavily optimized (small files, mostly text) may not
+            shrink further. In that case, the tool detects no improvement and downloads
+            your original file unchanged so you never lose quality unnecessarily.
           </p>
+
+          <h3>Best Practices for Smaller PDFs</h3>
+          <ul>
+            <li>Scan documents at 200–300 DPI rather than 600 DPI when possible.</li>
+            <li>Use grayscale (via our Grayscale PDF tool) before compressing for text-only documents.</li>
+            <li>Delete unused pages with our Delete Pages tool before compressing.</li>
+            <li>For very large PDFs, split into smaller files first using the Split PDF tool.</li>
+          </ul>
         </>
       }
       faqSection={<FAQ items={faqs} />}

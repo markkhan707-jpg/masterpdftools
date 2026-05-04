@@ -120,10 +120,11 @@ const SplitPdf = () => {
 
   return (
     <ToolPageShell
-      title="Split PDF — Extract PDF Pages Online Free | PDFMaster Tools"
-      description="Split PDF files online for free. Extract pages or divide a PDF into multiple documents instantly in your browser."
-      h1="Split PDF Files Online"
-      intro="Extract specific pages or split a PDF into multiple files using flexible page ranges."
+      title="Split PDF Online — Extract PDF Pages Free | PDFMaster Tools"
+      description="Split PDF files online for free. Extract specific pages, divide a PDF into multiple documents, or separate chapters using flexible page ranges. Browser-based and secure."
+      keywords="split pdf, extract pdf pages, divide pdf, pdf splitter, separate pdf pages, split pdf online free"
+      h1="Split PDF Files Online — Extract Pages from PDF"
+      intro="Extract specific pages or split a PDF into multiple files using flexible page ranges. Fast, free, browser-based."
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
@@ -173,40 +174,55 @@ const SplitPdf = () => {
       }
       seoContent={
         <>
-          <h2>How to Split a PDF Online</h2>
+          <h2>How to Split a PDF Online — Complete Guide</h2>
           <p>
             Splitting a PDF lets you extract just the pages you need from a larger
             document — a single chapter from an ebook, a particular invoice from a bank
-            statement, or a few key slides from a presentation. PDFMaster's free Split PDF
-            tool offers flexible range syntax so you can split exactly how you want, all
-            without uploading your file to any server.
+            statement, a few key slides from a presentation, or one signed agreement from
+            a multi-document scan. PDFMaster Tools' free Split PDF utility offers
+            flexible range syntax so you can split exactly how you want, all without
+            uploading your file to any server.
           </p>
-          <h3>Step-by-Step Instructions</h3>
-          <p>
-            <strong>1. Upload your PDF.</strong> The tool will read it locally and show you
-            the total page count.
-          </p>
-          <p>
-            <strong>2. Enter your page ranges.</strong> Use a comma-separated list. For
-            example, <code>1-3, 5, 8-10</code> creates three output PDFs: pages 1 through
-            3, page 5 alone, and pages 8 through 10.
-          </p>
-          <p>
-            <strong>3. Click Split.</strong> Each range downloads as a separate PDF
-            instantly.
-          </p>
-          <h3>Range Syntax Examples</h3>
+
+          <h3>Step-by-Step: How to Split a PDF</h3>
+          <ol>
+            <li><strong>Upload your PDF.</strong> The tool reads it locally and shows the total page count.</li>
+            <li><strong>Enter page ranges.</strong> Use a comma-separated list. Example: <code>1-3, 5, 8-10</code> creates three output PDFs.</li>
+            <li><strong>Click Split &amp; Download.</strong> Each range downloads instantly as its own PDF.</li>
+          </ol>
+
+          <h3>Page Range Syntax Examples</h3>
           <ul>
-            <li><code>5</code> — extract just page 5</li>
-            <li><code>1-10</code> — extract pages 1 through 10 as one file</li>
-            <li><code>1, 3, 5</code> — three files, one page each</li>
+            <li><code>5</code> — extract just page 5 as a single-page PDF</li>
+            <li><code>1-10</code> — extract pages 1 through 10 as one combined file</li>
+            <li><code>1, 3, 5</code> — produces three separate files, one page each</li>
             <li><code>1-3, 7-9, 12</code> — three files: pages 1-3, 7-9, and page 12</li>
+            <li><code>1-5, 6-10, 11-15</code> — split a 15-page document into three 5-page parts</li>
           </ul>
+
+          <h3>Common Use Cases for Splitting PDFs</h3>
+          <ul>
+            <li>Extract a single chapter from a long ebook or research paper</li>
+            <li>Pull a specific invoice or statement from a bank-document export</li>
+            <li>Separate signed pages from supporting documents in a contract bundle</li>
+            <li>Split a scanned multi-page document into individual page files</li>
+            <li>Break a large report into sections for easier email distribution</li>
+            <li>Isolate a single slide deck section for sharing</li>
+            <li>Prepare individual exhibits for legal filings</li>
+          </ul>
+
+          <h3>Split PDF vs Extract Pages — Are They the Same?</h3>
+          <p>
+            Yes — "split PDF" and "extract PDF pages" describe the same underlying
+            operation. Whether you want to break one document into many or pull out a
+            single page, this tool handles both with the same range syntax.
+          </p>
+
           <h3>Privacy Guarantee</h3>
           <p>
             All splitting is done in your browser using <code>pdf-lib</code>. Your PDF
-            never leaves your device, making this tool safe for confidential, financial,
-            or medical documents.
+            never leaves your device, making this tool safe for confidential financial,
+            medical, legal, and personal documents.
           </p>
         </>
       }

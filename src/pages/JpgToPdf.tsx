@@ -93,10 +93,11 @@ const JpgToPdf = () => {
 
   return (
     <ToolPageShell
-      title="JPG to PDF — Convert Images to PDF Free | PDFMaster Tools"
-      description="Convert JPG and PNG images to a single PDF online for free. Reorder pages, browser-based, secure."
-      h1="JPG to PDF Converter"
-      intro="Combine multiple JPG or PNG images into a single PDF. Reorder before converting."
+      title="JPG to PDF Online — Convert Images to PDF Free | PDFMaster Tools"
+      description="Convert JPG and PNG images to a single PDF online for free. Reorder pages, combine multiple images, browser-based and secure — no signup."
+      keywords="jpg to pdf, png to pdf, image to pdf, convert image to pdf, jpg to pdf converter, photo to pdf"
+      h1="JPG to PDF Converter — Combine Images into One PDF"
+      intro="Combine multiple JPG or PNG images into a single PDF document. Reorder, preview, and download — all in your browser."
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
@@ -169,14 +170,39 @@ const JpgToPdf = () => {
       }
       seoContent={
         <>
-          <h2>How to Convert JPG to PDF</h2>
+          <h2>How to Convert JPG to PDF — Complete Guide</h2>
           <p>
-            Converting images to PDF is useful for sharing scanned documents,
-            archiving photos, or assembling visual reports. Drop your JPG or PNG
-            files, drag them into the order you want, and click Convert. Each image
-            becomes a separate page sized to match the original. Everything happens
-            locally in your browser — no uploads, no waiting, no privacy concerns.
+            Converting images to PDF is useful for sharing scanned documents, archiving
+            photos, assembling visual reports, submitting application materials, or
+            sending receipts in a unified format. Drop your JPG or PNG files, drag them
+            into the order you want, and click Convert — each image becomes a separate
+            page sized to match the original image dimensions.
           </p>
+
+          <h3>Step-by-Step: How to Convert JPG to PDF</h3>
+          <ol>
+            <li><strong>Drop your images</strong> into the dropzone (JPG or PNG, multiple files OK).</li>
+            <li><strong>Reorder them</strong> using the up/down arrows so pages appear in the right sequence.</li>
+            <li><strong>Click Convert to PDF.</strong> Your combined PDF downloads automatically.</li>
+          </ol>
+
+          <h3>Common Use Cases</h3>
+          <ul>
+            <li>Combining smartphone photos of a paper document into one PDF</li>
+            <li>Submitting a passport scan, ID, and proof of address as a single file</li>
+            <li>Archiving photos with consistent formatting</li>
+            <li>Creating a printable photo album or visual portfolio</li>
+            <li>Bundling product screenshots into a quick reference document</li>
+            <li>Converting receipts for expense reports</li>
+          </ul>
+
+          <h3>Tips for Best Results</h3>
+          <ul>
+            <li>Take photos in landscape orientation for letter-sized output.</li>
+            <li>Use even lighting and a flat surface for sharp scans.</li>
+            <li>Crop and rotate images <em>before</em> converting for cleaner pages.</li>
+            <li>Compress the resulting PDF afterwards if file size matters.</li>
+          </ul>
         </>
       }
       faqSection={<FAQ items={faqs} />}

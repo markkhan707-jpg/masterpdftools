@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 interface ToolPageShellProps {
   title: string;
   description: string;
+  keywords?: string;
   h1: string;
   intro: string;
   faqSchema: { question: string; answer: string }[];
@@ -17,6 +18,7 @@ interface ToolPageShellProps {
 export const ToolPageShell = ({
   title,
   description,
+  keywords,
   h1,
   intro,
   faqSchema,
@@ -25,7 +27,7 @@ export const ToolPageShell = ({
   faqSection,
 }: ToolPageShellProps) => (
   <Layout>
-    <Seo title={title} description={description} faqSchema={faqSchema} />
+    <Seo title={title} description={description} keywords={keywords} faqSchema={faqSchema} />
     <div className="bg-gradient-to-b from-accent/40 to-background border-b border-border">
       <div className="container mx-auto px-4 py-10 md:py-14 text-center max-w-3xl">
         <h1 className="text-3xl md:text-5xl font-bold mb-4">{h1}</h1>

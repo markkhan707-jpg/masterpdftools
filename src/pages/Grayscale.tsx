@@ -91,10 +91,11 @@ const Grayscale = () => {
 
   return (
     <ToolPageShell
-      title="PDF to Grayscale — Convert PDF to Black & White Free | PDFMaster Tools"
-      description="Convert color PDFs to grayscale online for free. Save ink on printing, reduce file size, browser-based."
-      h1="PDF to Grayscale"
-      intro="Convert a color PDF into grayscale (black & white) for cheaper printing and smaller files."
+      title="PDF to Grayscale Online — Convert PDF to Black & White Free | PDFMaster Tools"
+      description="Convert color PDFs to grayscale online for free. Save ink when printing, reduce file size, browser-based and secure."
+      keywords="pdf to grayscale, pdf to black and white, grayscale pdf, convert color pdf, pdf bw, save ink pdf"
+      h1="PDF to Grayscale — Convert Color PDF to Black & White"
+      intro="Convert a color PDF into grayscale (black &amp; white) for cheaper printing, smaller files, and a uniform monochrome look."
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
@@ -121,12 +122,35 @@ const Grayscale = () => {
         <>
           <h2>Why Convert PDFs to Grayscale</h2>
           <p>
-            Many office printers charge per color page or use ink faster on color
-            output. Converting a PDF to grayscale before printing cuts cost and waste
-            without losing readability. The tool rasterizes each page, applies a
+            Many office printers charge per color page or use color ink and toner faster
+            on color output. Converting a PDF to grayscale before printing cuts cost and
+            waste without losing readability. The tool rasterizes each page, applies a
             luminance-based grayscale conversion, and rebuilds the PDF — so the result
-            looks like a clean photocopy.
+            looks like a clean photocopy with consistent contrast across every page.
           </p>
+
+          <h3>Step-by-Step: How to Convert PDF to Grayscale</h3>
+          <ol>
+            <li><strong>Upload your color PDF</strong> using the dropzone above.</li>
+            <li><strong>Click Convert to Grayscale.</strong> Each page is re-rendered in black &amp; white.</li>
+            <li><strong>Download</strong> your grayscale PDF — usually smaller than the original.</li>
+          </ol>
+
+          <h3>Benefits of Grayscale PDFs</h3>
+          <ul>
+            <li><strong>Cheaper printing</strong> — black-only printing is far less expensive than color</li>
+            <li><strong>Smaller file size</strong> — pages re-encoded as grayscale JPEGs typically shrink</li>
+            <li><strong>Consistent appearance</strong> — works well for monochrome printers and e-readers</li>
+            <li><strong>Better photocopying</strong> — high-contrast grayscale copies more reliably</li>
+          </ul>
+
+          <h3>Common Use Cases</h3>
+          <ul>
+            <li>Preparing reports for office black-and-white printing</li>
+            <li>Reducing file size of scanned color documents</li>
+            <li>Creating archive copies of receipts and invoices</li>
+            <li>Standardizing documents before mass printing</li>
+          </ul>
         </>
       }
       faqSection={<FAQ items={faqs} />}

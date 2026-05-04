@@ -12,22 +12,37 @@ const faqs = [
   {
     question: "How do I merge PDF files for free?",
     answer:
-      "Upload two or more PDF files, drag them into the order you want, then click Merge PDFs. Your combined file will download instantly. No signup or payment required.",
+      "Upload two or more PDF files, drag them into the order you want, then click Merge PDFs. Your combined file will download instantly. No signup, no payment, and no email address required.",
   },
   {
     question: "Is there a limit on the number of PDFs I can merge?",
     answer:
-      "There is no hard limit, but very large combined files may use significant browser memory. For best performance, keep total size under 50MB.",
+      "There is no hard limit on the number of files. However, very large combined files may use significant browser memory. For best performance, keep the total size under 50MB and use a modern browser like Chrome, Edge, Firefox, or Safari.",
   },
   {
     question: "Are my PDF files uploaded to a server?",
     answer:
-      "No. Merging happens entirely in your browser using the pdf-lib library. Your files never leave your device, ensuring complete privacy.",
+      "No. Merging happens entirely in your browser using the open-source pdf-lib library. Your files never leave your device, ensuring complete privacy for confidential documents like contracts, tax returns, or medical records.",
   },
   {
-    question: "Will the page order be preserved?",
+    question: "Will the page order be preserved when I merge PDFs?",
     answer:
-      "Yes. The pages from each PDF are appended in the exact order you arrange the files. Use the up/down arrows to reorder before merging.",
+      "Yes. Pages from each PDF are appended in the exact order you arrange the files. Use the up/down arrows to reorder before merging, and the resulting PDF will follow that exact sequence.",
+  },
+  {
+    question: "Does merging PDFs reduce quality?",
+    answer:
+      "No. Merging is a lossless operation. Pages are copied bit-for-bit from the source PDFs, so text remains selectable, images stay sharp, and embedded fonts are preserved.",
+  },
+  {
+    question: "Can I merge password-protected PDFs?",
+    answer:
+      "If a PDF only has owner restrictions, the tool can usually merge it. PDFs that require a password to open must be unlocked first using our Unlock PDF tool.",
+  },
+  {
+    question: "Does it work on mobile devices?",
+    answer:
+      "Yes. PDFMaster Tools works in any modern browser on iOS, Android, Windows, macOS, Linux, and ChromeOS — no app installation needed.",
   },
 ];
 
@@ -88,10 +103,11 @@ const MergePdf = () => {
 
   return (
     <ToolPageShell
-      title="Merge PDF — Combine PDF Files Online Free | PDFMaster Tools"
-      description="Merge PDF files online for free. Combine multiple PDFs into one document in seconds. Secure, fast, no signup."
-      h1="Merge PDF Files Online"
-      intro="Combine multiple PDFs into a single document. Drag, drop, reorder, and merge — all in your browser."
+      title="Merge PDF Online — Combine PDF Files Free | PDFMaster Tools"
+      description="Merge PDF files online for free. Combine multiple PDFs into one document in seconds. Drag, drop, reorder, and download — secure, fast, no signup."
+      keywords="merge pdf, combine pdf, join pdf, pdf merger, merge pdf online free, combine pdf files, pdf joiner"
+      h1="Merge PDF Files Online — Free PDF Combiner"
+      intro="Combine multiple PDFs into a single document. Drag, drop, reorder, and merge — all in your browser, with full privacy and zero uploads."
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
@@ -157,48 +173,105 @@ const MergePdf = () => {
       }
       seoContent={
         <>
-          <h2>How to Merge PDF Files Online</h2>
+          <h2>How to Merge PDF Files Online — A Complete Guide</h2>
           <p>
-            Combining several PDF documents into one unified file is one of the most common
-            office tasks. Whether you need to bundle invoices, consolidate research papers,
-            or compile a multi-section report, merging PDFs eliminates the hassle of
+            Combining several PDF documents into one unified file is one of the most
+            common tasks in modern offices, classrooms, and home workflows. Whether you
+            need to bundle invoices, consolidate research papers, compile a multi-section
+            report, or assemble a portfolio, merging PDFs eliminates the hassle of
             sending multiple attachments and makes your documents easier to share, store,
-            and print. PDFMaster's online Merge PDF tool makes this process effortless,
-            free, and completely private.
+            archive, and print. PDFMaster Tools' free online Merge PDF utility makes this
+            process effortless, completely free, and 100% private — your files are
+            processed entirely in your browser and never uploaded anywhere.
           </p>
-          <h3>Step-by-Step: Merging PDFs</h3>
+
+          <h3>Step-by-Step: How to Merge PDFs in Under 30 Seconds</h3>
+          <ol>
+            <li>
+              <strong>Upload your PDFs.</strong> Click the upload area or drag and drop
+              two or more PDF files into the dropzone. You can add files in batches —
+              each new upload appends to your existing list.
+            </li>
+            <li>
+              <strong>Arrange the order.</strong> Use the up and down arrows on each file
+              card to put them in the order you want them combined. Pages from each PDF
+              are appended sequentially in the order shown on screen.
+            </li>
+            <li>
+              <strong>Click Merge.</strong> Press the "Merge PDFs &amp; Download" button.
+              The tool processes everything locally in your browser and immediately
+              downloads the combined file as <code>merged.pdf</code>.
+            </li>
+            <li>
+              <strong>Open and verify.</strong> Open the downloaded file in any PDF
+              reader (Adobe Acrobat, Preview, Chrome, Edge, Foxit, etc.) to confirm your
+              pages are in the right order.
+            </li>
+          </ol>
+
+          <h3>Why Merge PDFs Directly in Your Browser?</h3>
           <p>
-            <strong>1. Upload your PDFs.</strong> Click the upload area or drag and drop
-            two or more PDF files. You can add files in batches — each new upload appends
-            to the existing list.
+            Most online PDF merge tools upload your files to remote servers, where they
+            may be cached, logged, indexed, or scanned by automated systems. For
+            confidential documents — contracts, medical records, tax returns, employee
+            files, or trade secrets — this represents a significant privacy and
+            compliance risk. PDFMaster Tools uses the open-source <code>pdf-lib</code>{" "}
+            library to perform all merging directly in your browser using JavaScript.
+            Your files never leave your device, are never transmitted over the internet,
+            and disappear from memory when you close the tab.
           </p>
+
+          <h3>Top 10 Use Cases for Merging PDFs</h3>
+          <ul>
+            <li>Combining multiple scanned pages into a single contract or agreement</li>
+            <li>Assembling monthly invoices into a quarterly or annual report</li>
+            <li>Merging separate book chapters or thesis sections into one manuscript</li>
+            <li>Bundling application forms with supporting documents and references</li>
+            <li>Consolidating meeting notes from multiple sessions into a single archive</li>
+            <li>Combining receipts and expense reports for reimbursement</li>
+            <li>Joining exported pages from different sources into a unified file</li>
+            <li>Creating a portfolio from multiple project PDFs</li>
+            <li>Stitching together legal exhibits or court filings</li>
+            <li>Preparing print-ready booklets or e-books from individual chapters</li>
+          </ul>
+
+          <h3>Tips for Best Results</h3>
+          <ul>
+            <li>
+              <strong>Name your files clearly</strong> before uploading so the order
+              shown on screen makes sense (e.g., <code>01-cover.pdf</code>,{" "}
+              <code>02-intro.pdf</code>).
+            </li>
+            <li>
+              <strong>Compress large PDFs first</strong> using our Compress PDF tool to
+              keep the merged output manageable.
+            </li>
+            <li>
+              <strong>Unlock protected PDFs first</strong> if any source file is
+              password-protected or encrypted.
+            </li>
+            <li>
+              <strong>Use Organize PDF</strong> after merging if you need to fine-tune
+              page order at the page level rather than the file level.
+            </li>
+          </ul>
+
+          <h3>Merge PDF vs Combine PDF vs Join PDF — What's the Difference?</h3>
           <p>
-            <strong>2. Arrange the order.</strong> Use the up and down arrows to put the
-            files in the order you want them combined. The pages of each PDF are appended
-            sequentially in the order shown.
+            These three terms all describe the same operation: taking two or more PDF
+            documents and assembling them into a single file. Some tools market the
+            feature as "combine PDF" or "join PDF," but the underlying process is
+            identical — copying pages from each input file into a new output PDF in the
+            order specified.
           </p>
+
+          <h3>Privacy, Security, and Compliance</h3>
           <p>
-            <strong>3. Click Merge.</strong> Press the "Merge PDFs &amp; Download" button.
-            The tool processes everything locally in your browser and immediately downloads
-            the combined file as <code>merged.pdf</code>.
-          </p>
-          <h3>Why Merge PDFs in Your Browser?</h3>
-          <p>
-            Most online merge tools upload your files to remote servers, where they may be
-            cached, logged, or scanned. For confidential documents — contracts, medical
-            records, tax returns — this is a significant privacy risk. PDFMaster uses{" "}
-            <code>pdf-lib</code> to perform all merging directly in your browser using
-            JavaScript. Your files never leave your device, are never transmitted over the
-            internet, and disappear from memory when you close the tab.
-          </p>
-          <h3>Common Use Cases</h3>
-          <p>
-            Combine multiple scanned pages into a single contract; assemble monthly
-            invoices into a quarterly report; merge separate book chapters into one
-            manuscript; bundle application forms with supporting documents; consolidate
-            meeting notes from multiple sessions; combine receipts for expense
-            reimbursement; or join exported pages from different sources into a unified
-            archive.
+            Because PDFMaster's Merge PDF tool runs entirely in your browser, it is
+            inherently safe for documents covered by privacy regulations such as HIPAA,
+            GDPR, FERPA, or attorney-client privilege. No data leaves your device, no
+            cookies track your files, and no analytics inspect your content. You retain
+            full control at every step.
           </p>
         </>
       }

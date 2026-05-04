@@ -79,10 +79,11 @@ const ProtectPdf = () => {
 
   return (
     <ToolPageShell
-      title="Protect PDF — Add Password to PDF Free | PDFMaster Tools"
-      description="Add a password to your PDF online for free. Browser-based encryption — your file never leaves your device."
-      h1="Password-Protect Your PDF"
-      intro="Add a password to your PDF so only people you share it with can open it."
+      title="Protect PDF Online — Add Password to PDF Free | PDFMaster Tools"
+      description="Add a password to your PDF online for free. Browser-based encryption keeps your file private — your PDF never leaves your device."
+      keywords="protect pdf, password protect pdf, encrypt pdf, secure pdf, add password to pdf, pdf password, lock pdf"
+      h1="Password-Protect Your PDF Online"
+      intro="Add a password to your PDF so only people you share it with can open it. All processing happens in your browser."
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
@@ -131,14 +132,48 @@ const ProtectPdf = () => {
       }
       seoContent={
         <>
-          <h2>How to Add a Password to a PDF</h2>
+          <h2>How to Add a Password to a PDF — Complete Guide</h2>
           <p>
             Adding a password to a PDF is one of the simplest ways to keep contracts,
-            invoices, medical records, or personal documents private. Only people who
-            know the password will be able to open the file. Choose a strong password
-            (at least 8 characters with a mix of letters, numbers, and symbols) and
-            share it with recipients through a separate channel — never include the
-            password in the same email as the PDF itself.
+            invoices, medical records, financial statements, or personal documents
+            private. Only people who know the password will be able to open the file —
+            even if it's intercepted, leaked, or accidentally shared with the wrong
+            recipient. PDFMaster Tools' Protect PDF utility runs entirely in your
+            browser, so your file and password never leave your device.
+          </p>
+
+          <h3>Step-by-Step: How to Password-Protect a PDF</h3>
+          <ol>
+            <li><strong>Upload your PDF</strong> using the dropzone above.</li>
+            <li><strong>Enter a strong password</strong> in both fields to confirm.</li>
+            <li><strong>Click Protect &amp; Download.</strong> The encrypted PDF downloads instantly.</li>
+            <li><strong>Share the password securely</strong> through a separate channel from the file itself.</li>
+          </ol>
+
+          <h3>How to Choose a Strong PDF Password</h3>
+          <ul>
+            <li>Use at least 12 characters — longer is better.</li>
+            <li>Mix uppercase, lowercase, numbers, and symbols.</li>
+            <li>Avoid dictionary words, names, and dates of birth.</li>
+            <li>Don't reuse a password from another account.</li>
+            <li>Consider a passphrase like "Coffee-Pumpkin-Stairs-42!"</li>
+          </ul>
+
+          <h3>How to Share a Password Safely</h3>
+          <p>
+            Never include the password in the same email as the PDF itself. If your
+            email is compromised or forwarded, the password is exposed. Instead, share
+            the password through a different channel: a phone call, an SMS message, an
+            encrypted messaging app like Signal, or in person.
+          </p>
+
+          <h3>Browser Encryption Limitations</h3>
+          <p>
+            Browser-based PDF encryption uses standard PDF security features that all
+            mainstream readers (Adobe Acrobat, Preview, Chrome, Edge) support. For
+            highly sensitive documents that require AES-256 encryption certified for
+            regulated industries (HIPAA, PCI-DSS, government), use a desktop application
+            like Adobe Acrobat Pro.
           </p>
         </>
       }

@@ -92,10 +92,11 @@ const PdfToJpg = () => {
 
   return (
     <ToolPageShell
-      title="PDF to JPG — Convert PDF Pages to Images Free | PDFMaster Tools"
-      description="Convert each page of a PDF to a high-quality JPG image. Free, browser-based, no upload required."
-      h1="PDF to JPG Converter"
-      intro="Turn every page of your PDF into a high-resolution JPG image."
+      title="PDF to JPG Online — Convert PDF Pages to Images Free | PDFMaster Tools"
+      description="Convert each page of a PDF to a high-quality JPG image online for free. Multiple pages bundled in a ZIP. Browser-based — no upload required."
+      keywords="pdf to jpg, pdf to image, convert pdf to jpg, pdf to png, pdf to jpg converter, pdf page to image"
+      h1="PDF to JPG Converter — Free Online"
+      intro="Turn every page of your PDF into a high-resolution JPG image. Multiple pages download as a single ZIP."
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
@@ -125,13 +126,37 @@ const PdfToJpg = () => {
       }
       seoContent={
         <>
-          <h2>How to Convert PDF to JPG Images</h2>
+          <h2>How to Convert PDF to JPG Images — Complete Guide</h2>
           <p>
             Converting PDF pages to JPG images is useful for posting on social media,
-            embedding in slide decks, or quickly previewing documents on devices that
-            don't have a PDF reader. Our converter renders each page at 2× scale for
-            sharp, high-resolution output. If your PDF has multiple pages, you'll get
-            them bundled in a convenient ZIP file.
+            embedding in slide decks, quickly previewing documents on devices that don't
+            have a PDF reader, creating thumbnails for websites, or sharing single pages
+            without sending the whole document. Our converter renders each page at 2×
+            scale for sharp, high-resolution output.
+          </p>
+
+          <h3>Step-by-Step: How to Convert PDF to JPG</h3>
+          <ol>
+            <li><strong>Upload your PDF</strong> using the dropzone above.</li>
+            <li><strong>Click Convert to JPG.</strong> Each page is rendered at high resolution.</li>
+            <li><strong>Download.</strong> Single-page PDFs deliver one JPG; multi-page PDFs are bundled in a ZIP file.</li>
+          </ol>
+
+          <h3>Common Use Cases</h3>
+          <ul>
+            <li>Posting a single PDF page as an image on social media</li>
+            <li>Embedding pages into a PowerPoint or Google Slides presentation</li>
+            <li>Creating preview thumbnails for a website or marketplace</li>
+            <li>Sharing one page from a PDF without sending the entire file</li>
+            <li>Importing PDF content into image editors like Photoshop or GIMP</li>
+            <li>Generating high-resolution screenshots from PDF reports</li>
+          </ul>
+
+          <h3>Output Quality</h3>
+          <p>
+            Pages are rendered at 2× their native PDF dimensions and saved as 92%-quality
+            JPEG images. This produces sharp, screen-ready output suitable for
+            presentations, web pages, and print at typical sizes.
           </p>
         </>
       }
