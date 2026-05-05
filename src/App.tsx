@@ -23,6 +23,12 @@ import Grayscale from "./pages/Grayscale.tsx";
 import ExtractText from "./pages/ExtractText.tsx";
 import HtmlToPdf from "./pages/HtmlToPdf.tsx";
 import SignPdf from "./pages/SignPdf.tsx";
+import PdfToPng from "./pages/PdfToPng.tsx";
+import EditMetadata from "./pages/EditMetadata.tsx";
+import RepairPdf from "./pages/RepairPdf.tsx";
+import ResizePdf from "./pages/ResizePdf.tsx";
+import PdfInfo from "./pages/PdfInfo.tsx";
+import NupPdf from "./pages/NupPdf.tsx";
 import About from "./pages/About.tsx";
 import Privacy from "./pages/Privacy.tsx";
 import Terms from "./pages/Terms.tsx";
@@ -58,6 +64,12 @@ const App = () => (
             <Route path="/extract-text" element={<ExtractText />} />
             <Route path="/html-to-pdf" element={<HtmlToPdf />} />
             <Route path="/sign-pdf" element={<SignPdf />} />
+            <Route path="/pdf-to-png" element={<PdfToPng />} />
+            <Route path="/edit-metadata" element={<EditMetadata />} />
+            <Route path="/repair-pdf" element={<RepairPdf />} />
+            <Route path="/resize-pdf" element={<ResizePdf />} />
+            <Route path="/pdf-info" element={<PdfInfo />} />
+            <Route path="/nup-pdf" element={<NupPdf />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />

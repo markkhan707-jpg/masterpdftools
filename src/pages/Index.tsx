@@ -23,6 +23,12 @@ import {
   FileText as FileTextIcon,
   Code,
   PenTool,
+  FileImage as FileImage2,
+  Tags,
+  Wrench,
+  Maximize2,
+  Info,
+  LayoutGrid,
   Zap,
   ShieldCheck,
   Heart,
@@ -48,6 +54,12 @@ const tools = [
   { to: "/grayscale-pdf", icon: Contrast, title: "Grayscale PDF", description: "Convert color PDFs to black & white.", color: "tool-convert" },
   { to: "/extract-text", icon: FileTextIcon, title: "Extract Text", description: "Pull all text from a PDF into a .txt file.", color: "tool-merge" },
   { to: "/html-to-pdf", icon: Code, title: "HTML to PDF", description: "Render HTML markup as a downloadable PDF.", color: "tool-split" },
+  { to: "/pdf-to-png", icon: FileImage2, title: "PDF to PNG", description: "Convert PDF pages to lossless PNG images.", color: "tool-compress" },
+  { to: "/resize-pdf", icon: Maximize2, title: "Resize PDF", description: "Change page size to A4, Letter, Legal, A3 & more.", color: "tool-convert" },
+  { to: "/nup-pdf", icon: LayoutGrid, title: "N-up Pages", description: "Print 2 or 4 PDF pages per sheet to save paper.", color: "tool-merge" },
+  { to: "/edit-metadata", icon: Tags, title: "Edit Metadata", description: "Update PDF title, author, subject and keywords.", color: "tool-split" },
+  { to: "/repair-pdf", icon: Wrench, title: "Repair PDF", description: "Fix corrupted PDFs that won't open.", color: "tool-compress" },
+  { to: "/pdf-info", icon: Info, title: "PDF Info", description: "Inspect metadata, page sizes & file properties.", color: "tool-convert" },
 ];
 
 const features = [
