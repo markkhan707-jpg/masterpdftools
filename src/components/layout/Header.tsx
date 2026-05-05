@@ -100,13 +100,20 @@ export const Header = () => {
           ))}
           <DropdownMenu>
             <DropdownMenuTrigger className="px-3 py-2 text-sm font-medium rounded-md text-foreground/70 hover:text-primary inline-flex items-center gap-1 outline-none">
-              More <ChevronDown className="h-3.5 w-3.5" />
+              All Tools <ChevronDown className="h-3.5 w-3.5" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48">
-              {moreTools.map((t) => (
-                <DropdownMenuItem key={t.to} asChild>
-                  <Link to={t.to}>{t.label}</Link>
-                </DropdownMenuItem>
+            <DropdownMenuContent align="end" className="w-[560px] p-3 grid grid-cols-2 gap-3">
+              {categoryGroups.map((g) => (
+                <div key={g.name} className="space-y-1">
+                  <div className="px-2 py-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    {g.name}
+                  </div>
+                  {g.tools.map((t) => (
+                    <DropdownMenuItem key={t.to} asChild>
+                      <Link to={t.to} className="text-sm">{t.label}</Link>
+                    </DropdownMenuItem>
+                  ))}
+                </div>
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
