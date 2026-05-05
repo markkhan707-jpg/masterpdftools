@@ -31,6 +31,12 @@ const moreTools = [
   { to: "/grayscale-pdf", label: "Grayscale PDF" },
   { to: "/extract-text", label: "Extract Text" },
   { to: "/html-to-pdf", label: "HTML to PDF" },
+  { to: "/pdf-to-png", label: "PDF to PNG" },
+  { to: "/resize-pdf", label: "Resize PDF" },
+  { to: "/nup-pdf", label: "N-up Pages" },
+  { to: "/edit-metadata", label: "Edit Metadata" },
+  { to: "/repair-pdf", label: "Repair PDF" },
+  { to: "/pdf-info", label: "PDF Info" },
 ];
 
 const allTools = [...primaryTools, ...moreTools];
