@@ -184,25 +184,54 @@ const Index = () => (
 
     {/* Tools Grid */}
     <section id="tools" className="container mx-auto px-4 py-16 md:py-20">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold mb-3">Choose Your Tool</h2>
-        <p className="text-muted-foreground">Powerful PDF utilities at your fingertips.</p>
+      <div className="text-center mb-10">
+        <h2 className="text-3xl md:text-4xl font-bold mb-3">All PDF Tools by Category</h2>
+        <p className="text-muted-foreground">Browse {tools.length} free utilities organized by what you need to do.</p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {tools.map((t) => (
-          <Link key={t.to} to={t.to} className="tool-card group block">
-            <div
-              className="h-12 w-12 rounded-xl flex items-center justify-center mb-4 text-white"
-              style={{ backgroundColor: `hsl(var(--${t.color}))` }}
-            >
-              <t.icon className="h-6 w-6" />
+
+      {/* Category nav */}
+      <div className="flex flex-wrap justify-center gap-2 mb-12">
+        {categories.map((c) => (
+          <a
+            key={c.id}
+            href={`#${c.id}`}
+            className="px-4 py-2 text-sm font-medium rounded-full border border-border bg-card hover:border-primary hover:text-primary transition-colors"
+          >
+            {c.name}
+          </a>
+        ))}
+      </div>
+
+      <div className="space-y-14">
+        {categories.map((cat) => (
+          <div key={cat.id} id={cat.id} className="scroll-mt-20">
+            <div className="flex items-end justify-between gap-4 mb-5 border-b border-border pb-3">
+              <div>
+                <h3 className="text-xl md:text-2xl font-bold">{cat.name}</h3>
+                <p className="text-sm text-muted-foreground mt-1">{cat.description}</p>
+              </div>
+              <span className="text-xs font-medium text-muted-foreground shrink-0">
+                {cat.tools.length} tools
+              </span>
             </div>
-            <h3 className="text-lg font-semibold mb-2">{t.title}</h3>
-            <p className="text-sm text-muted-foreground mb-4">{t.description}</p>
-            <span className="inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:gap-2 transition-all">
-              Try it <ArrowRight className="h-4 w-4" />
-            </span>
-          </Link>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {cat.tools.map((t) => (
+                <Link key={t.to} to={t.to} className="tool-card group block">
+                  <div
+                    className="h-12 w-12 rounded-xl flex items-center justify-center mb-4 text-white"
+                    style={{ backgroundColor: `hsl(var(--${t.color}))` }}
+                  >
+                    <t.icon className="h-6 w-6" />
+                  </div>
+                  <h4 className="text-lg font-semibold mb-2">{t.title}</h4>
+                  <p className="text-sm text-muted-foreground mb-4">{t.description}</p>
+                  <span className="inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:gap-2 transition-all">
+                    Try it <ArrowRight className="h-4 w-4" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
         ))}
       </div>
     </section>
