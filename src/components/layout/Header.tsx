@@ -16,29 +16,60 @@ const primaryTools = [
   { to: "/pdf-to-word", label: "PDF to Word" },
 ];
 
-const moreTools = [
-  { to: "/organize-pdf", label: "Organize PDF" },
-  { to: "/rotate-pdf", label: "Rotate PDF" },
-  { to: "/delete-pages", label: "Delete Pages" },
-  { to: "/crop-pdf", label: "Crop PDF" },
-  { to: "/page-numbers", label: "Page Numbers" },
-  { to: "/watermark-pdf", label: "Watermark PDF" },
-  { to: "/sign-pdf", label: "Sign PDF" },
-  { to: "/protect-pdf", label: "Protect PDF" },
-  { to: "/unlock-pdf", label: "Unlock PDF" },
-  { to: "/jpg-to-pdf", label: "JPG to PDF" },
-  { to: "/pdf-to-jpg", label: "PDF to JPG" },
-  { to: "/grayscale-pdf", label: "Grayscale PDF" },
-  { to: "/extract-text", label: "Extract Text" },
-  { to: "/html-to-pdf", label: "HTML to PDF" },
-  { to: "/pdf-to-png", label: "PDF to PNG" },
-  { to: "/resize-pdf", label: "Resize PDF" },
-  { to: "/nup-pdf", label: "N-up Pages" },
-  { to: "/edit-metadata", label: "Edit Metadata" },
-  { to: "/repair-pdf", label: "Repair PDF" },
-  { to: "/pdf-info", label: "PDF Info" },
+const categoryGroups: { name: string; tools: { to: string; label: string }[] }[] = [
+  {
+    name: "Organize PDF",
+    tools: [
+      { to: "/organize-pdf", label: "Organize PDF" },
+      { to: "/delete-pages", label: "Delete Pages" },
+      { to: "/rotate-pdf", label: "Rotate PDF" },
+      { to: "/nup-pdf", label: "N-up Pages" },
+    ],
+  },
+  {
+    name: "Optimize PDF",
+    tools: [
+      { to: "/resize-pdf", label: "Resize PDF" },
+      { to: "/repair-pdf", label: "Repair PDF" },
+      { to: "/grayscale-pdf", label: "Grayscale PDF" },
+    ],
+  },
+  {
+    name: "Convert to PDF",
+    tools: [
+      { to: "/jpg-to-pdf", label: "JPG to PDF" },
+      { to: "/html-to-pdf", label: "HTML to PDF" },
+    ],
+  },
+  {
+    name: "Convert from PDF",
+    tools: [
+      { to: "/pdf-to-jpg", label: "PDF to JPG" },
+      { to: "/pdf-to-png", label: "PDF to PNG" },
+      { to: "/extract-text", label: "Extract Text" },
+    ],
+  },
+  {
+    name: "Edit PDF",
+    tools: [
+      { to: "/page-numbers", label: "Page Numbers" },
+      { to: "/watermark-pdf", label: "Watermark PDF" },
+      { to: "/sign-pdf", label: "Sign PDF" },
+      { to: "/crop-pdf", label: "Crop PDF" },
+      { to: "/edit-metadata", label: "Edit Metadata" },
+      { to: "/pdf-info", label: "PDF Info" },
+    ],
+  },
+  {
+    name: "Security",
+    tools: [
+      { to: "/protect-pdf", label: "Protect PDF" },
+      { to: "/unlock-pdf", label: "Unlock PDF" },
+    ],
+  },
 ];
 
+const moreTools = categoryGroups.flatMap((g) => g.tools);
 const allTools = [...primaryTools, ...moreTools];
 
 export const Header = () => {
@@ -69,13 +100,20 @@ export const Header = () => {
           ))}
           <DropdownMenu>
             <DropdownMenuTrigger className="px-3 py-2 text-sm font-medium rounded-md text-foreground/70 hover:text-primary inline-flex items-center gap-1 outline-none">
-              More <ChevronDown className="h-3.5 w-3.5" />
+              All Tools <ChevronDown className="h-3.5 w-3.5" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48">
-              {moreTools.map((t) => (
-                <DropdownMenuItem key={t.to} asChild>
-                  <Link to={t.to}>{t.label}</Link>
-                </DropdownMenuItem>
+            <DropdownMenuContent align="end" className="w-[560px] p-3 grid grid-cols-2 gap-3">
+              {categoryGroups.map((g) => (
+                <div key={g.name} className="space-y-1">
+                  <div className="px-2 py-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    {g.name}
+                  </div>
+                  {g.tools.map((t) => (
+                    <DropdownMenuItem key={t.to} asChild>
+                      <Link to={t.to} className="text-sm">{t.label}</Link>
+                    </DropdownMenuItem>
+                  ))}
+                </div>
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
