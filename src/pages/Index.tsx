@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Seo } from "@/components/Seo";
+import { Helmet } from "react-helmet-async";
 import { AdSlot } from "@/components/AdSlot";
 import { FAQ } from "@/components/FAQ";
 import { Button } from "@/components/ui/button";
@@ -161,13 +162,35 @@ const faqs = [
   },
 ];
 
+const SITE_URL = "https://masterpdftools.lovable.app";
+
+const itemListJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  itemListElement: tools.map((t, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    url: `${SITE_URL}${t.to}`,
+    name: t.title,
+  })),
+};
+
 const Index = () => (
   <Layout>
     <Seo
-      title="PDFMaster Tools — Free Online PDF Tools: Merge, Split, Compress, Convert"
-      description="All-in-one free PDF tools. Merge, split, compress, and convert PDFs instantly in your browser. Fast, secure, no signup required."
+      title={`PDFMaster Tools — ${tools.length}+ Free Online PDF Tools: Merge, Split, Compress, Convert`}
+      description={`${tools.length}+ free online PDF tools. Merge, split, compress, convert, sign, edit, protect & unlock PDFs in your browser. 100% private, no signup, no upload.`}
+      keywords="pdf tools, online pdf tools, free pdf editor, merge pdf, split pdf, compress pdf, pdf to word, jpg to pdf, csv to pdf, sign pdf online"
       faqSchema={faqs}
+      softwareApp={{
+        name: "PDFMaster Tools",
+        category: "WebApplication",
+        applicationCategory: "BusinessApplication",
+      }}
     />
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(itemListJsonLd)}</script>
+    </Helmet>
 
     {/* Hero */}
     <section className="relative overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
