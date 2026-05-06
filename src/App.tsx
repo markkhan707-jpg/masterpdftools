@@ -29,6 +29,12 @@ import RepairPdf from "./pages/RepairPdf.tsx";
 import ResizePdf from "./pages/ResizePdf.tsx";
 import PdfInfo from "./pages/PdfInfo.tsx";
 import NupPdf from "./pages/NupPdf.tsx";
+import ReversePages from "./pages/ReversePages.tsx";
+import ExtractImages from "./pages/ExtractImages.tsx";
+import HeaderFooter from "./pages/HeaderFooter.tsx";
+import BlankPdf from "./pages/BlankPdf.tsx";
+import FlattenPdf from "./pages/FlattenPdf.tsx";
+import CsvToPdf from "./pages/CsvToPdf.tsx";
 import About from "./pages/About.tsx";
 import Privacy from "./pages/Privacy.tsx";
 import Terms from "./pages/Terms.tsx";
@@ -70,6 +76,12 @@ const App = () => (
             <Route path="/resize-pdf" element={<ResizePdf />} />
             <Route path="/pdf-info" element={<PdfInfo />} />
             <Route path="/nup-pdf" element={<NupPdf />} />
+            <Route path="/reverse-pages" element={<ReversePages />} />
+            <Route path="/extract-images" element={<ExtractImages />} />
+            <Route path="/header-footer" element={<HeaderFooter />} />
+            <Route path="/blank-pdf" element={<BlankPdf />} />
+            <Route path="/flatten-pdf" element={<FlattenPdf />} />
+            <Route path="/csv-to-pdf" element={<CsvToPdf />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
