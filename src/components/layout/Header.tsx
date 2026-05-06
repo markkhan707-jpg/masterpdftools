@@ -23,6 +23,7 @@ const categoryGroups: { name: string; tools: { to: string; label: string }[] }[]
       { to: "/organize-pdf", label: "Organize PDF" },
       { to: "/delete-pages", label: "Delete Pages" },
       { to: "/rotate-pdf", label: "Rotate PDF" },
+      { to: "/reverse-pages", label: "Reverse Pages" },
       { to: "/nup-pdf", label: "N-up Pages" },
     ],
   },
@@ -31,6 +32,7 @@ const categoryGroups: { name: string; tools: { to: string; label: string }[] }[]
     tools: [
       { to: "/resize-pdf", label: "Resize PDF" },
       { to: "/repair-pdf", label: "Repair PDF" },
+      { to: "/flatten-pdf", label: "Flatten PDF" },
       { to: "/grayscale-pdf", label: "Grayscale PDF" },
     ],
   },
@@ -39,6 +41,8 @@ const categoryGroups: { name: string; tools: { to: string; label: string }[] }[]
     tools: [
       { to: "/jpg-to-pdf", label: "JPG to PDF" },
       { to: "/html-to-pdf", label: "HTML to PDF" },
+      { to: "/csv-to-pdf", label: "CSV to PDF" },
+      { to: "/blank-pdf", label: "Blank PDF" },
     ],
   },
   {
@@ -47,12 +51,14 @@ const categoryGroups: { name: string; tools: { to: string; label: string }[] }[]
       { to: "/pdf-to-jpg", label: "PDF to JPG" },
       { to: "/pdf-to-png", label: "PDF to PNG" },
       { to: "/extract-text", label: "Extract Text" },
+      { to: "/extract-images", label: "Extract Images" },
     ],
   },
   {
     name: "Edit PDF",
     tools: [
       { to: "/page-numbers", label: "Page Numbers" },
+      { to: "/header-footer", label: "Header & Footer" },
       { to: "/watermark-pdf", label: "Watermark PDF" },
       { to: "/sign-pdf", label: "Sign PDF" },
       { to: "/crop-pdf", label: "Crop PDF" },
