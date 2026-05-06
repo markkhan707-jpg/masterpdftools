@@ -40,8 +40,6 @@ import {
   Table as TableIcon,
 } from "lucide-react";
 
-// trailing import block ends below
-const _unused = 0;
 
 type Tool = { to: string; icon: any; title: string; description: string; color: string };
 
