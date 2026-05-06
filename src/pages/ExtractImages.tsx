@@ -71,6 +71,8 @@ const ExtractImages = () => {
       h1="Extract Images from PDF — Save Every Page as a PNG"
       intro="Pull every page out of a PDF as a crisp, high-resolution PNG image. Perfect for grabbing diagrams, figures, and screenshots."
       faqSchema={faqs}
+      breadcrumbName="Extract Images from PDF"
+      breadcrumbPath="/extract-images"
       toolUI={
         <div className="space-y-6">
           <FileDropzone onFiles={setFiles} files={files} onRemove={() => setFiles([])} />

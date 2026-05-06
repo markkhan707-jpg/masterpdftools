@@ -62,6 +62,8 @@ const BlankPdf = () => {
       h1="Create a Blank PDF"
       intro="Generate an empty PDF in any standard page size, with the number of pages you need. Useful for templates, placeholders, and printing."
       faqSchema={faqs}
+      breadcrumbName="Create Blank PDF"
+      breadcrumbPath="/blank-pdf"
       toolUI={
         <div className="space-y-6">
           <div className="grid gap-4 md:grid-cols-3">

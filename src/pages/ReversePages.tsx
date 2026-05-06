@@ -58,6 +58,8 @@ const ReversePages = () => {
       h1="Reverse PDF Pages — Flip the Page Order Instantly"
       intro="Upload your PDF and we'll flip the order of every page in seconds. 100% free and private."
       faqSchema={faqs}
+      breadcrumbName="Reverse PDF Pages"
+      breadcrumbPath="/reverse-pages"
       toolUI={
         <div className="space-y-6">
           <FileDropzone onFiles={setFiles} files={files} onRemove={() => setFiles([])} />

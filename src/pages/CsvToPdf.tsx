@@ -143,6 +143,8 @@ const CsvToPdf = () => {
       h1="CSV to PDF — Convert Spreadsheets into Printable Tables"
       intro="Upload a CSV file and download a paginated PDF table — header row styled, columns auto-sized, ready to share or print."
       faqSchema={faqs}
+      breadcrumbName="CSV to PDF"
+      breadcrumbPath="/csv-to-pdf"
       toolUI={
         <div className="space-y-6">
           <div

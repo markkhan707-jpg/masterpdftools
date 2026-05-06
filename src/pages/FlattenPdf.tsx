@@ -74,6 +74,8 @@ const FlattenPdf = () => {
       h1="Flatten PDF — Lock Forms, Annotations & Signatures"
       intro="Convert form fields, annotations, and editable layers into permanent page content. The output looks identical but cannot be modified."
       faqSchema={faqs}
+      breadcrumbName="Flatten PDF"
+      breadcrumbPath="/flatten-pdf"
       toolUI={
         <div className="space-y-6">
           <FileDropzone onFiles={setFiles} files={files} onRemove={() => setFiles([])} />

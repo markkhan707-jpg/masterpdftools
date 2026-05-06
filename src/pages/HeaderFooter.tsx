@@ -74,6 +74,8 @@ const HeaderFooter = () => {
       h1="Add Header & Footer to PDF"
       intro="Stamp a custom header and footer on every page of your document — perfect for branded reports, drafts, and confidential documents."
       faqSchema={faqs}
+      breadcrumbName="Add Header & Footer"
+      breadcrumbPath="/header-footer"
       toolUI={
         <div className="space-y-6">
           <FileDropzone onFiles={setFiles} files={files} onRemove={() => setFiles([])} />
