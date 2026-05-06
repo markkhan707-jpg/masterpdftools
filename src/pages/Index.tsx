@@ -54,6 +54,7 @@ const categories: { id: string; name: string; description: string; tools: Tool[]
       { to: "/organize-pdf", icon: Layers, title: "Organize PDF", description: "Reorder, rotate, and delete pages in one place.", color: "tool-merge" },
       { to: "/delete-pages", icon: Trash2, title: "Delete Pages", description: "Remove unwanted pages from your PDF.", color: "tool-compress" },
       { to: "/rotate-pdf", icon: RotateCw, title: "Rotate PDF", description: "Rotate PDF pages 90, 180, or 270 degrees.", color: "tool-split" },
+      { to: "/reverse-pages", icon: FlipVertical2, title: "Reverse Pages", description: "Flip the order of every page in your PDF.", color: "tool-split" },
       { to: "/nup-pdf", icon: LayoutGrid, title: "N-up Pages", description: "Print 2 or 4 PDF pages per sheet to save paper.", color: "tool-merge" },
     ],
   },
@@ -65,6 +66,7 @@ const categories: { id: string; name: string; description: string; tools: Tool[]
       { to: "/compress-pdf", icon: Minimize2, title: "Compress PDF", description: "Reduce PDF file size while keeping quality.", color: "tool-compress" },
       { to: "/resize-pdf", icon: Maximize2, title: "Resize PDF", description: "Change page size to A4, Letter, Legal, A3 & more.", color: "tool-convert" },
       { to: "/repair-pdf", icon: Wrench, title: "Repair PDF", description: "Fix corrupted PDFs that won't open.", color: "tool-compress" },
+      { to: "/flatten-pdf", icon: Layers, title: "Flatten PDF", description: "Lock forms, signatures & annotations into pages.", color: "tool-merge" },
       { to: "/grayscale-pdf", icon: Contrast, title: "Grayscale PDF", description: "Convert color PDFs to black & white.", color: "tool-convert" },
     ],
   },
@@ -75,6 +77,8 @@ const categories: { id: string; name: string; description: string; tools: Tool[]
     tools: [
       { to: "/jpg-to-pdf", icon: FileImage, title: "JPG to PDF", description: "Convert JPG or PNG images into a single PDF.", color: "tool-split" },
       { to: "/html-to-pdf", icon: Code, title: "HTML to PDF", description: "Render HTML markup as a downloadable PDF.", color: "tool-split" },
+      { to: "/csv-to-pdf", icon: TableIcon, title: "CSV to PDF", description: "Convert spreadsheet CSV data into a PDF table.", color: "tool-convert" },
+      { to: "/blank-pdf", icon: FilePlus2, title: "Blank PDF", description: "Generate empty PDFs in any standard size.", color: "tool-merge" },
     ],
   },
   {
@@ -86,6 +90,7 @@ const categories: { id: string; name: string; description: string; tools: Tool[]
       { to: "/pdf-to-jpg", icon: ImageIcon, title: "PDF to JPG", description: "Turn each PDF page into a high-quality JPG.", color: "tool-compress" },
       { to: "/pdf-to-png", icon: FileImage2, title: "PDF to PNG", description: "Convert PDF pages to lossless PNG images.", color: "tool-compress" },
       { to: "/extract-text", icon: FileTextIcon, title: "Extract Text", description: "Pull all text from a PDF into a .txt file.", color: "tool-merge" },
+      { to: "/extract-images", icon: Images, title: "Extract Images", description: "Save every PDF page as a high-resolution PNG.", color: "tool-split" },
     ],
   },
   {
@@ -94,6 +99,7 @@ const categories: { id: string; name: string; description: string; tools: Tool[]
     description: "Annotate, sign and personalize your documents.",
     tools: [
       { to: "/page-numbers", icon: Hash, title: "Page Numbers", description: "Add page numbers to every page.", color: "tool-merge" },
+      { to: "/header-footer", icon: AlignVerticalSpaceAround, title: "Header & Footer", description: "Stamp custom header & footer text on every page.", color: "tool-convert" },
       { to: "/watermark-pdf", icon: Stamp, title: "Watermark PDF", description: "Stamp your PDF with a custom text watermark.", color: "tool-split" },
       { to: "/sign-pdf", icon: PenTool, title: "Sign PDF", description: "Draw your signature and add it to a PDF.", color: "tool-compress" },
       { to: "/crop-pdf", icon: Crop, title: "Crop PDF", description: "Trim equal margins from every page.", color: "tool-convert" },
