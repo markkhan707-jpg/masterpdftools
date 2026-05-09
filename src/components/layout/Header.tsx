@@ -25,6 +25,7 @@ const categoryGroups: { name: string; tools: { to: string; label: string }[] }[]
       { to: "/rotate-pdf", label: "Rotate PDF" },
       { to: "/reverse-pages", label: "Reverse Pages" },
       { to: "/nup-pdf", label: "N-up Pages" },
+      { to: "/duplicate-pages", label: "Duplicate Pages" },
     ],
   },
   {
@@ -42,6 +43,8 @@ const categoryGroups: { name: string; tools: { to: string; label: string }[] }[]
       { to: "/jpg-to-pdf", label: "JPG to PDF" },
       { to: "/html-to-pdf", label: "HTML to PDF" },
       { to: "/csv-to-pdf", label: "CSV to PDF" },
+      { to: "/text-to-pdf", label: "Text to PDF" },
+      { to: "/markdown-to-pdf", label: "Markdown to PDF" },
       { to: "/blank-pdf", label: "Blank PDF" },
     ],
   },
@@ -64,6 +67,9 @@ const categoryGroups: { name: string; tools: { to: string; label: string }[] }[]
       { to: "/crop-pdf", label: "Crop PDF" },
       { to: "/edit-metadata", label: "Edit Metadata" },
       { to: "/pdf-info", label: "PDF Info" },
+      { to: "/bates-numbering", label: "Bates Numbering" },
+      { to: "/word-count", label: "Word Count" },
+      { to: "/invert-colors", label: "Invert Colors" },
     ],
   },
   {
