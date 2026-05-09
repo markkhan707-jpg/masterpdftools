@@ -42,6 +42,12 @@ import {
   Table as TableIcon,
   Search,
   X,
+  Type,
+  FileCode,
+  Copy,
+  Gavel,
+  BarChart3,
+  MoonStar,
 } from "lucide-react";
 
 type Tool = { to: string; icon: any; title: string; description: string; color: string };
@@ -59,6 +65,7 @@ const categories: { id: string; name: string; description: string; tools: Tool[]
       { to: "/rotate-pdf", icon: RotateCw, title: "Rotate PDF", description: "Rotate PDF pages 90, 180, or 270 degrees.", color: "tool-split" },
       { to: "/reverse-pages", icon: FlipVertical2, title: "Reverse Pages", description: "Flip the order of every page in your PDF.", color: "tool-split" },
       { to: "/nup-pdf", icon: LayoutGrid, title: "N-up Pages", description: "Print 2 or 4 PDF pages per sheet to save paper.", color: "tool-merge" },
+      { to: "/duplicate-pages", icon: Copy, title: "Duplicate Pages", description: "Clone selected PDF pages in place with custom copy count.", color: "tool-split" },
     ],
   },
   {
@@ -71,6 +78,7 @@ const categories: { id: string; name: string; description: string; tools: Tool[]
       { to: "/repair-pdf", icon: Wrench, title: "Repair PDF", description: "Fix corrupted PDFs that won't open.", color: "tool-compress" },
       { to: "/flatten-pdf", icon: Layers, title: "Flatten PDF", description: "Lock forms, signatures & annotations into pages.", color: "tool-merge" },
       { to: "/grayscale-pdf", icon: Contrast, title: "Grayscale PDF", description: "Convert color PDFs to black & white.", color: "tool-convert" },
+      { to: "/invert-colors", icon: MoonStar, title: "Invert Colors", description: "Flip PDF colors for dark-mode reading.", color: "tool-merge" },
     ],
   },
   {
@@ -81,6 +89,8 @@ const categories: { id: string; name: string; description: string; tools: Tool[]
       { to: "/jpg-to-pdf", icon: FileImage, title: "JPG to PDF", description: "Convert JPG or PNG images into a single PDF.", color: "tool-split" },
       { to: "/html-to-pdf", icon: Code, title: "HTML to PDF", description: "Render HTML markup as a downloadable PDF.", color: "tool-split" },
       { to: "/csv-to-pdf", icon: TableIcon, title: "CSV to PDF", description: "Convert spreadsheet CSV data into a PDF table.", color: "tool-convert" },
+      { to: "/text-to-pdf", icon: Type, title: "Text to PDF", description: "Paste any text and convert it into a paginated PDF.", color: "tool-merge" },
+      { to: "/markdown-to-pdf", icon: FileCode, title: "Markdown to PDF", description: "Render Markdown into a beautifully styled PDF.", color: "tool-split" },
       { to: "/blank-pdf", icon: FilePlus2, title: "Blank PDF", description: "Generate empty PDFs in any standard size.", color: "tool-merge" },
     ],
   },
@@ -108,6 +118,8 @@ const categories: { id: string; name: string; description: string; tools: Tool[]
       { to: "/crop-pdf", icon: Crop, title: "Crop PDF", description: "Trim equal margins from every page.", color: "tool-convert" },
       { to: "/edit-metadata", icon: Tags, title: "Edit Metadata", description: "Update PDF title, author, subject and keywords.", color: "tool-split" },
       { to: "/pdf-info", icon: Info, title: "PDF Info", description: "Inspect metadata, page sizes & file properties.", color: "tool-convert" },
+      { to: "/bates-numbering", icon: Gavel, title: "Bates Numbering", description: "Stamp legal Bates numbers on every page.", color: "tool-compress" },
+      { to: "/word-count", icon: BarChart3, title: "PDF Word Count", description: "Count words, chars & estimate reading time.", color: "tool-merge" },
     ],
   },
   {
