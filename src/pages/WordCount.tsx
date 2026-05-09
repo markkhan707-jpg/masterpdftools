@@ -62,7 +62,7 @@ const WordCount = () => {
       breadcrumbPath="/word-count"
       toolUI={
         <div className="space-y-6">
-          <FileDropzone onFilesSelected={(f) => setFile(f[0])} accept="application/pdf" />
+          <FileDropzone onFiles={(f) => setFile(f[0])} files={file ? [file] : []} onRemove={() => setFile(null)} />
           {file && (
             <Button size="lg" className="w-full" onClick={handleProcess} disabled={processing}>
               {processing ? (<><Loader2 className="h-4 w-4 animate-spin" /> Analyzing...</>) : (<><BarChart3 className="h-4 w-4" /> Analyze PDF</>)}

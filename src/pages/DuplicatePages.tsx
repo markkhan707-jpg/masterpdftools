@@ -81,7 +81,7 @@ const DuplicatePages = () => {
       breadcrumbPath="/duplicate-pages"
       toolUI={
         <div className="space-y-6">
-          <FileDropzone onFilesSelected={(f) => setFile(f[0])} accept="application/pdf" />
+          <FileDropzone onFiles={(f) => setFile(f[0])} files={file ? [file] : []} onRemove={() => setFile(null)} />
           {file && (
             <>
               <div className="grid gap-4 md:grid-cols-2">
