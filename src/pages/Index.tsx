@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Seo } from "@/components/Seo";
@@ -39,8 +40,9 @@ import {
   AlignVerticalSpaceAround,
   FilePlus2,
   Table as TableIcon,
+  Search,
+  X,
 } from "lucide-react";
-
 
 type Tool = { to: string; icon: any; title: string; description: string; color: string };
 
@@ -175,205 +177,371 @@ const itemListJsonLd = {
   })),
 };
 
-const Index = () => (
-  <Layout>
-    <Seo
-      title={`PDFMaster Tools — ${tools.length}+ Free Online PDF Tools: Merge, Split, Compress, Convert`}
-      description={`${tools.length}+ free online PDF tools. Merge, split, compress, convert, sign, edit, protect & unlock PDFs in your browser. 100% private, no signup, no upload.`}
-      keywords="pdf tools, online pdf tools, free pdf editor, merge pdf, split pdf, compress pdf, pdf to word, jpg to pdf, csv to pdf, sign pdf online"
-      faqSchema={faqs}
-      softwareApp={{
-        name: "PDFMaster Tools",
-        category: "WebApplication",
-        applicationCategory: "BusinessApplication",
-      }}
-    />
-    <Helmet>
-      <script type="application/ld+json">{JSON.stringify(itemListJsonLd)}</script>
-    </Helmet>
+const Index = () => {
+  const [query, setQuery] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-    {/* Hero */}
-    <section className="relative overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
-      <div className="container mx-auto px-4 py-16 md:py-24 text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent text-accent-foreground text-xs font-medium mb-6">
-          <Heart className="h-3 w-3" /> 100% Free • No Signup
+  const q = query.trim().toLowerCase();
+
+  const matchingTools = q
+    ? tools.filter(
+        (t) =>
+          t.title.toLowerCase().includes(q) ||
+          t.description.toLowerCase().includes(q)
+      )
+    : [];
+
+  const filteredCategories = q
+    ? categories
+        .map((c) => ({
+          ...c,
+          tools: c.tools.filter(
+            (t) =>
+              t.title.toLowerCase().includes(q) ||
+              t.description.toLowerCase().includes(q)
+          ),
+        }))
+        .filter((c) => c.tools.length > 0)
+    : categories;
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "/" && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        const target = e.target as HTMLElement;
+        if (
+          target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable
+        ) {
+          return;
+        }
+        e.preventDefault();
+        inputRef.current?.focus();
+        setShowDropdown(true);
+      }
+      if (e.key === "Escape") {
+        setShowDropdown(false);
+        inputRef.current?.blur();
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node) &&
+        inputRef.current &&
+        !inputRef.current.contains(e.target as Node)
+      ) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const clearSearch = () => {
+    setQuery("");
+    setShowDropdown(false);
+    inputRef.current?.focus();
+  };
+
+  return (
+    <Layout>
+      <Seo
+        title={`PDFMaster Tools — ${tools.length}+ Free Online PDF Tools: Merge, Split, Compress, Convert`}
+        description={`${tools.length}+ free online PDF tools. Merge, split, compress, convert, sign, edit, protect & unlock PDFs in your browser. 100% private, no signup, no upload.`}
+        keywords="pdf tools, online pdf tools, free pdf editor, merge pdf, split pdf, compress pdf, pdf to word, jpg to pdf, csv to pdf, sign pdf online"
+        faqSchema={faqs}
+        softwareApp={{
+          name: "PDFMaster Tools",
+          category: "WebApplication",
+          applicationCategory: "BusinessApplication",
+        }}
+      />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(itemListJsonLd)}</script>
+      </Helmet>
+
+      {/* Hero */}
+      <section className="relative overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
+        <div className="container mx-auto px-4 py-16 md:py-24 text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent text-accent-foreground text-xs font-medium mb-6">
+            <Heart className="h-3 w-3" /> 100% Free • No Signup
+          </div>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 max-w-3xl mx-auto leading-tight">
+            All-in-One Free <span className="text-primary">PDF Tools</span>
+          </h1>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+            Merge, Split, Compress & Convert PDFs instantly — right in your browser.
+          </p>
+
+          {/* Search Bar */}
+          <div className="max-w-xl mx-auto mb-8 relative">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+              <input
+                ref={inputRef}
+                type="text"
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setShowDropdown(true);
+                }}
+                onFocus={() => setShowDropdown(true)}
+                placeholder="Search PDF tools..."
+                className="w-full h-14 pl-12 pr-12 rounded-2xl border border-border bg-card text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary shadow-sm text-base"
+              />
+              {query ? (
+                <button
+                  onClick={clearSearch}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 p-1 rounded-md hover:bg-muted text-muted-foreground"
+                  aria-label="Clear search"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              ) : (
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-muted-foreground border border-border rounded-md px-1.5 py-0.5 hidden sm:inline-block">
+                  /
+                </span>
+              )}
+            </div>
+
+            {/* Dropdown results */}
+            {showDropdown && q && (
+              <div
+                ref={dropdownRef}
+                className="absolute left-0 right-0 top-full mt-2 bg-card border border-border rounded-2xl shadow-lg z-30 overflow-hidden"
+              >
+                {matchingTools.length > 0 ? (
+                  <div className="py-2 max-h-80 overflow-y-auto">
+                    {matchingTools.map((t) => (
+                      <Link
+                        key={t.to}
+                        to={t.to}
+                        onClick={() => {
+                          setQuery("");
+                          setShowDropdown(false);
+                        }}
+                        className="flex items-center gap-3 px-4 py-3 hover:bg-accent transition-colors"
+                      >
+                        <div
+                          className="h-9 w-9 rounded-lg flex items-center justify-center shrink-0 text-white"
+                          style={{ backgroundColor: `hsl(var(--${t.color}))` }}
+                        >
+                          <t.icon className="h-4 w-4" />
+                        </div>
+                        <div className="text-left min-w-0">
+                          <div className="text-sm font-medium truncate">{t.title}</div>
+                          <div className="text-xs text-muted-foreground truncate">{t.description}</div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="px-4 py-6 text-center text-sm text-muted-foreground">
+                    No tools found for "{query}"
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-3">
+            {tools.slice(0, 4).map((t) => (
+              <Button key={t.to} asChild variant="outline" size="lg">
+                <Link to={t.to}>
+                  <t.icon className="h-4 w-4" />
+                  {t.title}
+                </Link>
+              </Button>
+            ))}
+          </div>
         </div>
-        <h1 className="text-4xl md:text-6xl font-bold mb-6 max-w-3xl mx-auto leading-tight">
-          All-in-One Free <span className="text-primary">PDF Tools</span>
-        </h1>
-        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-          Merge, Split, Compress & Convert PDFs instantly — right in your browser.
-        </p>
-        <div className="flex flex-wrap justify-center gap-3">
-          {tools.slice(0, 4).map((t) => (
-            <Button key={t.to} asChild variant="outline" size="lg">
-              <Link to={t.to}>
-                <t.icon className="h-4 w-4" />
-                {t.title}
-              </Link>
-            </Button>
+      </section>
+
+      {/* Tools Grid */}
+      <section id="tools" className="container mx-auto px-4 py-16 md:py-20">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold mb-3">All PDF Tools by Category</h2>
+          <p className="text-muted-foreground">
+            {q
+              ? `${matchingTools.length} result${matchingTools.length === 1 ? "" : "s"} for "${query}"`
+              : `Browse ${tools.length} free utilities organized by what you need to do.`}
+          </p>
+        </div>
+
+        {/* Category nav */}
+        {!q && (
+          <div className="flex flex-wrap justify-center gap-2 mb-12">
+            {categories.map((c) => (
+              <a
+                key={c.id}
+                href={`#${c.id}`}
+                className="px-4 py-2 text-sm font-medium rounded-full border border-border bg-card hover:border-primary hover:text-primary transition-colors"
+              >
+                {c.name}
+              </a>
+            ))}
+          </div>
+        )}
+
+        <div className="space-y-14">
+          {filteredCategories.length > 0 ? (
+            filteredCategories.map((cat) => (
+              <div key={cat.id} id={cat.id} className="scroll-mt-20">
+                <div className="flex items-end justify-between gap-4 mb-5 border-b border-border pb-3">
+                  <div>
+                    <h3 className="text-xl md:text-2xl font-bold">{cat.name}</h3>
+                    <p className="text-sm text-muted-foreground mt-1">{cat.description}</p>
+                  </div>
+                  <span className="text-xs font-medium text-muted-foreground shrink-0">
+                    {cat.tools.length} tools
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                  {cat.tools.map((t) => (
+                    <Link key={t.to} to={t.to} className="tool-card group block">
+                      <div
+                        className="h-12 w-12 rounded-xl flex items-center justify-center mb-4 text-white"
+                        style={{ backgroundColor: `hsl(var(--${t.color}))` }}
+                      >
+                        <t.icon className="h-6 w-6" />
+                      </div>
+                      <h4 className="text-lg font-semibold mb-2">{t.title}</h4>
+                      <p className="text-sm text-muted-foreground mb-4">{t.description}</p>
+                      <span className="inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:gap-2 transition-all">
+                        Try it <ArrowRight className="h-4 w-4" />
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="text-center py-12">
+              <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
+              <p className="text-lg font-medium mb-2">No tools found</p>
+              <p className="text-muted-foreground text-sm">
+                Try a different search term or browse all tools below.
+              </p>
+              <Button className="mt-4" variant="outline" onClick={() => setQuery("")}>
+                Clear Search
+              </Button>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <div className="container mx-auto px-4">
+        <AdSlot label="Ad — Banner (728x90)" />
+      </div>
+
+      {/* Features */}
+      <section className="container mx-auto px-4 py-16 md:py-20">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-3">Why Choose PDFMaster?</h2>
+          <p className="text-muted-foreground">Built for speed, security, and simplicity.</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {features.map((f) => (
+            <div key={f.title} className="text-center p-6">
+              <div className="h-14 w-14 rounded-2xl bg-accent text-primary mx-auto mb-4 flex items-center justify-center">
+                <f.icon className="h-7 w-7" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{f.description}</p>
+            </div>
           ))}
         </div>
-      </div>
-    </section>
+      </section>
 
-    {/* Tools Grid */}
-    <section id="tools" className="container mx-auto px-4 py-16 md:py-20">
-      <div className="text-center mb-10">
-        <h2 className="text-3xl md:text-4xl font-bold mb-3">All PDF Tools by Category</h2>
-        <p className="text-muted-foreground">Browse {tools.length} free utilities organized by what you need to do.</p>
-      </div>
+      {/* SEO Content */}
+      <section className="bg-secondary/30 border-y border-border py-16 md:py-20">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <article className="prose prose-slate dark:prose-invert max-w-none">
+            <h2>The Complete Guide to Working with PDF Files Online</h2>
+            <p>
+              PDF (Portable Document Format) has become the universal standard for sharing
+              documents across platforms, devices, and operating systems. Whether you're a
+              student combining research papers, a business professional preparing reports, or
+              someone managing personal documents, you need reliable PDF tools you can trust.
+              PDFMaster Tools provides a complete suite of free, browser-based PDF utilities
+              that work without installing software, creating accounts, or compromising your
+              privacy.
+            </p>
 
-      {/* Category nav */}
-      <div className="flex flex-wrap justify-center gap-2 mb-12">
-        {categories.map((c) => (
-          <a
-            key={c.id}
-            href={`#${c.id}`}
-            className="px-4 py-2 text-sm font-medium rounded-full border border-border bg-card hover:border-primary hover:text-primary transition-colors"
-          >
-            {c.name}
-          </a>
-        ))}
-      </div>
+            <h3>How to Merge PDF Files Online</h3>
+            <p>
+              Merging PDFs is one of the most common tasks people need to perform. Whether
+              you're combining invoices for monthly accounting, joining scanned pages into a
+              single document, or assembling a portfolio, the process should be simple. With
+              PDFMaster's <Link to="/merge-pdf">Merge PDF tool</Link>, you can drag and drop
+              multiple PDF files, reorder them by simply dragging cards into the right
+              sequence, and download the combined result in seconds. There's no limit on how
+              many files you can merge in a session, and because everything happens locally in
+              your browser, sensitive documents like contracts and tax forms never leave your
+              device.
+            </p>
 
-      <div className="space-y-14">
-        {categories.map((cat) => (
-          <div key={cat.id} id={cat.id} className="scroll-mt-20">
-            <div className="flex items-end justify-between gap-4 mb-5 border-b border-border pb-3">
-              <div>
-                <h3 className="text-xl md:text-2xl font-bold">{cat.name}</h3>
-                <p className="text-sm text-muted-foreground mt-1">{cat.description}</p>
-              </div>
-              <span className="text-xs font-medium text-muted-foreground shrink-0">
-                {cat.tools.length} tools
-              </span>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {cat.tools.map((t) => (
-                <Link key={t.to} to={t.to} className="tool-card group block">
-                  <div
-                    className="h-12 w-12 rounded-xl flex items-center justify-center mb-4 text-white"
-                    style={{ backgroundColor: `hsl(var(--${t.color}))` }}
-                  >
-                    <t.icon className="h-6 w-6" />
-                  </div>
-                  <h4 className="text-lg font-semibold mb-2">{t.title}</h4>
-                  <p className="text-sm text-muted-foreground mb-4">{t.description}</p>
-                  <span className="inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:gap-2 transition-all">
-                    Try it <ArrowRight className="h-4 w-4" />
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
+            <h3>How to Compress PDFs Online Without Losing Quality</h3>
+            <p>
+              Large PDF files are a common headache — email providers reject attachments over
+              a certain size, cloud storage fills up quickly, and uploads slow to a crawl.
+              PDFMaster's <Link to="/compress-pdf">Compress PDF tool</Link> reduces file size
+              by optimizing embedded images, stripping unnecessary metadata, and re-encoding
+              content streams. You can choose between Low, Medium, and High compression
+              levels depending on whether you prioritize quality or smaller file size. Most
+              image-heavy PDFs can be reduced by 40–70% with virtually no visible quality
+              loss, making them easier to email, upload, and archive.
+            </p>
 
-    <div className="container mx-auto px-4">
-      <AdSlot label="Ad — Banner (728x90)" />
-    </div>
+            <h3>Splitting PDFs and Extracting Specific Pages</h3>
+            <p>
+              Sometimes you only need a few pages from a long PDF — a single chapter from an
+              ebook, a specific receipt from a bank statement, or a particular slide from a
+              presentation. The <Link to="/split-pdf">Split PDF tool</Link> lets you extract
+              individual pages or split a document into multiple files using flexible page
+              ranges (e.g., 1-3, 5, 8-10). This is far more efficient than printing and
+              re-scanning, and the output preserves the original PDF's formatting, fonts, and
+              embedded images perfectly.
+            </p>
 
-    {/* Features */}
-    <section className="container mx-auto px-4 py-16 md:py-20">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold mb-3">Why Choose PDFMaster?</h2>
-        <p className="text-muted-foreground">Built for speed, security, and simplicity.</p>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        {features.map((f) => (
-          <div key={f.title} className="text-center p-6">
-            <div className="h-14 w-14 rounded-2xl bg-accent text-primary mx-auto mb-4 flex items-center justify-center">
-              <f.icon className="h-7 w-7" />
-            </div>
-            <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">{f.description}</p>
-          </div>
-        ))}
-      </div>
-    </section>
+            <h3>Converting PDF to Word for Easy Editing</h3>
+            <p>
+              PDFs are designed for sharing, not editing. When you need to modify content —
+              update a resume, edit a report, or repurpose text from an article — converting
+              to a Microsoft Word (.docx) file makes the job vastly easier. Our{" "}
+              <Link to="/pdf-to-word">PDF to Word converter</Link> extracts text from your
+              PDF and packages it into a clean, editable .docx file ready to open in Word,
+              Google Docs, or LibreOffice.
+            </p>
 
-    {/* SEO Content */}
-    <section className="bg-secondary/30 border-y border-border py-16 md:py-20">
-      <div className="container mx-auto px-4 max-w-3xl">
-        <article className="prose prose-slate dark:prose-invert max-w-none">
-          <h2>The Complete Guide to Working with PDF Files Online</h2>
-          <p>
-            PDF (Portable Document Format) has become the universal standard for sharing
-            documents across platforms, devices, and operating systems. Whether you're a
-            student combining research papers, a business professional preparing reports, or
-            someone managing personal documents, you need reliable PDF tools you can trust.
-            PDFMaster Tools provides a complete suite of free, browser-based PDF utilities
-            that work without installing software, creating accounts, or compromising your
-            privacy.
-          </p>
+            <h3>Privacy and Security First</h3>
+            <p>
+              Most online PDF tools upload your files to remote servers, which raises serious
+              concerns about data privacy — especially for contracts, medical records, and
+              financial documents. PDFMaster takes a fundamentally different approach: every
+              tool runs entirely in your browser using JavaScript and WebAssembly. Your files
+              are never transmitted over the internet, never stored on our servers, and never
+              seen by anyone but you. Close the tab and the files are gone. It's the safest
+              way to work with sensitive PDFs online.
+            </p>
+          </article>
+        </div>
+      </section>
 
-          <h3>How to Merge PDF Files Online</h3>
-          <p>
-            Merging PDFs is one of the most common tasks people need to perform. Whether
-            you're combining invoices for monthly accounting, joining scanned pages into a
-            single document, or assembling a portfolio, the process should be simple. With
-            PDFMaster's <Link to="/merge-pdf">Merge PDF tool</Link>, you can drag and drop
-            multiple PDF files, reorder them by simply dragging cards into the right
-            sequence, and download the combined result in seconds. There's no limit on how
-            many files you can merge in a session, and because everything happens locally in
-            your browser, sensitive documents like contracts and tax forms never leave your
-            device.
-          </p>
-
-          <h3>How to Compress PDFs Online Without Losing Quality</h3>
-          <p>
-            Large PDF files are a common headache — email providers reject attachments over
-            a certain size, cloud storage fills up quickly, and uploads slow to a crawl.
-            PDFMaster's <Link to="/compress-pdf">Compress PDF tool</Link> reduces file size
-            by optimizing embedded images, stripping unnecessary metadata, and re-encoding
-            content streams. You can choose between Low, Medium, and High compression
-            levels depending on whether you prioritize quality or smaller file size. Most
-            image-heavy PDFs can be reduced by 40–70% with virtually no visible quality
-            loss, making them easier to email, upload, and archive.
-          </p>
-
-          <h3>Splitting PDFs and Extracting Specific Pages</h3>
-          <p>
-            Sometimes you only need a few pages from a long PDF — a single chapter from an
-            ebook, a specific receipt from a bank statement, or a particular slide from a
-            presentation. The <Link to="/split-pdf">Split PDF tool</Link> lets you extract
-            individual pages or split a document into multiple files using flexible page
-            ranges (e.g., 1-3, 5, 8-10). This is far more efficient than printing and
-            re-scanning, and the output preserves the original PDF's formatting, fonts, and
-            embedded images perfectly.
-          </p>
-
-          <h3>Converting PDF to Word for Easy Editing</h3>
-          <p>
-            PDFs are designed for sharing, not editing. When you need to modify content —
-            update a resume, edit a report, or repurpose text from an article — converting
-            to a Microsoft Word (.docx) file makes the job vastly easier. Our{" "}
-            <Link to="/pdf-to-word">PDF to Word converter</Link> extracts text from your
-            PDF and packages it into a clean, editable .docx file ready to open in Word,
-            Google Docs, or LibreOffice.
-          </p>
-
-          <h3>Privacy and Security First</h3>
-          <p>
-            Most online PDF tools upload your files to remote servers, which raises serious
-            concerns about data privacy — especially for contracts, medical records, and
-            financial documents. PDFMaster takes a fundamentally different approach: every
-            tool runs entirely in your browser using JavaScript and WebAssembly. Your files
-            are never transmitted over the internet, never stored on our servers, and never
-            seen by anyone but you. Close the tab and the files are gone. It's the safest
-            way to work with sensitive PDFs online.
-          </p>
-        </article>
-      </div>
-    </section>
-
-    {/* FAQ */}
-    <section className="container mx-auto px-4 py-16 md:py-20">
-      <FAQ items={faqs} />
-    </section>
-  </Layout>
-);
+      {/* FAQ */}
+      <section className="container mx-auto px-4 py-16 md:py-20">
+        <FAQ items={faqs} />
+      </section>
+    </Layout>
+  );
+};
 
 export default Index;
