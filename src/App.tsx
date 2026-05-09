@@ -35,6 +35,12 @@ import HeaderFooter from "./pages/HeaderFooter.tsx";
 import BlankPdf from "./pages/BlankPdf.tsx";
 import FlattenPdf from "./pages/FlattenPdf.tsx";
 import CsvToPdf from "./pages/CsvToPdf.tsx";
+import TextToPdf from "./pages/TextToPdf.tsx";
+import MarkdownToPdf from "./pages/MarkdownToPdf.tsx";
+import DuplicatePages from "./pages/DuplicatePages.tsx";
+import BatesNumbering from "./pages/BatesNumbering.tsx";
+import WordCount from "./pages/WordCount.tsx";
+import InvertColors from "./pages/InvertColors.tsx";
 import About from "./pages/About.tsx";
 import Privacy from "./pages/Privacy.tsx";
 import Terms from "./pages/Terms.tsx";
@@ -82,6 +88,12 @@ const App = () => (
             <Route path="/blank-pdf" element={<BlankPdf />} />
             <Route path="/flatten-pdf" element={<FlattenPdf />} />
             <Route path="/csv-to-pdf" element={<CsvToPdf />} />
+            <Route path="/text-to-pdf" element={<TextToPdf />} />
+            <Route path="/markdown-to-pdf" element={<MarkdownToPdf />} />
+            <Route path="/duplicate-pages" element={<DuplicatePages />} />
+            <Route path="/bates-numbering" element={<BatesNumbering />} />
+            <Route path="/word-count" element={<WordCount />} />
+            <Route path="/invert-colors" element={<InvertColors />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
