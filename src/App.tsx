@@ -41,6 +41,9 @@ import DuplicatePages from "./pages/DuplicatePages.tsx";
 import BatesNumbering from "./pages/BatesNumbering.tsx";
 import WordCount from "./pages/WordCount.tsx";
 import InvertColors from "./pages/InvertColors.tsx";
+import AiSummarizePdf from "./pages/AiSummarizePdf.tsx";
+import AiTranslatePdf from "./pages/AiTranslatePdf.tsx";
+import AiOcrPdf from "./pages/AiOcrPdf.tsx";
 import About from "./pages/About.tsx";
 import Privacy from "./pages/Privacy.tsx";
 import Terms from "./pages/Terms.tsx";
@@ -94,6 +97,9 @@ const App = () => (
             <Route path="/bates-numbering" element={<BatesNumbering />} />
             <Route path="/word-count" element={<WordCount />} />
             <Route path="/invert-colors" element={<InvertColors />} />
+            <Route path="/ai-summarize-pdf" element={<AiSummarizePdf />} />
+            <Route path="/ai-translate-pdf" element={<AiTranslatePdf />} />
+            <Route path="/ai-ocr-pdf" element={<AiOcrPdf />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />

@@ -48,11 +48,24 @@ import {
   Gavel,
   BarChart3,
   MoonStar,
+  Sparkles,
+  Languages,
+  ScanText,
 } from "lucide-react";
 
 type Tool = { to: string; icon: any; title: string; description: string; color: string };
 
-const categories: { id: string; name: string; description: string; tools: Tool[] }[] = [
+const categories: { id: string; name: string; description: string; tools: (Tool & { isNew?: boolean })[] }[] = [
+  {
+    id: "ai",
+    name: "AI Tools ✨",
+    description: "Smart AI-powered features: summarize, translate, and OCR scanned PDFs.",
+    tools: [
+      { to: "/ai-summarize-pdf", icon: Sparkles, title: "AI PDF Summarizer", description: "Get a TL;DR, key points & section summaries instantly.", color: "tool-merge", isNew: true },
+      { to: "/ai-translate-pdf", icon: Languages, title: "AI PDF Translator", description: "Translate any PDF into 20+ languages with AI.", color: "tool-convert", isNew: true },
+      { to: "/ai-ocr-pdf", icon: ScanText, title: "AI OCR (Scanned PDF)", description: "Extract text from scans & handwriting using AI vision.", color: "tool-split", isNew: true },
+    ],
+  },
   {
     id: "organize",
     name: "Organize PDF",
