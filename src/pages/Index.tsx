@@ -431,7 +431,12 @@ const Index = () => {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                   {cat.tools.map((t) => (
-                    <Link key={t.to} to={t.to} className="tool-card group block">
+                    <Link key={t.to} to={t.to} className="tool-card group block relative">
+                      {t.isNew && (
+                        <span className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-wider bg-primary text-primary-foreground px-2 py-0.5 rounded-full">
+                          New
+                        </span>
+                      )}
                       <div
                         className="h-12 w-12 rounded-xl flex items-center justify-center mb-4 text-white"
                         style={{ backgroundColor: `hsl(var(--${t.color}))` }}
