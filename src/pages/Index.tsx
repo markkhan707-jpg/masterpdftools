@@ -48,11 +48,24 @@ import {
   Gavel,
   BarChart3,
   MoonStar,
+  Sparkles,
+  Languages,
+  ScanText,
 } from "lucide-react";
 
 type Tool = { to: string; icon: any; title: string; description: string; color: string };
 
-const categories: { id: string; name: string; description: string; tools: Tool[] }[] = [
+const categories: { id: string; name: string; description: string; tools: (Tool & { isNew?: boolean })[] }[] = [
+  {
+    id: "ai",
+    name: "AI Tools ✨",
+    description: "Smart AI-powered features: summarize, translate, and OCR scanned PDFs.",
+    tools: [
+      { to: "/ai-summarize-pdf", icon: Sparkles, title: "AI PDF Summarizer", description: "Get a TL;DR, key points & section summaries instantly.", color: "tool-merge", isNew: true },
+      { to: "/ai-translate-pdf", icon: Languages, title: "AI PDF Translator", description: "Translate any PDF into 20+ languages with AI.", color: "tool-convert", isNew: true },
+      { to: "/ai-ocr-pdf", icon: ScanText, title: "AI OCR (Scanned PDF)", description: "Extract text from scans & handwriting using AI vision.", color: "tool-split", isNew: true },
+    ],
+  },
   {
     id: "organize",
     name: "Organize PDF",
@@ -418,7 +431,12 @@ const Index = () => {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                   {cat.tools.map((t) => (
-                    <Link key={t.to} to={t.to} className="tool-card group block">
+                    <Link key={t.to} to={t.to} className="tool-card group block relative">
+                      {t.isNew && (
+                        <span className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-wider bg-primary text-primary-foreground px-2 py-0.5 rounded-full">
+                          New
+                        </span>
+                      )}
                       <div
                         className="h-12 w-12 rounded-xl flex items-center justify-center mb-4 text-white"
                         style={{ backgroundColor: `hsl(var(--${t.color}))` }}

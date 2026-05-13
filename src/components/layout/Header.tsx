@@ -18,6 +18,14 @@ const primaryTools = [
 
 const categoryGroups: { name: string; tools: { to: string; label: string }[] }[] = [
   {
+    name: "AI Tools ✨",
+    tools: [
+      { to: "/ai-summarize-pdf", label: "AI Summarize PDF" },
+      { to: "/ai-translate-pdf", label: "AI Translate PDF" },
+      { to: "/ai-ocr-pdf", label: "AI OCR (Scanned PDF)" },
+    ],
+  },
+  {
     name: "Organize PDF",
     tools: [
       { to: "/organize-pdf", label: "Organize PDF" },
