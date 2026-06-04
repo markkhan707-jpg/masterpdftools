@@ -1,6 +1,4 @@
 import { useState } from "react";
-import * as pdfjsLib from "pdfjs-dist";
-import workerSrc from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 import { ToolPageShell } from "@/components/ToolPageShell";
 import { FileDropzone } from "@/components/FileDropzone";
 import { FAQ } from "@/components/FAQ";
@@ -10,8 +8,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { ScanText, Loader2, Copy, Download } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { copyTextSafely, downloadBlobSafely, renderPdfPagesAsImages } from "@/lib/aiToolCompat";
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
 
 const MAX_PAGES = 20;
 
@@ -34,23 +32,15 @@ const AiOcrPdf = () => {
     setText("");
     setProgress(2);
     try {
-      const bytes = await file.arrayBuffer();
-      const pdf = await pdfjsLib.getDocument({ data: bytes }).promise;
-      const total = Math.min(pdf.numPages, MAX_PAGES);
-      if (pdf.numPages > MAX_PAGES) {
-        toast({ title: `Processing first ${MAX_PAGES} pages`, description: `Your PDF has ${pdf.numPages} pages. Split it for full coverage.` });
+      const { images, totalPages } = await renderPdfPagesAsImages(file, MAX_PAGES, (p) => setProgress(Math.min(35, Math.round(p * 0.35))));
+      const total = Math.min(totalPages, MAX_PAGES);
+      if (totalPages > MAX_PAGES) {
+        toast({ title: `Processing first ${MAX_PAGES} pages`, description: `Your PDF has ${totalPages} pages. Split it for full coverage.` });
       }
       let acc = "";
       for (let i = 1; i <= total; i++) {
-        const page = await pdf.getPage(i);
-        const viewport = page.getViewport({ scale: 2 });
-        const canvas = document.createElement("canvas");
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-        const ctx = canvas.getContext("2d")!;
-        await page.render({ canvasContext: ctx, viewport, canvas } as any).promise;
-        const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
-        const base64 = dataUrl.split(",")[1];
+        const base64 = images[i - 1];
+        if (!base64) throw new Error("Could not render one of the PDF pages.");
 
         const { data, error } = await supabase.functions.invoke("ai-ocr", {
           body: { imageBase64: base64, mimeType: "image/jpeg" },
@@ -60,7 +50,7 @@ const AiOcrPdf = () => {
 
         acc += `--- Page ${i} ---\n${data?.text || ""}\n\n`;
         setText(acc);
-        setProgress(Math.round((i / total) * 100));
+        setProgress(35 + Math.round((i / total) * 65));
       }
       toast({ title: "OCR complete", description: `${total} page(s) processed.` });
     } catch (e: any) {
@@ -73,27 +63,22 @@ const AiOcrPdf = () => {
   };
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(text);
+    await copyTextSafely(text);
     toast({ title: "Copied to clipboard" });
   };
 
   const handleDownload = () => {
     const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = (file?.name.replace(/\.pdf$/i, "") || "ocr") + ".txt";
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadBlobSafely(blob, (file?.name.replace(/\.pdf$/i, "") || "ocr") + ".txt");
   };
 
   return (
     <ToolPageShell
-      title="AI OCR for Scanned PDFs — Extract Text from Images Free | PDFMaster"
-      description="Turn scanned PDFs into editable text using AI vision OCR. Reads handwriting, low-quality scans & 100+ languages. Powered by Lovable AI. Free, no signup."
-      keywords="ai ocr pdf, scanned pdf to text, pdf ocr online, image pdf to text, gemini ocr, vision ocr pdf, handwriting pdf to text"
-      h1="AI OCR — Scanned PDF to Text"
-      intro="Upload a scanned or image-based PDF and let AI vision extract every word — including handwriting and 100+ languages."
+      title="AI OCR PDF Online Free – Scanned PDF to Text on Any Device | Master PDF Tools"
+      description="Extract text from scanned PDFs using AI OCR. Mobile-friendly, cross-browser, secure, and compatible with all devices, operating systems, and software versions."
+      keywords="AI OCR PDF, Scanned PDF to Text, OCR PDF Online Free, AI Image to Text, Handwriting OCR, Multi-language OCR, Mobile OCR Tool, PDF OCR for All Devices, cross-platform ocr, fast secure ai ocr"
+      h1="AI OCR — Scanned PDF to Text on Any Device"
+      intro="Turn scanned and image-based PDFs into editable text with AI vision. Works on mobile, tablet, laptop, and desktop — all browsers and software versions."
       faqSchema={faqs}
       breadcrumbName="AI OCR PDF"
       breadcrumbPath="/ai-ocr-pdf"
@@ -114,7 +99,7 @@ const AiOcrPdf = () => {
           {text && (
             <>
               <Textarea value={text} readOnly rows={14} className="font-mono text-xs" />
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <Button variant="outline" onClick={handleCopy}><Copy className="h-4 w-4" /> Copy</Button>
                 <Button onClick={handleDownload}><Download className="h-4 w-4" /> Download .txt</Button>
               </div>
@@ -139,7 +124,7 @@ const AiOcrPdf = () => {
           <h3>How It Works</h3>
           <ol>
             <li>Each PDF page is rendered as a high-resolution image in your browser.</li>
-            <li>The image is sent securely to Lovable AI's vision model.</li>
+            <li>The image is sent securely to our AI's vision model.</li>
             <li>Extracted text streams back page by page, ready to copy or download.</li>
           </ol>
           <h3>Privacy</h3>
