@@ -1,50 +1,38 @@
-# Add AI-Powered PDF Tools
+## Goal
+Sync everything in the uploaded `pdftoolsmaster-main (3).zip` into this project, adding new features and overwriting existing files where they differ.
 
-Add three new tools to the suite, all powered by Lovable AI (no API key needed from the user — runs through the existing Lovable Cloud backend).
+## What the zip adds (delta vs current project)
+**New pages**
+- `src/pages/AiChatPdf.tsx` (Chat-with-PDF)
+- `src/pages/AiHumanizer.tsx` (AI text humanizer)
+- `src/pages/AiMcqGenerator.tsx` (AI MCQ generator from PDFs)
+- `src/pages/Auth.tsx` (login/signup)
+- `src/pages/Compare.tsx` (PDF compare)
 
-## New Tools
+**New components**
+- `DensityToggle.tsx`, `FavoriteButton.tsx`, `OfflineBanner.tsx`, `ScrollToTop.tsx`
 
-### 1. AI PDF Summarizer (`/ai-summarize-pdf`)
-- User uploads a PDF.
-- Frontend extracts text in-browser with `pdfjs-dist` (already in project).
-- Text is sent to an edge function `ai-summarize` which calls Lovable AI (`google/gemini-3-flash-preview`).
-- Returns: TL;DR, 5–10 key bullet points, and a section-by-section summary, rendered as Markdown.
-- "Copy" and "Download as .txt" buttons.
+**New edge functions**
+- `supabase/functions/ai-chat-pdf`, `ai-humanize`, `ai-mcq`
 
-### 2. AI Translate PDF Text (`/ai-translate-pdf`)
-- User uploads a PDF and picks a target language (dropdown: Spanish, French, German, Italian, Portuguese, Arabic, Hindi, Chinese, Japanese, Korean, + "Other" free text).
-- Text extracted client-side, chunked (~6k chars), sent to edge function `ai-translate`.
-- Streams translated text back into a textarea; can download as `.txt` or generate a translated PDF using `pdf-lib` (Helvetica, like the existing Text-to-PDF tool).
+**New public assets / configs**
+- `public/ads.txt`, `public/llms.txt`, `public/logo.png`
+- `vercel.json`, `.prettierrc`, `.prettierignore`
 
-### 3. AI OCR for Scanned PDFs (`/ai-ocr-pdf`)
-- User uploads a scanned/image PDF.
-- Frontend rasterizes each page to a JPEG (via `pdfjs-dist`, already used in `InvertColors.tsx`).
-- Each page image is sent to edge function `ai-ocr`, which forwards to Lovable AI's vision model (`google/gemini-2.5-flash`) with the image + instruction "Extract all text verbatim, preserve line breaks".
-- Combined text returned per page, displayed with page markers, downloadable as `.txt`.
+**Updated files** (overwritten with zip versions): `index.html`, `package.json`, `bun.lock`, `tailwind.config.ts`, `src/App.tsx`, `src/index.css`, `src/components/layout/*`, `src/pages/Index.tsx`, existing tool pages, `public/sitemap.xml`, `public/robots.txt`, etc.
 
-## Backend (Lovable Cloud Edge Functions)
+## What will NOT be overwritten
+- `.env` (current Lovable Cloud Supabase keys are kept — zip's `.env` ignored)
+- `src/integrations/supabase/client.ts` and `types.ts` (auto-generated, kept)
+- `supabase/config.toml` (kept)
+- `.git` (zip has none; nothing to worry about)
 
-Three new edge functions, all using `LOVABLE_API_KEY` (auto-provisioned, no user setup):
+## Steps
+1. `rsync -a --exclude='.git' --exclude='.env' --exclude='src/integrations/supabase/client.ts' --exclude='src/integrations/supabase/types.ts' --exclude='supabase/config.toml' /tmp/zipcontent/pdftoolsmaster-main/ /dev-server/`
+2. Run `bun install` to pick up any new deps from the updated `package.json` / `bun.lock`.
+3. Verify build, fix any import/route mismatches if they surface.
 
-- `supabase/functions/ai-summarize/index.ts` — POST `{ text }` → returns `{ summary }`
-- `supabase/functions/ai-translate/index.ts` — POST `{ text, targetLanguage }` → streams translated text (SSE)
-- `supabase/functions/ai-ocr/index.ts` — POST `{ imageBase64 }` → returns `{ text }`
-
-All include CORS headers, input validation, and surface 429 / 402 errors to the client as toasts.
-
-No database tables, no auth required (tools stay anonymous like the rest of the suite).
-
-## UI Integration
-
-- Add the 3 routes in `src/App.tsx`.
-- Add a new **"AI Tools"** category at the top of the categorized grid in `src/pages/Index.tsx` with sparkle/AI iconography (`Sparkles`, `Languages`, `ScanText` from lucide-react) and "NEW" badges.
-- Add the 3 tools to the megamenu in `src/components/layout/Header.tsx`.
-- Add them to `public/sitemap.xml`.
-- Each page uses the existing `ToolPageShell` with rich SEO content + FAQ (matching the pattern already established across the 37 existing tools).
-
-## Technical Notes
-
-- Default model: `google/gemini-3-flash-preview` for text, `google/gemini-2.5-flash` for vision OCR (cheap + fast).
-- Translator uses streaming SSE (per the AI Gateway streaming pattern) so long docs render progressively.
-- OCR processes pages sequentially with a progress bar; cap at 20 pages with a clear message for larger files (cost/latency safety).
-- All file processing (text extraction, rasterization) stays client-side; only extracted text/images go to the AI backend, preserving the project's privacy story (which gets called out on each tool page).
+## Notes
+- Auth page implies user accounts — if the zip's Auth uses Supabase auth, I'll ensure email auth is enabled (no anonymous, no auto-confirm unless required).
+- New edge functions will be auto-deployed.
+- If anything in the zip conflicts with current Lovable Cloud project keys, current `.env` wins so the backend keeps working.

@@ -51,7 +51,12 @@ import {
   Sparkles,
   Languages,
   ScanText,
+  MessageSquare,
+  ListChecks,
+  Wand2,
 } from "lucide-react";
+import { FavoriteButton } from "@/components/FavoriteButton";
+import { useFavorites } from "@/hooks/useFavorites";
 
 type Tool = { to: string; icon: any; title: string; description: string; color: string };
 
@@ -59,11 +64,14 @@ const categories: { id: string; name: string; description: string; tools: (Tool 
   {
     id: "ai",
     name: "AI Tools ✨",
-    description: "Smart AI-powered features: summarize, translate, and OCR scanned PDFs.",
+    description: "Smart AI-powered features: chat with PDFs, generate quizzes, summarize, translate, and OCR scanned PDFs.",
     tools: [
-      { to: "/ai-summarize-pdf", icon: Sparkles, title: "AI PDF Summarizer", description: "Get a TL;DR, key points & section summaries instantly.", color: "tool-merge", isNew: true },
-      { to: "/ai-translate-pdf", icon: Languages, title: "AI PDF Translator", description: "Translate any PDF into 20+ languages with AI.", color: "tool-convert", isNew: true },
-      { to: "/ai-ocr-pdf", icon: ScanText, title: "AI OCR (Scanned PDF)", description: "Extract text from scans & handwriting using AI vision.", color: "tool-split", isNew: true },
+      { to: "/ai-chat-pdf", icon: MessageSquare, title: "Chat with PDF", description: "Ask any PDF questions and get instant answers with page citations.", color: "tool-merge", isNew: true },
+      { to: "/ai-mcq-generator", icon: ListChecks, title: "AI MCQ Generator", description: "Turn any PDF, DOCX or text into a randomized quiz with explanations.", color: "tool-convert", isNew: true },
+      { to: "/ai-summarize-pdf", icon: Sparkles, title: "AI PDF Summarizer", description: "Get a TL;DR, key points & section summaries instantly.", color: "tool-split", isNew: true },
+      { to: "/ai-translate-pdf", icon: Languages, title: "AI PDF Translator", description: "Translate any PDF into 20+ languages with AI.", color: "tool-compress", isNew: true },
+      { to: "/ai-ocr-pdf", icon: ScanText, title: "AI OCR (Scanned PDF)", description: "Extract text from scans & handwriting using AI vision.", color: "tool-merge", isNew: true },
+      { to: "/ai-humanizer", icon: Wand2, title: "AI Humanizer", description: "Turn ChatGPT, Gemini & Claude text into natural human writing.", color: "tool-convert", isNew: true },
     ],
   },
   {
@@ -207,6 +215,8 @@ const Index = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { favorites, isSignedIn } = useFavorites();
+  const favoriteTools = tools.filter((t) => favorites.has(t.to));
 
   const q = query.trim().toLowerCase();
 
@@ -401,25 +411,86 @@ const Index = () => {
           </p>
         </div>
 
-        {/* Category nav */}
+        {/* Category nav — horizontal scrolling toolbar, sticky on scroll */}
         {!q && (
-          <div className="flex flex-wrap justify-center gap-2 mb-12">
-            {categories.map((c) => (
-              <a
-                key={c.id}
-                href={`#${c.id}`}
-                className="px-4 py-2 text-sm font-medium rounded-full border border-border bg-card hover:border-primary hover:text-primary transition-colors"
-              >
-                {c.name}
-              </a>
-            ))}
+          <div className="sticky top-16 z-20 -mx-4 px-4 mb-10 bg-background/85 backdrop-blur-md border-y border-border/60 py-3">
+            <nav aria-label="Tool categories" className="toolbar-scroll max-w-7xl mx-auto">
+              {categories.map((c) => (
+                <a
+                  key={c.id}
+                  href={`#${c.id}`}
+                  className="px-4 py-2 text-sm font-medium rounded-full border border-border bg-card whitespace-nowrap hover:border-primary hover:text-primary hover:bg-accent transition-colors"
+                >
+                  {c.name}
+                  <span className="ml-2 text-xs text-muted-foreground font-normal">
+                    {c.tools.length}
+                  </span>
+                </a>
+              ))}
+            </nav>
+          </div>
+        )}
+
+        {!q && isSignedIn && favoriteTools.length > 0 && (
+          <div id="favorites" className="mb-10 scroll-mt-32">
+            <div className="flex items-end justify-between gap-4 mb-5 border-b border-border pb-3">
+              <div>
+                <h3 className="text-xl md:text-2xl font-bold flex items-center gap-2">
+                  <Heart className="h-5 w-5 text-primary fill-current" /> Your Favorite Tools
+                </h3>
+                <p className="text-sm text-muted-foreground mt-1">Quick access to the tools you saved.</p>
+              </div>
+              <span className="text-xs font-medium text-muted-foreground shrink-0">
+                {favoriteTools.length} saved
+              </span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5">
+              {favoriteTools.map((t) => (
+                <Link key={t.to} to={t.to} className="tool-card group block relative" aria-label={`${t.title} — ${t.description}`}>
+                  <div className="absolute top-3 right-3">
+                    <FavoriteButton toolPath={t.to} />
+                  </div>
+                  <div
+                    className="h-12 w-12 rounded-xl flex items-center justify-center mb-4 text-white shadow-sm"
+                    style={{ backgroundColor: `hsl(var(--${t.color}))` }}
+                    aria-hidden="true"
+                  >
+                    <t.icon className="h-6 w-6" />
+                  </div>
+                  <h4 className="text-lg font-semibold mb-2">{t.title}</h4>
+                  <p className="text-sm text-muted-foreground mb-4">{t.description}</p>
+                  <span className="inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:gap-2 transition-all">
+                    Open <ArrowRight className="h-4 w-4" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {!q && !isSignedIn && (
+          <div className="mb-10 rounded-2xl border border-primary/30 bg-accent/50 p-6 flex flex-col md:flex-row items-start md:items-center gap-4 justify-between">
+            <div className="flex items-start gap-3">
+              <div className="h-10 w-10 rounded-xl bg-primary text-primary-foreground flex items-center justify-center shrink-0">
+                <Heart className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="font-semibold">Save your favorite tools</h3>
+                <p className="text-sm text-muted-foreground">
+                  Create a free account to bookmark tools and access them quickly on any device.
+                </p>
+              </div>
+            </div>
+            <Button asChild>
+              <Link to="/auth">Sign Up Free</Link>
+            </Button>
           </div>
         )}
 
         <div className="space-y-14">
           {filteredCategories.length > 0 ? (
             filteredCategories.map((cat) => (
-              <div key={cat.id} id={cat.id} className="scroll-mt-20">
+              <div key={cat.id} id={cat.id} className="scroll-mt-32">
                 <div className="flex items-end justify-between gap-4 mb-5 border-b border-border pb-3">
                   <div>
                     <h3 className="text-xl md:text-2xl font-bold">{cat.name}</h3>
@@ -429,17 +500,21 @@ const Index = () => {
                     {cat.tools.length} tools
                   </span>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5">
                   {cat.tools.map((t) => (
-                    <Link key={t.to} to={t.to} className="tool-card group block relative">
-                      {t.isNew && (
-                        <span className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-wider bg-primary text-primary-foreground px-2 py-0.5 rounded-full">
-                          New
-                        </span>
-                      )}
+                    <Link key={t.to} to={t.to} className="tool-card group block relative" aria-label={`${t.title} — ${t.description}`}>
+                      <div className="absolute top-3 right-3 flex items-center gap-2">
+                        {t.isNew && (
+                          <span className="text-[10px] font-bold uppercase tracking-wider bg-primary text-primary-foreground px-2 py-0.5 rounded-full">
+                            New
+                          </span>
+                        )}
+                        <FavoriteButton toolPath={t.to} />
+                      </div>
                       <div
-                        className="h-12 w-12 rounded-xl flex items-center justify-center mb-4 text-white"
+                        className="h-12 w-12 rounded-xl flex items-center justify-center mb-4 text-white shadow-sm"
                         style={{ backgroundColor: `hsl(var(--${t.color}))` }}
+                        aria-hidden="true"
                       >
                         <t.icon className="h-6 w-6" />
                       </div>

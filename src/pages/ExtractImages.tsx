@@ -40,7 +40,7 @@ const ExtractImages = () => {
         const ctx = canvas.getContext("2d")!;
         canvas.width = viewport.width;
         canvas.height = viewport.height;
-        await page.render({ canvasContext: ctx, viewport, canvas }).promise;
+        await page.render({ canvasContext: ctx, viewport } as any).promise;
         const blob = await new Promise<Blob>((r) => canvas.toBlob((b) => r(b!), "image/png"));
         zip.file(`${baseName}-image-${i}.png`, blob);
         setProgress(10 + Math.round((i / pdf.numPages) * 80));
@@ -65,9 +65,9 @@ const ExtractImages = () => {
 
   return (
     <ToolPageShell
-      title="Extract Images from PDF Online — Free PDF Image Extractor | PDFMaster"
-      description="Extract images from PDF files online for free. Pull figures, photos, and diagrams as high-resolution PNGs. Browser-based, private, no signup."
-      keywords="extract images from pdf, pdf image extractor, get images from pdf, pdf to images, save images from pdf"
+      title="Extract Images from PDF Online Free – PDF Image Extractor on Any Device | Master PDF Tools"
+      description="Extract all images from PDF online with one click. Mobile-friendly, cross-browser, secure, and compatible with all devices and software versions."
+      keywords="Extract Images from PDF Online Free, PDF Image Extractor, Extract PDF Images for All Devices, Mobile PDF Image Extract, extract images from pdf, pdf image extractor, get images from pdf, pdf to images, save images from pdf"
       h1="Extract Images from PDF — Save Every Page as a PNG"
       intro="Pull every page out of a PDF as a crisp, high-resolution PNG image. Perfect for grabbing diagrams, figures, and screenshots."
       faqSchema={faqs}

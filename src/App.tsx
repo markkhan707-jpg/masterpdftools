@@ -4,6 +4,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import Index from "./pages/Index.tsx";
 import MergePdf from "./pages/MergePdf.tsx";
 import SplitPdf from "./pages/SplitPdf.tsx";
@@ -44,11 +45,18 @@ import InvertColors from "./pages/InvertColors.tsx";
 import AiSummarizePdf from "./pages/AiSummarizePdf.tsx";
 import AiTranslatePdf from "./pages/AiTranslatePdf.tsx";
 import AiOcrPdf from "./pages/AiOcrPdf.tsx";
+import AiMcqGenerator from "./pages/AiMcqGenerator.tsx";
+import AiChatPdf from "./pages/AiChatPdf.tsx";
+import AiHumanizer from "./pages/AiHumanizer.tsx";
 import About from "./pages/About.tsx";
 import Privacy from "./pages/Privacy.tsx";
 import Terms from "./pages/Terms.tsx";
 import Contact from "./pages/Contact.tsx";
+import Auth from "./pages/Auth.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import { AuthProvider } from "./hooks/useAuth";
+import { DensityProvider } from "./hooks/useDensity";
+import Compare from "./pages/Compare.tsx";
 
 const queryClient = new QueryClient();
 
@@ -59,6 +67,9 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <DensityProvider>
+          <AuthProvider>
+            <ScrollToTop />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/merge-pdf" element={<MergePdf />} />
@@ -100,13 +111,20 @@ const App = () => (
             <Route path="/ai-summarize-pdf" element={<AiSummarizePdf />} />
             <Route path="/ai-translate-pdf" element={<AiTranslatePdf />} />
             <Route path="/ai-ocr-pdf" element={<AiOcrPdf />} />
+            <Route path="/ai-mcq-generator" element={<AiMcqGenerator />} />
+            <Route path="/ai-chat-pdf" element={<AiChatPdf />} />
+            <Route path="/ai-humanizer" element={<AiHumanizer />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/compare" element={<Compare />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </AuthProvider>
+          </DensityProvider>
         </BrowserRouter>
       </TooltipProvider>
     </HelmetProvider>
