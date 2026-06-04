@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Download, Loader2, Hash } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   {
     question: "Where will the page numbers appear?",
@@ -42,7 +43,7 @@ const PageNumbers = () => {
     setProgress(10);
     try {
       const bytes = await files[0].arrayBuffer();
-      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
+      const pdf = await loadPdfLib(bytes);
       const font = await pdf.embedFont(StandardFonts.Helvetica);
       const pages = pdf.getPages();
       const total = pages.length;

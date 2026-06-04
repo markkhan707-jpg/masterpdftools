@@ -10,6 +10,7 @@ import { Progress } from "@/components/ui/progress";
 import { Loader2, Images } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+import { loadPdfJs } from "@/lib/pdf";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 const faqs = [
@@ -30,7 +31,7 @@ const ExtractImages = () => {
     try {
       const file = files[0];
       const bytes = await file.arrayBuffer();
-      const pdf = await pdfjsLib.getDocument({ data: bytes }).promise;
+      const pdf = await loadPdfJs(bytes);
       const baseName = file.name.replace(/\.pdf$/i, "");
       const zip = new JSZip();
       for (let i = 1; i <= pdf.numPages; i++) {

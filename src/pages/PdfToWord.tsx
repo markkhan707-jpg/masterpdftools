@@ -10,6 +10,7 @@ import { Progress } from "@/components/ui/progress";
 import { Download, Loader2, Info } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+import { loadPdfJs, describePdfError } from "@/lib/pdf";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 const faqs = [
@@ -47,7 +48,7 @@ const PdfToWord = () => {
     try {
       const file = files[0];
       const bytes = await file.arrayBuffer();
-      const pdfDoc = await pdfjsLib.getDocument({ data: bytes }).promise;
+      const pdfDoc = await loadPdfJs(bytes);
 
       const paragraphs: Paragraph[] = [
         new Paragraph({
@@ -92,11 +93,7 @@ const PdfToWord = () => {
       toast({ title: "Conversion complete", description: "Word file has been downloaded." });
     } catch (e) {
       console.error(e);
-      toast({
-        title: "Conversion failed",
-        description: "Could not extract text. The PDF may be scanned, encrypted, or corrupted.",
-        variant: "destructive",
-      });
+      { const __err = describePdfError(e); toast({ title: __err.title, description: __err.description, variant: "destructive" }); }
     } finally {
       setProcessing(false);
       setTimeout(() => setProgress(0), 1500);

@@ -10,6 +10,7 @@ import { Progress } from "@/components/ui/progress";
 import { Download, Loader2, Tags } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   { question: "What metadata can I edit?", answer: "Title, Author, Subject, Keywords, Creator, and Producer fields stored in the PDF document information dictionary." },
   { question: "Why edit PDF metadata?", answer: "Cleaner search results, professional document properties, better SEO when PDFs are indexed online, and easier organization in document management systems." },
@@ -29,7 +30,7 @@ const EditMetadata = () => {
     setFiles([file]);
     try {
       const bytes = await file.arrayBuffer();
-      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
+      const pdf = await loadPdfLib(bytes);
       setTitle(pdf.getTitle() || "");
       setAuthor(pdf.getAuthor() || "");
       setSubject(pdf.getSubject() || "");
@@ -43,7 +44,7 @@ const EditMetadata = () => {
     setProgress(20);
     try {
       const bytes = await files[0].arrayBuffer();
-      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
+      const pdf = await loadPdfLib(bytes);
       pdf.setTitle(title);
       pdf.setAuthor(author);
       pdf.setSubject(subject);

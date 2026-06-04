@@ -10,6 +10,7 @@ import { Progress } from "@/components/ui/progress";
 import { Download, Loader2, Contrast } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+import { loadPdfJs } from "@/lib/pdf";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 const faqs = [
@@ -41,7 +42,7 @@ const Grayscale = () => {
     setProgress(5);
     try {
       const bytes = await files[0].arrayBuffer();
-      const src = await pdfjsLib.getDocument({ data: bytes }).promise;
+      const src = await loadPdfJs(bytes);
       const out = await PDFDocument.create();
 
       for (let i = 1; i <= src.numPages; i++) {

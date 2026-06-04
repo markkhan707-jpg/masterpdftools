@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Download, Loader2, Maximize2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+import { loadPdfLib } from "@/lib/pdf";
 const SIZES: Record<string, [number, number]> = {
   A4: [595.28, 841.89],
   Letter: [612, 792],
@@ -38,7 +39,7 @@ const ResizePdf = () => {
     setProgress(10);
     try {
       const bytes = await files[0].arrayBuffer();
-      const src = await PDFDocument.load(bytes, { ignoreEncryption: true });
+      const src = await loadPdfLib(bytes);
       const out = await PDFDocument.create();
       let [w, h] = SIZES[size];
       if (orientation === "landscape") [w, h] = [h, w];

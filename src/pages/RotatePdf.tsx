@@ -8,6 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { Download, Loader2, RotateCw, RotateCcw } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   {
     question: "Can I rotate just one page or all pages?",
@@ -38,7 +39,7 @@ const RotatePdf = () => {
     setProgress(10);
     try {
       const bytes = await files[0].arrayBuffer();
-      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
+      const pdf = await loadPdfLib(bytes);
       const pages = pdf.getPages();
       pages.forEach((p) => {
         const current = p.getRotation().angle;

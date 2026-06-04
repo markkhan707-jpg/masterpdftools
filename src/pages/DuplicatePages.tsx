@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Download, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   { question: "How do page ranges work?", answer: "Use comma-separated values and ranges, e.g. '1,3,5-7'. Each listed page will be duplicated in place." },
   { question: "How many copies can I make?", answer: "From 1 to 20 copies per selected page." },
@@ -40,7 +41,7 @@ const DuplicatePages = () => {
     setProcessing(true);
     try {
       const bytes = await file.arrayBuffer();
-      const src = await PDFDocument.load(bytes);
+      const src = await loadPdfLib(bytes);
       const out = await PDFDocument.create();
       const targets = parseRange(range, src.getPageCount());
       const allIdx = src.getPageIndices();
