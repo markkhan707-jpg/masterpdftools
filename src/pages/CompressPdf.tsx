@@ -67,8 +67,7 @@ const CompressPdf = () => {
       const { scale, quality } = settings[level];
 
       // Render each page to canvas, re-encode as JPEG, then build a new PDF.
-      const loadingTask = pdfjsLib.getDocument({ data: bytes.slice(0) });
-      const pdfDoc = await loadingTask.promise;
+      const pdfDoc = await loadPdfJs(bytes.slice(0));
       const out = await PDFDocument.create();
 
       for (let i = 1; i <= pdfDoc.numPages; i++) {
@@ -109,11 +108,8 @@ const CompressPdf = () => {
       toast({ title: "Compression complete", description: "Your file has been downloaded." });
     } catch (e) {
       console.error(e);
-      toast({
-        title: "Compression failed",
-        description: "File may be corrupted or password-protected.",
-        variant: "destructive",
-      });
+      const { title, description } = describePdfError(e);
+      toast({ title, description, variant: "destructive" });
     } finally {
       setProcessing(false);
       setTimeout(() => setProgress(0), 1500);
