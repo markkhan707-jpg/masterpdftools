@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/radio-group";
 import { Download, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { loadPdfJs, describePdfError } from "@/lib/pdf";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
