@@ -6,6 +6,7 @@ import { FAQ } from "@/components/FAQ";
 import { Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   { question: "What information is shown?", answer: "Page count, file size, document title, author, subject, keywords, creator software, producer, creation/modification dates, PDF version, and per-page dimensions." },
   { question: "Are my files uploaded?", answer: "No. Inspection runs entirely in your browser using pdf-lib." },
@@ -25,7 +26,7 @@ const PdfInfo = () => {
     setLoading(true);
     try {
       const bytes = await file.arrayBuffer();
-      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true, updateMetadata: false });
+      const pdf = await loadPdfLib(bytes);
       const data: Record<string, string> = {
         "File name": file.name,
         "File size": fmtSize(file.size),

@@ -8,6 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { ArrowUp, ArrowDown, Download, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+import { loadPdfLib, describePdfError } from "@/lib/pdf";
 const faqs = [
   {
     question: "How do I merge PDF files for free?",
@@ -72,7 +73,7 @@ const MergePdf = () => {
       const merged = await PDFDocument.create();
       for (let i = 0; i < files.length; i++) {
         const bytes = await files[i].arrayBuffer();
-        const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
+        const pdf = await loadPdfLib(bytes);
         const pages = await merged.copyPages(pdf, pdf.getPageIndices());
         pages.forEach((p) => merged.addPage(p));
         setProgress(10 + Math.round(((i + 1) / files.length) * 80));
@@ -90,11 +91,7 @@ const MergePdf = () => {
       toast({ title: "Merge complete", description: "Your merged PDF has been downloaded." });
     } catch (e) {
       console.error(e);
-      toast({
-        title: "Merge failed",
-        description: "One of your files may be corrupted or password-protected.",
-        variant: "destructive",
-      });
+      { const __err = describePdfError(e); toast({ title: __err.title, description: __err.description, variant: "destructive" }); }
     } finally {
       setProcessing(false);
       setTimeout(() => setProgress(0), 1500);

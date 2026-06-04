@@ -10,6 +10,7 @@ import { Progress } from "@/components/ui/progress";
 import { Download, Loader2, Image as ImageIcon } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+import { loadPdfJs } from "@/lib/pdf";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 const faqs = [
@@ -41,7 +42,7 @@ const PdfToJpg = () => {
     try {
       const file = files[0];
       const bytes = await file.arrayBuffer();
-      const pdf = await pdfjsLib.getDocument({ data: bytes }).promise;
+      const pdf = await loadPdfJs(bytes);
       const baseName = file.name.replace(/\.pdf$/i, "");
 
       const blobs: { name: string; blob: Blob }[] = [];

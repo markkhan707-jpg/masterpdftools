@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Download, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   { question: "What are Bates numbers?", answer: "Bates numbering is a unique identifier (typically a prefix + zero-padded sequence) stamped on every page of a PDF, used in legal discovery, accounting, and document production." },
   { question: "Where are the numbers placed?", answer: "Bates numbers are placed at the bottom-right of every page in a small monospace-looking font, the standard convention for legal filings." },
@@ -27,7 +28,7 @@ const BatesNumbering = () => {
     setProcessing(true);
     try {
       const bytes = await file.arrayBuffer();
-      const pdf = await PDFDocument.load(bytes);
+      const pdf = await loadPdfLib(bytes);
       const font = await pdf.embedFont(StandardFonts.Courier);
       const pages = pdf.getPages();
       pages.forEach((page, i) => {

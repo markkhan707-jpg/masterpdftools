@@ -8,6 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { Download, Loader2, Wrench } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   { question: "What kinds of issues can this fix?", answer: "Minor corruption such as broken cross-reference tables, malformed object streams, and incorrect file trailers. Severely damaged files where page content is missing cannot be recovered." },
   { question: "Will my file change visually?", answer: "No. Repair only rewrites the underlying PDF structure. Pages, text, and images remain identical." },
@@ -25,7 +26,7 @@ const RepairPdf = () => {
     setProgress(15);
     try {
       const bytes = await files[0].arrayBuffer();
-      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true, throwOnInvalidObject: false, updateMetadata: false });
+      const pdf = await loadPdfLib(bytes);
       setProgress(60);
       const out = await pdf.save({ useObjectStreams: true });
       const blob = new Blob([out as BlobPart], { type: "application/pdf" });

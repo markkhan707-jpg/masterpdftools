@@ -10,6 +10,7 @@ import { Progress } from "@/components/ui/progress";
 import { Crop, Download, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   {
     question: "What does cropping do?",
@@ -40,7 +41,7 @@ const CropPdf = () => {
     setProgress(10);
     try {
       const bytes = await files[0].arrayBuffer();
-      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
+      const pdf = await loadPdfLib(bytes);
       const m = Math.max(0, margin);
       pdf.getPages().forEach((page) => {
         const { width, height } = page.getSize();

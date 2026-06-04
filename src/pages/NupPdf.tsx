@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Download, Loader2, LayoutGrid } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   { question: "What is N-up?", answer: "N-up combines multiple original pages onto a single output page (2-up = 2 per sheet, 4-up = 4 per sheet). Great for printing handouts, saving paper, and creating booklets." },
   { question: "What page size is the output?", answer: "A4 in landscape for 2-up, A4 portrait for 4-up. Original pages are scaled proportionally to fit each cell with white space if aspect ratios differ." },
@@ -28,7 +29,7 @@ const ResizePdfNup = () => {
     setProgress(10);
     try {
       const bytes = await files[0].arrayBuffer();
-      const src = await PDFDocument.load(bytes, { ignoreEncryption: true });
+      const src = await loadPdfLib(bytes);
       const out = await PDFDocument.create();
       const indices = src.getPageIndices();
       const embedded = await out.embedPdf(src, indices);

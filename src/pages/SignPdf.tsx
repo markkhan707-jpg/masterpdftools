@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Download, Loader2, PenTool, Eraser } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   {
     question: "Is the signature legally binding?",
@@ -58,7 +59,7 @@ const SignPdf = () => {
     setFiles([f]);
     try {
       const bytes = await f.arrayBuffer();
-      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
+      const pdf = await loadPdfLib(bytes);
       setPageCount(pdf.getPageCount());
       setPageNum(1);
     } catch {
@@ -82,7 +83,7 @@ const SignPdf = () => {
       const sigBytes = await (await fetch(sigDataUrl)).arrayBuffer();
 
       const bytes = await files[0].arrayBuffer();
-      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
+      const pdf = await loadPdfLib(bytes);
       const png = await pdf.embedPng(sigBytes);
       const ratio = png.height / png.width;
 

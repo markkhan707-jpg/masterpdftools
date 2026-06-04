@@ -10,6 +10,7 @@ import { Progress } from "@/components/ui/progress";
 import { Download, Loader2, Trash2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   {
     question: "How do I specify which pages to delete?",
@@ -55,7 +56,7 @@ const DeletePages = () => {
     setFiles([f]);
     try {
       const bytes = await f.arrayBuffer();
-      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
+      const pdf = await loadPdfLib(bytes);
       setPageCount(pdf.getPageCount());
     } catch {
       toast({ title: "Could not read PDF", variant: "destructive" });
@@ -82,7 +83,7 @@ const DeletePages = () => {
     setProgress(10);
     try {
       const bytes = await files[0].arrayBuffer();
-      const src = await PDFDocument.load(bytes, { ignoreEncryption: true });
+      const src = await loadPdfLib(bytes);
       const out = await PDFDocument.create();
       const keep = Array.from({ length: pageCount }, (_, i) => i).filter(
         (i) => !toDelete.has(i)

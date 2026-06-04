@@ -11,6 +11,7 @@ import { Slider } from "@/components/ui/slider";
 import { Download, Loader2, Stamp } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   {
     question: "Can I add an image watermark?",
@@ -46,7 +47,7 @@ const WatermarkPdf = () => {
     setProgress(10);
     try {
       const bytes = await files[0].arrayBuffer();
-      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
+      const pdf = await loadPdfLib(bytes);
       const font = await pdf.embedFont(StandardFonts.HelveticaBold);
       const pages = pdf.getPages();
       pages.forEach((page) => {

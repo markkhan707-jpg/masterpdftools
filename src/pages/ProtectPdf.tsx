@@ -10,6 +10,7 @@ import { Progress } from "@/components/ui/progress";
 import { Download, Loader2, Lock, AlertTriangle } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
+import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   {
     question: "How strong is the password protection?",
@@ -49,7 +50,7 @@ const ProtectPdf = () => {
     setProgress(10);
     try {
       const bytes = await files[0].arrayBuffer();
-      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
+      const pdf = await loadPdfLib(bytes);
       setProgress(50);
       // pdf-lib does not support encryption natively, so we use save with userPassword via any-cast workaround.
       // Fallback: re-save and rely on "encrypt" option if available, otherwise warn user.
