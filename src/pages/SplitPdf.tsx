@@ -66,8 +66,9 @@ const SplitPdf = () => {
       const bytes = await f.arrayBuffer();
       const pdf = await loadPdfLib(bytes);
       setPageCount(pdf.getPageCount());
-    } catch {
-      { const __err = describePdfError(e); toast({ title: __err.title, description: __err.description, variant: "destructive" }); }
+    } catch (e) {
+      const __err = describePdfError(e);
+      toast({ title: __err.title, description: __err.description, variant: "destructive" });
       setFiles([]);
     }
   };
