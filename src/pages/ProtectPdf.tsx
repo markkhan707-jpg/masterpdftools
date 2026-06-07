@@ -14,7 +14,7 @@ const faqs = [
   {
     question: "How strong is the password protection?",
     answer:
-      "This tool adds a basic password layer compatible with all PDF readers. For highly sensitive documents (legal, medical, financial), use a desktop tool with AES-256 encryption.",
+      "This tool applies AES-256 PDF encryption in your browser so the protected file requires the password to open in standard PDF readers.",
   },
   {
     question: "Can I remove the password later?",
@@ -27,6 +27,29 @@ const faqs = [
       "No. The password is only used in your browser to encrypt the PDF and is never transmitted or saved.",
   },
 ];
+
+const createOwnerPassword = () => {
+  const bytes = new Uint8Array(32);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+};
+
+const enableAes256Encryption = (pdf: PDFDocument, userPassword: string) => {
+  (pdf.context.header as unknown as { getVersionString: () => string }).getVersionString = () => "1.7ext3";
+  pdf.encrypt({
+    userPassword,
+    ownerPassword: createOwnerPassword(),
+    permissions: {
+      printing: "highResolution",
+      modifying: false,
+      copying: false,
+      annotating: false,
+      fillingForms: true,
+      contentAccessibility: true,
+      documentAssembly: false,
+    },
+  });
+};
 
 const ProtectPdf = () => {
   const [files, setFiles] = useState<File[]>([]);
@@ -51,19 +74,8 @@ const ProtectPdf = () => {
       const bytes = await files[0].arrayBuffer();
       const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
       setProgress(50);
-      const out = await pdf.save({
-        userPassword: password,
-        ownerPassword: password,
-        permissions: {
-          printing: "highResolution",
-          modifying: false,
-          copying: false,
-          annotating: false,
-          fillingForms: true,
-          contentAccessibility: true,
-          documentAssembly: false,
-        },
-      } as any);
+      enableAes256Encryption(pdf, password);
+      const out = await pdf.save();
       const blob = new Blob([out as BlobPart], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -76,9 +88,9 @@ const ProtectPdf = () => {
     } catch (e) {
       console.error(e);
       toast({
-        title: "Protection unavailable in-browser",
+        title: "Couldn't protect PDF",
         description:
-          "Browser PDF encryption has limitations. For strong AES-256 encryption use a desktop tool like Adobe Acrobat.",
+          "Please try a different PDF. If this file already has an open password, unlock it first and then protect it again.",
         variant: "destructive",
       });
     } finally {
@@ -100,7 +112,7 @@ const ProtectPdf = () => {
           <div className="flex gap-3 bg-accent/50 border border-border rounded-lg p-4 text-sm">
             <AlertTriangle className="h-5 w-5 text-primary shrink-0 mt-0.5" />
             <p className="text-muted-foreground">
-              Your password is applied locally in the browser using standard PDF encryption supported by Adobe Acrobat, Preview, Chrome and Edge. Choose a strong password — we cannot recover it for you.
+              Your password is applied locally in the browser using AES-256 PDF encryption supported by modern PDF readers. Choose a strong password — we cannot recover it for you.
             </p>
           </div>
 
@@ -178,11 +190,10 @@ const ProtectPdf = () => {
 
           <h3>Browser Encryption Limitations</h3>
           <p>
-            Browser-based PDF encryption uses standard PDF security features that all
-            mainstream readers (Adobe Acrobat, Preview, Chrome, Edge) support. For
-            highly sensitive documents that require AES-256 encryption certified for
-            regulated industries (HIPAA, PCI-DSS, government), use a desktop application
-            like Adobe Acrobat Pro.
+            Browser-based PDF encryption uses standard AES-256 PDF security features that
+            modern readers support. For regulated workflows that require organization-level
+            certificates, audited access logs, or managed key escrow, use an enterprise
+            document security system.
           </p>
         </>
       }
