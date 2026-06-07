@@ -112,7 +112,7 @@ const ProtectPdf = () => {
           <div className="flex gap-3 bg-accent/50 border border-border rounded-lg p-4 text-sm">
             <AlertTriangle className="h-5 w-5 text-primary shrink-0 mt-0.5" />
             <p className="text-muted-foreground">
-              Your password is applied locally in the browser using standard PDF encryption supported by Adobe Acrobat, Preview, Chrome and Edge. Choose a strong password — we cannot recover it for you.
+              Your password is applied locally in the browser using AES-256 PDF encryption supported by modern PDF readers. Choose a strong password — we cannot recover it for you.
             </p>
           </div>
 
@@ -190,11 +190,10 @@ const ProtectPdf = () => {
 
           <h3>Browser Encryption Limitations</h3>
           <p>
-            Browser-based PDF encryption uses standard PDF security features that all
-            mainstream readers (Adobe Acrobat, Preview, Chrome, Edge) support. For
-            highly sensitive documents that require AES-256 encryption certified for
-            regulated industries (HIPAA, PCI-DSS, government), use a desktop application
-            like Adobe Acrobat Pro.
+            Browser-based PDF encryption uses standard AES-256 PDF security features that
+            modern readers support. For regulated workflows that require organization-level
+            certificates, audited access logs, or managed key escrow, use an enterprise
+            document security system.
           </p>
         </>
       }
