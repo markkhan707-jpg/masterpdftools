@@ -10,7 +10,6 @@ import { Progress } from "@/components/ui/progress";
 import { Download, Loader2, Unlock } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { describePdfError } from "@/lib/pdf";
 const faqs = [
   {
     question: "Does this remove all PDF passwords?",
@@ -59,7 +58,12 @@ const UnlockPdf = () => {
       toast({ title: "PDF unlocked", description: "Restrictions removed." });
     } catch (e) {
       console.error(e);
-      { const __err = describePdfError(e); toast({ title: __err.title, description: __err.description, variant: "destructive" }); }
+      toast({
+        title: "Unlock failed",
+        description:
+          "If the PDF requires a password to open, this browser-based tool cannot decrypt it.",
+        variant: "destructive",
+      });
     } finally {
       setProcessing(false);
       setTimeout(() => setProgress(0), 1500);
@@ -81,7 +85,7 @@ const UnlockPdf = () => {
             onFiles={(f) => setFiles([f[0]])}
             onRemove={() => setFiles([])}
             cta="Drop a PDF here or click to upload"
-            subtitle="One file at a time • Max 50MB"
+            subtitle="One file at a time • Max 150MB"
           />
 
           <div className="space-y-2">

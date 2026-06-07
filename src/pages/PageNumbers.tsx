@@ -10,7 +10,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Download, Loader2, Hash } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   {
     question: "Where will the page numbers appear?",
@@ -43,7 +42,7 @@ const PageNumbers = () => {
     setProgress(10);
     try {
       const bytes = await files[0].arrayBuffer();
-      const pdf = await loadPdfLib(bytes);
+      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
       const font = await pdf.embedFont(StandardFonts.Helvetica);
       const pages = pdf.getPages();
       const total = pages.length;
@@ -95,7 +94,7 @@ const PageNumbers = () => {
             onFiles={(f) => setFiles([f[0]])}
             onRemove={() => setFiles([])}
             cta="Drop a PDF here or click to upload"
-            subtitle="One file at a time • Max 50MB"
+            subtitle="One file at a time • Max 150MB"
           />
 
           <div className="space-y-2">

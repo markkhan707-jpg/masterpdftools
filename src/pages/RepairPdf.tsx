@@ -8,7 +8,6 @@ import { Progress } from "@/components/ui/progress";
 import { Download, Loader2, Wrench } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   { question: "What kinds of issues can this fix?", answer: "Minor corruption such as broken cross-reference tables, malformed object streams, and incorrect file trailers. Severely damaged files where page content is missing cannot be recovered." },
   { question: "Will my file change visually?", answer: "No. Repair only rewrites the underlying PDF structure. Pages, text, and images remain identical." },
@@ -26,7 +25,7 @@ const RepairPdf = () => {
     setProgress(15);
     try {
       const bytes = await files[0].arrayBuffer();
-      const pdf = await loadPdfLib(bytes);
+      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true, throwOnInvalidObject: false, updateMetadata: false });
       setProgress(60);
       const out = await pdf.save({ useObjectStreams: true });
       const blob = new Blob([out as BlobPart], { type: "application/pdf" });
@@ -57,7 +56,7 @@ const RepairPdf = () => {
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
-          <FileDropzone files={files} onFiles={(f) => setFiles([f[0]])} onRemove={() => setFiles([])} cta="Drop a PDF here or click to upload" subtitle="One file at a time • Max 50MB" />
+          <FileDropzone files={files} onFiles={(f) => setFiles([f[0]])} onRemove={() => setFiles([])} cta="Drop a PDF here or click to upload" subtitle="One file at a time • Max 150MB" />
           {processing && <Progress value={progress} />}
           <Button size="lg" className="w-full" disabled={!files[0] || processing} onClick={handleRepair}>
             {processing ? (<><Loader2 className="h-4 w-4 animate-spin" /> Repairing...</>) : (<><Wrench className="h-4 w-4" /> Repair & Download</>)}

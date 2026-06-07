@@ -8,7 +8,6 @@ import { Progress } from "@/components/ui/progress";
 import { ArrowUp, ArrowDown, Download, Loader2, Trash2, Layers } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   {
     question: "What can I do with this tool?",
@@ -41,7 +40,7 @@ const OrganizePdf = () => {
     setFiles([f]);
     try {
       const bytes = await f.arrayBuffer();
-      const pdf = await loadPdfLib(bytes);
+      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
       const count = pdf.getPageCount();
       setPages(Array.from({ length: count }, (_, i) => ({ index: i, rotation: 0 })));
     } catch {
@@ -71,7 +70,7 @@ const OrganizePdf = () => {
     setProgress(10);
     try {
       const bytes = await files[0].arrayBuffer();
-      const src = await loadPdfLib(bytes);
+      const src = await PDFDocument.load(bytes, { ignoreEncryption: true });
       const out = await PDFDocument.create();
       const indexes = pages.map((p) => p.index);
       const copied = await out.copyPages(src, indexes);
@@ -124,7 +123,7 @@ const OrganizePdf = () => {
               setPages([]);
             }}
             cta="Drop a PDF here or click to upload"
-            subtitle="One file at a time • Max 50MB"
+            subtitle="One file at a time • Max 150MB"
           />
 
           {pages.length > 0 && (

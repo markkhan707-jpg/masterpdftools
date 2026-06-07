@@ -10,7 +10,6 @@ import { Progress } from "@/components/ui/progress";
 import { Download, Loader2, Tags } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   { question: "What metadata can I edit?", answer: "Title, Author, Subject, Keywords, Creator, and Producer fields stored in the PDF document information dictionary." },
   { question: "Why edit PDF metadata?", answer: "Cleaner search results, professional document properties, better SEO when PDFs are indexed online, and easier organization in document management systems." },
@@ -30,7 +29,7 @@ const EditMetadata = () => {
     setFiles([file]);
     try {
       const bytes = await file.arrayBuffer();
-      const pdf = await loadPdfLib(bytes);
+      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
       setTitle(pdf.getTitle() || "");
       setAuthor(pdf.getAuthor() || "");
       setSubject(pdf.getSubject() || "");
@@ -44,7 +43,7 @@ const EditMetadata = () => {
     setProgress(20);
     try {
       const bytes = await files[0].arrayBuffer();
-      const pdf = await loadPdfLib(bytes);
+      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
       pdf.setTitle(title);
       pdf.setAuthor(author);
       pdf.setSubject(subject);
@@ -81,7 +80,7 @@ const EditMetadata = () => {
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
-          <FileDropzone files={files} onFiles={(f) => handleLoad(f[0])} onRemove={() => setFiles([])} cta="Drop a PDF here or click to upload" subtitle="One file at a time • Max 50MB" />
+          <FileDropzone files={files} onFiles={(f) => handleLoad(f[0])} onRemove={() => setFiles([])} cta="Drop a PDF here or click to upload" subtitle="One file at a time • Max 150MB" />
           {files[0] && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-card border border-border rounded-xl p-4">
               <div className="space-y-2"><Label>Title</Label><Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Document title" /></div>

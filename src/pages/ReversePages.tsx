@@ -8,7 +8,6 @@ import { Progress } from "@/components/ui/progress";
 import { Download, Loader2, FlipVertical2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   { question: "What does Reverse PDF do?", answer: "It flips the order of pages in your PDF — the last page becomes page 1 and the first page becomes the last." },
   { question: "When is reversing pages useful?", answer: "Common cases include fixing scans from a duplex scanner that fed pages in reverse, flipping booklet imposition, or restoring chronological order in archived documents." },
@@ -26,7 +25,7 @@ const ReversePages = () => {
     setProgress(10);
     try {
       const bytes = await files[0].arrayBuffer();
-      const src = await loadPdfLib(bytes);
+      const src = await PDFDocument.load(bytes, { ignoreEncryption: true });
       const out = await PDFDocument.create();
       const indices = src.getPageIndices().reverse();
       const copied = await out.copyPages(src, indices);

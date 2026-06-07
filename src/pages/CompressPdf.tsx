@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { PDFDocument } from "pdf-lib";
-import * as pdfjsLib from "pdfjs-dist";
-import pdfWorker from "pdfjs-dist/build/pdf.worker.min.mjs?url";
+import { pdfjsLib } from "@/lib/pdfjs";
 import { ToolPageShell } from "@/components/ToolPageShell";
 import { FileDropzone } from "@/components/FileDropzone";
 import { FAQ } from "@/components/FAQ";
@@ -14,9 +13,9 @@ import {
 } from "@/components/ui/radio-group";
 import { Download, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
-import { loadPdfJs, describePdfError } from "@/lib/pdf";
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
+
+
 
 const faqs = [
   {
@@ -67,15 +66,21 @@ const CompressPdf = () => {
       const { scale, quality } = settings[level];
 
       // Render each page to canvas, re-encode as JPEG, then build a new PDF.
-      const pdfDoc = await loadPdfJs(bytes.slice(0));
+      const loadingTask = pdfjsLib.getDocument({
+        data: bytes.slice(0),
+        password: "",
+        isEvalSupported: false,
+        useSystemFonts: true,
+      });
+      const pdfDoc = await loadingTask.promise;
       const out = await PDFDocument.create();
 
       for (let i = 1; i <= pdfDoc.numPages; i++) {
         const page = await pdfDoc.getPage(i);
         const viewport = page.getViewport({ scale });
         const canvas = document.createElement("canvas");
-        canvas.width = Math.floor(viewport.width);
-        canvas.height = Math.floor(viewport.height);
+        canvas.width = Math.max(1, Math.floor(viewport.width));
+        canvas.height = Math.max(1, Math.floor(viewport.height));
         const ctx = canvas.getContext("2d")!;
         ctx.fillStyle = "#ffffff";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -106,10 +111,19 @@ const CompressPdf = () => {
       setResult({ before: bytes.byteLength, after: finalBytes.byteLength });
       setProgress(100);
       toast({ title: "Compression complete", description: "Your file has been downloaded." });
-    } catch (e) {
-      console.error(e);
-      const { title, description } = describePdfError(e);
-      toast({ title, description, variant: "destructive" });
+    } catch (e: any) {
+      console.error("Compress PDF error:", e);
+      const name = e?.name || "";
+      const msg = String(e?.message || e || "");
+      let description = "Something went wrong while compressing this PDF. Please try again.";
+      if (name === "PasswordException" || /password/i.test(msg)) {
+        description = "This PDF is password-protected. Please remove the password (try our Unlock PDF tool) and try again.";
+      } else if (name === "InvalidPDFException" || /invalid pdf|corrupt|missing pdf/i.test(msg)) {
+        description = "This file doesn't look like a valid PDF or it may be damaged. Try our Repair PDF tool first.";
+      } else if (/memory|allocation|maximum call stack/i.test(msg)) {
+        description = "The PDF is too large or complex for your browser's memory. Try splitting it first or using a lower compression level.";
+      }
+      toast({ title: "Compression failed", description, variant: "destructive" });
     } finally {
       setProcessing(false);
       setTimeout(() => setProgress(0), 1500);
@@ -137,7 +151,7 @@ const CompressPdf = () => {
             onFiles={(f) => setFiles([f[0]])}
             onRemove={() => setFiles([])}
             cta="Drop a PDF here or click to upload"
-            subtitle="One file at a time • Max 50MB"
+            subtitle="One file at a time • Max 150MB"
           />
 
           <div className="space-y-3">

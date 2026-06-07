@@ -10,7 +10,6 @@ import { Progress } from "@/components/ui/progress";
 import { Download, Loader2, Info } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { loadPdfJs, describePdfError } from "@/lib/pdf";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 const faqs = [
@@ -48,7 +47,7 @@ const PdfToWord = () => {
     try {
       const file = files[0];
       const bytes = await file.arrayBuffer();
-      const pdfDoc = await loadPdfJs(bytes);
+      const pdfDoc = await pdfjsLib.getDocument({ data: bytes }).promise;
 
       const paragraphs: Paragraph[] = [
         new Paragraph({
@@ -93,7 +92,11 @@ const PdfToWord = () => {
       toast({ title: "Conversion complete", description: "Word file has been downloaded." });
     } catch (e) {
       console.error(e);
-      { const __err = describePdfError(e); toast({ title: __err.title, description: __err.description, variant: "destructive" }); }
+      toast({
+        title: "Conversion failed",
+        description: "Could not extract text. The PDF may be scanned, encrypted, or corrupted.",
+        variant: "destructive",
+      });
     } finally {
       setProcessing(false);
       setTimeout(() => setProgress(0), 1500);
@@ -127,7 +130,7 @@ const PdfToWord = () => {
             onFiles={(f) => setFiles([f[0]])}
             onRemove={() => setFiles([])}
             cta="Drop a PDF here or click to upload"
-            subtitle="One file at a time • Max 50MB"
+            subtitle="One file at a time • Max 150MB"
           />
 
           {processing && <Progress value={progress} />}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PDFDocument } from "pdf-lib";
+import { PDFDocument } from "@cantoo/pdf-lib";
 import { ToolPageShell } from "@/components/ToolPageShell";
 import { FileDropzone } from "@/components/FileDropzone";
 import { FAQ } from "@/components/FAQ";
@@ -10,7 +10,6 @@ import { Progress } from "@/components/ui/progress";
 import { Download, Loader2, Lock, AlertTriangle } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   {
     question: "How strong is the password protection?",
@@ -50,11 +49,21 @@ const ProtectPdf = () => {
     setProgress(10);
     try {
       const bytes = await files[0].arrayBuffer();
-      const pdf = await loadPdfLib(bytes);
+      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
       setProgress(50);
-      // pdf-lib does not support encryption natively, so we use save with userPassword via any-cast workaround.
-      // Fallback: re-save and rely on "encrypt" option if available, otherwise warn user.
-      const out = await (pdf.save as any)({ userPassword: password, ownerPassword: password });
+      const out = await pdf.save({
+        userPassword: password,
+        ownerPassword: password,
+        permissions: {
+          printing: "highResolution",
+          modifying: false,
+          copying: false,
+          annotating: false,
+          fillingForms: true,
+          contentAccessibility: true,
+          documentAssembly: false,
+        },
+      } as any);
       const blob = new Blob([out as BlobPart], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -91,8 +100,7 @@ const ProtectPdf = () => {
           <div className="flex gap-3 bg-accent/50 border border-border rounded-lg p-4 text-sm">
             <AlertTriangle className="h-5 w-5 text-primary shrink-0 mt-0.5" />
             <p className="text-muted-foreground">
-              Browser-based encryption has limitations. For highly confidential
-              documents, use a desktop tool that supports AES-256 encryption.
+              Your password is applied locally in the browser using standard PDF encryption supported by Adobe Acrobat, Preview, Chrome and Edge. Choose a strong password — we cannot recover it for you.
             </p>
           </div>
 
@@ -101,7 +109,7 @@ const ProtectPdf = () => {
             onFiles={(f) => setFiles([f[0]])}
             onRemove={() => setFiles([])}
             cta="Drop a PDF here or click to upload"
-            subtitle="One file at a time • Max 50MB"
+            subtitle="One file at a time • Max 150MB"
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

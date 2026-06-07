@@ -12,7 +12,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Download, Loader2, PenTool, Eraser } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   {
     question: "Is the signature legally binding?",
@@ -59,7 +58,7 @@ const SignPdf = () => {
     setFiles([f]);
     try {
       const bytes = await f.arrayBuffer();
-      const pdf = await loadPdfLib(bytes);
+      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
       setPageCount(pdf.getPageCount());
       setPageNum(1);
     } catch {
@@ -83,7 +82,7 @@ const SignPdf = () => {
       const sigBytes = await (await fetch(sigDataUrl)).arrayBuffer();
 
       const bytes = await files[0].arrayBuffer();
-      const pdf = await loadPdfLib(bytes);
+      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
       const png = await pdf.embedPng(sigBytes);
       const ratio = png.height / png.width;
 
@@ -143,7 +142,7 @@ const SignPdf = () => {
               setPageCount(0);
             }}
             cta="Drop a PDF here or click to upload"
-            subtitle="One file at a time • Max 50MB"
+            subtitle="One file at a time • Max 150MB"
           />
 
           <div className="space-y-2">

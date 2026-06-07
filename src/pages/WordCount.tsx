@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Loader2, BarChart3 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { loadPdfJs } from "@/lib/pdf";
 pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
 
 const faqs = [
@@ -28,7 +27,7 @@ const WordCount = () => {
     setStats(null);
     try {
       const bytes = await file.arrayBuffer();
-      const pdf = await loadPdfJs(bytes);
+      const pdf = await pdfjsLib.getDocument({ data: bytes }).promise;
       let text = "";
       for (let i = 1; i <= pdf.numPages; i++) {
         const page = await pdf.getPage(i);

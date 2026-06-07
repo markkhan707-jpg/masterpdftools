@@ -6,7 +6,6 @@ import { FAQ } from "@/components/FAQ";
 import { Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   { question: "What information is shown?", answer: "Page count, file size, document title, author, subject, keywords, creator software, producer, creation/modification dates, PDF version, and per-page dimensions." },
   { question: "Are my files uploaded?", answer: "No. Inspection runs entirely in your browser using pdf-lib." },
@@ -26,7 +25,7 @@ const PdfInfo = () => {
     setLoading(true);
     try {
       const bytes = await file.arrayBuffer();
-      const pdf = await loadPdfLib(bytes);
+      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true, updateMetadata: false });
       const data: Record<string, string> = {
         "File name": file.name,
         "File size": fmtSize(file.size),
@@ -61,7 +60,7 @@ const PdfInfo = () => {
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
-          <FileDropzone files={files} onFiles={(f) => handleLoad(f[0])} onRemove={() => { setFiles([]); setInfo(null); setPages([]); }} cta="Drop a PDF here or click to upload" subtitle="One file at a time • Max 50MB" />
+          <FileDropzone files={files} onFiles={(f) => handleLoad(f[0])} onRemove={() => { setFiles([]); setInfo(null); setPages([]); }} cta="Drop a PDF here or click to upload" subtitle="One file at a time • Max 150MB" />
           {loading && <div className="flex items-center justify-center text-muted-foreground"><Loader2 className="h-4 w-4 animate-spin mr-2" /> Reading...</div>}
           {info && (
             <div className="bg-card border border-border rounded-xl overflow-hidden">

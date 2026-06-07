@@ -8,7 +8,6 @@ import { Progress } from "@/components/ui/progress";
 import { ArrowUp, ArrowDown, Download, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { loadPdfLib, describePdfError } from "@/lib/pdf";
 const faqs = [
   {
     question: "How do I merge PDF files for free?",
@@ -18,7 +17,7 @@ const faqs = [
   {
     question: "Is there a limit on the number of PDFs I can merge?",
     answer:
-      "There is no hard limit on the number of files. However, very large combined files may use significant browser memory. For best performance, keep the total size under 50MB and use a modern browser like Chrome, Edge, Firefox, or Safari.",
+      "There is no hard limit on the number of files. However, very large combined files may use significant browser memory. For best performance, keep the total size under 150MB and use a modern browser like Chrome, Edge, Firefox, or Safari.",
   },
   {
     question: "Are my PDF files uploaded to a server?",
@@ -73,7 +72,7 @@ const MergePdf = () => {
       const merged = await PDFDocument.create();
       for (let i = 0; i < files.length; i++) {
         const bytes = await files[i].arrayBuffer();
-        const pdf = await loadPdfLib(bytes);
+        const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
         const pages = await merged.copyPages(pdf, pdf.getPageIndices());
         pages.forEach((p) => merged.addPage(p));
         setProgress(10 + Math.round(((i + 1) / files.length) * 80));
@@ -91,7 +90,11 @@ const MergePdf = () => {
       toast({ title: "Merge complete", description: "Your merged PDF has been downloaded." });
     } catch (e) {
       console.error(e);
-      { const __err = describePdfError(e); toast({ title: __err.title, description: __err.description, variant: "destructive" }); }
+      toast({
+        title: "Merge failed",
+        description: "One of your files may be corrupted or password-protected.",
+        variant: "destructive",
+      });
     } finally {
       setProcessing(false);
       setTimeout(() => setProgress(0), 1500);
@@ -113,7 +116,7 @@ const MergePdf = () => {
             files={[]}
             onFiles={addFiles}
             cta="Drop PDF files here or click to upload"
-            subtitle="Select 2 or more PDFs • Max 50MB each"
+            subtitle="Select 2 or more PDFs • Max 150MB each"
           />
 
           {files.length > 0 && (
