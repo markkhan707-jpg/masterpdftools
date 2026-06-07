@@ -10,7 +10,6 @@ import { Progress } from "@/components/ui/progress";
 import { Download, Loader2, Layers } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { loadPdfJs } from "@/lib/pdf";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 const faqs = [
@@ -31,7 +30,7 @@ const FlattenPdf = () => {
     try {
       const file = files[0];
       const bytes = await file.arrayBuffer();
-      const src = await loadPdfJs(bytes);
+      const src = await pdfjsLib.getDocument({ data: bytes }).promise;
       const out = await PDFDocument.create();
       for (let i = 1; i <= src.numPages; i++) {
         const page = await src.getPage(i);

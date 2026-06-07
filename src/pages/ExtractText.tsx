@@ -10,7 +10,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Copy, Download, Loader2, FileText } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { loadPdfJs } from "@/lib/pdf";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 const faqs = [
@@ -43,7 +42,7 @@ const ExtractText = () => {
     setText("");
     try {
       const bytes = await files[0].arrayBuffer();
-      const pdf = await loadPdfJs(bytes);
+      const pdf = await pdfjsLib.getDocument({ data: bytes }).promise;
       let result = "";
       for (let i = 1; i <= pdf.numPages; i++) {
         const page = await pdf.getPage(i);
@@ -104,7 +103,7 @@ const ExtractText = () => {
               setText("");
             }}
             cta="Drop a PDF here or click to upload"
-            subtitle="One file at a time • Max 50MB"
+            subtitle="One file at a time • Max 150MB"
           />
 
           {processing && <Progress value={progress} />}

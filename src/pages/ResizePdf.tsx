@@ -10,7 +10,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Download, Loader2, Maximize2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { loadPdfLib } from "@/lib/pdf";
 const SIZES: Record<string, [number, number]> = {
   A4: [595.28, 841.89],
   Letter: [612, 792],
@@ -39,7 +38,7 @@ const ResizePdf = () => {
     setProgress(10);
     try {
       const bytes = await files[0].arrayBuffer();
-      const src = await loadPdfLib(bytes);
+      const src = await PDFDocument.load(bytes, { ignoreEncryption: true });
       const out = await PDFDocument.create();
       let [w, h] = SIZES[size];
       if (orientation === "landscape") [w, h] = [h, w];
@@ -82,7 +81,7 @@ const ResizePdf = () => {
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
-          <FileDropzone files={files} onFiles={(f) => setFiles([f[0]])} onRemove={() => setFiles([])} cta="Drop a PDF here or click to upload" subtitle="One file at a time • Max 50MB" />
+          <FileDropzone files={files} onFiles={(f) => setFiles([f[0]])} onRemove={() => setFiles([])} cta="Drop a PDF here or click to upload" subtitle="One file at a time • Max 150MB" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-card border border-border rounded-xl p-4">
             <div className="space-y-2">
               <Label>Page Size</Label>

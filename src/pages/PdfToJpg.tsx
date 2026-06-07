@@ -10,7 +10,6 @@ import { Progress } from "@/components/ui/progress";
 import { Download, Loader2, Image as ImageIcon } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { loadPdfJs } from "@/lib/pdf";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 const faqs = [
@@ -42,7 +41,7 @@ const PdfToJpg = () => {
     try {
       const file = files[0];
       const bytes = await file.arrayBuffer();
-      const pdf = await loadPdfJs(bytes);
+      const pdf = await pdfjsLib.getDocument({ data: bytes }).promise;
       const baseName = file.name.replace(/\.pdf$/i, "");
 
       const blobs: { name: string; blob: Blob }[] = [];
@@ -106,7 +105,7 @@ const PdfToJpg = () => {
             onFiles={(f) => setFiles([f[0]])}
             onRemove={() => setFiles([])}
             cta="Drop a PDF here or click to upload"
-            subtitle="One file at a time • Max 50MB"
+            subtitle="One file at a time • Max 150MB"
           />
 
           {processing && <Progress value={progress} />}

@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { Download, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { loadPdfJs } from "@/lib/pdf";
 pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
 
 const faqs = [
@@ -27,7 +26,7 @@ const InvertColors = () => {
     setProcessing(true);
     try {
       const bytes = await file.arrayBuffer();
-      const pdfjs = await loadPdfJs(bytes);
+      const pdfjs = await pdfjsLib.getDocument({ data: bytes }).promise;
       const out = await PDFDocument.create();
       for (let i = 1; i <= pdfjs.numPages; i++) {
         const page = await pdfjs.getPage(i);

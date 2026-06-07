@@ -54,9 +54,6 @@ import {
   MessageSquare,
   ListChecks,
   Wand2,
-  FileSpreadsheet,
-  ClipboardEdit,
-  EyeOff,
 } from "lucide-react";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { useFavorites } from "@/hooks/useFavorites";
@@ -116,8 +113,6 @@ const categories: { id: string; name: string; description: string; tools: (Tool 
       { to: "/text-to-pdf", icon: Type, title: "Text to PDF", description: "Paste any text and convert it into a paginated PDF.", color: "tool-merge" },
       { to: "/markdown-to-pdf", icon: FileCode, title: "Markdown to PDF", description: "Render Markdown into a beautifully styled PDF.", color: "tool-split" },
       { to: "/blank-pdf", icon: FilePlus2, title: "Blank PDF", description: "Generate empty PDFs in any standard size.", color: "tool-merge" },
-      { to: "/word-to-pdf", icon: FileType2, title: "Word to PDF", description: "Convert .docx documents into paginated PDFs.", color: "tool-convert", isNew: true },
-      { to: "/excel-to-pdf", icon: FileSpreadsheet, title: "Excel to PDF", description: "Turn .xlsx, .xls, and .ods spreadsheets into PDFs.", color: "tool-convert", isNew: true },
     ],
   },
   {
@@ -146,8 +141,6 @@ const categories: { id: string; name: string; description: string; tools: (Tool 
       { to: "/pdf-info", icon: Info, title: "PDF Info", description: "Inspect metadata, page sizes & file properties.", color: "tool-convert" },
       { to: "/bates-numbering", icon: Gavel, title: "Bates Numbering", description: "Stamp legal Bates numbers on every page.", color: "tool-compress" },
       { to: "/word-count", icon: BarChart3, title: "PDF Word Count", description: "Count words, chars & estimate reading time.", color: "tool-merge" },
-      { to: "/fill-forms", icon: ClipboardEdit, title: "Fill PDF Forms", description: "Complete AcroForm fields and download a filled PDF.", color: "tool-merge", isNew: true },
-      { to: "/redact-pdf", icon: EyeOff, title: "Redact PDF", description: "Permanently black out sensitive text and images.", color: "tool-compress", isNew: true },
     ],
   },
   {
@@ -195,7 +188,7 @@ const faqs = [
   {
     question: "What is the maximum file size I can process?",
     answer:
-      "You can process PDFs up to 50MB. For very large files, browser performance depends on your device's memory.",
+      "You can process PDFs up to 150MB. For very large files, browser performance depends on your device's memory.",
   },
   {
     question: "Do I need to install any software?",

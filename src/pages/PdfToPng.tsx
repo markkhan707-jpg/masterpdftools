@@ -10,7 +10,6 @@ import { Progress } from "@/components/ui/progress";
 import { Loader2, Image as ImageIcon } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { loadPdfJs } from "@/lib/pdf";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 const faqs = [
@@ -31,7 +30,7 @@ const PdfToPng = () => {
     try {
       const file = files[0];
       const bytes = await file.arrayBuffer();
-      const pdf = await loadPdfJs(bytes);
+      const pdf = await pdfjsLib.getDocument({ data: bytes }).promise;
       const baseName = file.name.replace(/\.pdf$/i, "");
       const blobs: { name: string; blob: Blob }[] = [];
       for (let i = 1; i <= pdf.numPages; i++) {
@@ -83,7 +82,7 @@ const PdfToPng = () => {
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
-          <FileDropzone files={files} onFiles={(f) => setFiles([f[0]])} onRemove={() => setFiles([])} cta="Drop a PDF here or click to upload" subtitle="One file at a time • Max 50MB" />
+          <FileDropzone files={files} onFiles={(f) => setFiles([f[0]])} onRemove={() => setFiles([])} cta="Drop a PDF here or click to upload" subtitle="One file at a time • Max 150MB" />
           {processing && <Progress value={progress} />}
           <Button size="lg" className="w-full" disabled={!files[0] || processing} onClick={handleConvert}>
             {processing ? (<><Loader2 className="h-4 w-4 animate-spin" /> Converting...</>) : (<><ImageIcon className="h-4 w-4" /> Convert to PNG</>)}

@@ -10,7 +10,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Download, Loader2, LayoutGrid } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { loadPdfLib } from "@/lib/pdf";
 const faqs = [
   { question: "What is N-up?", answer: "N-up combines multiple original pages onto a single output page (2-up = 2 per sheet, 4-up = 4 per sheet). Great for printing handouts, saving paper, and creating booklets." },
   { question: "What page size is the output?", answer: "A4 in landscape for 2-up, A4 portrait for 4-up. Original pages are scaled proportionally to fit each cell with white space if aspect ratios differ." },
@@ -29,7 +28,7 @@ const ResizePdfNup = () => {
     setProgress(10);
     try {
       const bytes = await files[0].arrayBuffer();
-      const src = await loadPdfLib(bytes);
+      const src = await PDFDocument.load(bytes, { ignoreEncryption: true });
       const out = await PDFDocument.create();
       const indices = src.getPageIndices();
       const embedded = await out.embedPdf(src, indices);
@@ -89,7 +88,7 @@ const ResizePdfNup = () => {
       faqSchema={faqs}
       toolUI={
         <div className="space-y-6">
-          <FileDropzone files={files} onFiles={(f) => setFiles([f[0]])} onRemove={() => setFiles([])} cta="Drop a PDF here or click to upload" subtitle="One file at a time • Max 50MB" />
+          <FileDropzone files={files} onFiles={(f) => setFiles([f[0]])} onRemove={() => setFiles([])} cta="Drop a PDF here or click to upload" subtitle="One file at a time • Max 150MB" />
           <div className="bg-card border border-border rounded-xl p-4">
             <Label>Pages per sheet</Label>
             <Select value={String(n)} onValueChange={(v) => setN(Number(v) as 2 | 4)}>

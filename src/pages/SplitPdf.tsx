@@ -10,7 +10,6 @@ import { Progress } from "@/components/ui/progress";
 import { Download, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-import { loadPdfLib, describePdfError } from "@/lib/pdf";
 const faqs = [
   {
     question: "How do I split a PDF into multiple files?",
@@ -64,11 +63,14 @@ const SplitPdf = () => {
     setFiles([f]);
     try {
       const bytes = await f.arrayBuffer();
-      const pdf = await loadPdfLib(bytes);
+      const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
       setPageCount(pdf.getPageCount());
-    } catch (e) {
-      const __err = describePdfError(e);
-      toast({ title: __err.title, description: __err.description, variant: "destructive" });
+    } catch {
+      toast({
+        title: "Could not read PDF",
+        description: "File may be corrupted or password-protected.",
+        variant: "destructive",
+      });
       setFiles([]);
     }
   };
@@ -88,7 +90,7 @@ const SplitPdf = () => {
     setProgress(5);
     try {
       const bytes = await files[0].arrayBuffer();
-      const src = await loadPdfLib(bytes);
+      const src = await PDFDocument.load(bytes, { ignoreEncryption: true });
 
       for (let i = 0; i < groups.length; i++) {
         const out = await PDFDocument.create();
@@ -134,7 +136,7 @@ const SplitPdf = () => {
               setPageCount(0);
             }}
             cta="Drop a PDF here or click to upload"
-            subtitle="One file at a time • Max 50MB"
+            subtitle="One file at a time • Max 150MB"
           />
 
           {pageCount > 0 && (
