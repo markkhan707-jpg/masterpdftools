@@ -101,30 +101,59 @@ const UnlockPdf = () => {
       const bytes = await files[0].arrayBuffer();
       let outBytes: Uint8Array | null = null;
 
-      // 1) Try @cantoo/pdf-lib first — handles AES/RC4 with password and
-      // rebuilds the PDF without encryption when re-saved.
-      try {
-        const pdf = await CantooPDFDocument.load(bytes, {
-          password: password || undefined,
-          ignoreEncryption: false,
-          throwOnInvalidObject: false,
-        } as any);
-        setProgress(60);
-        outBytes = await pdf.save({ useObjectStreams: false } as any);
-      } catch (e: any) {
-        if (isPasswordError(e) && !password) {
-          throw new Error("PASSWORD_REQUIRED");
+      // Strategy:
+      // A) If a password is provided, try @cantoo/pdf-lib (supports AES-256/RC4
+      //    user-password decryption). If it fails, fall back to pdf.js render.
+      // B) If no password, strip owner restrictions with pdf-lib re-save. If
+      //    that reveals a user-password requirement, prompt for it.
+      if (password) {
+        try {
+          const pdf = await CantooPDFDocument.load(bytes, {
+            password,
+            ignoreEncryption: false,
+            throwOnInvalidObject: false,
+          } as any);
+          setProgress(55);
+          const cantooBytes = await pdf.save({ useObjectStreams: false } as any);
+          // Re-save through standard pdf-lib to guarantee a fully unencrypted output.
+          try {
+            const clean = await PDFDocument.load(cantooBytes as any, {
+              ignoreEncryption: true,
+              throwOnInvalidObject: false,
+              updateMetadata: false,
+            } as any);
+            outBytes = await clean.save();
+          } catch {
+            outBytes = cantooBytes;
+          }
+        } catch (e: any) {
+          if (isPasswordError(e)) {
+            // Wrong password OR cantoo couldn't handle this encryption — try pdf.js render.
+            setProgress(35);
+            try {
+              outBytes = await decryptViaRender(bytes, password);
+            } catch (e2: any) {
+              if (isPasswordError(e2)) throw new Error("WRONG_PASSWORD");
+              throw e2;
+            }
+          } else {
+            // Non-password error — try render as last resort.
+            setProgress(35);
+            outBytes = await decryptViaRender(bytes, password);
+          }
         }
-        if (isPasswordError(e) && password) {
-          // Fallback: render with pdf.js (broadest format support)
-          setProgress(40);
-          outBytes = await decryptViaRender(bytes, password);
-        } else {
-          // 2) Owner-restricted PDFs — strip via pdf-lib re-save.
+      } else {
+        // No password: attempt owner-restriction strip.
+        try {
           const pdf = await PDFDocument.load(bytes, {
             ignoreEncryption: true,
+            throwOnInvalidObject: false,
           } as any);
+          setProgress(60);
           outBytes = await pdf.save();
+        } catch (e: any) {
+          if (isPasswordError(e)) throw new Error("PASSWORD_REQUIRED");
+          throw e;
         }
       }
 
@@ -142,10 +171,10 @@ const UnlockPdf = () => {
           description: "This PDF needs a password to open. Enter it above and try again.",
           variant: "destructive",
         });
-      } else if (isPasswordError(e)) {
+      } else if (msg === "WRONG_PASSWORD" || isPasswordError(e)) {
         toast({
           title: "Wrong password",
-          description: "The password you entered didn't decrypt this PDF.",
+          description: "The password you entered didn't decrypt this PDF. Double-check and try again.",
           variant: "destructive",
         });
       } else {
