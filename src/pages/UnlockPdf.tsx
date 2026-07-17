@@ -171,10 +171,10 @@ const UnlockPdf = () => {
           description: "This PDF needs a password to open. Enter it above and try again.",
           variant: "destructive",
         });
-      } else if (isPasswordError(e)) {
+      } else if (msg === "WRONG_PASSWORD" || isPasswordError(e)) {
         toast({
           title: "Wrong password",
-          description: "The password you entered didn't decrypt this PDF.",
+          description: "The password you entered didn't decrypt this PDF. Double-check and try again.",
           variant: "destructive",
         });
       } else {
