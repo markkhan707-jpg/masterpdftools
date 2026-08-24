@@ -4,9 +4,9 @@
 //
 // Everything runs locally in the browser; no file or password ever leaves the device.
 
-import createQpdfModule from "@jspawn/qpdf-wasm/qpdf.mjs";
-
-import qpdfWasmUrl from "@jspawn/qpdf-wasm/qpdf.wasm?url";
+// The qpdf WebAssembly binary is served as a static asset from /wasm/qpdf.wasm
+// and fetched at runtime in the browser only — never bundled.
+const QPDF_WASM_URL = "/wasm/qpdf.wasm";
 
 interface QpdfModule {
   FS: {
@@ -18,13 +18,16 @@ interface QpdfModule {
 }
 
 const createModule = async (): Promise<QpdfModule> => {
+  if (typeof window === "undefined") throw new Error("qpdf is browser-only");
+  const { default: createQpdfModule } = await import("@jspawn/qpdf-wasm/qpdf.mjs");
   const logs: string[] = [];
-  const mod = await createQpdfModule({
+  const mod = await (createQpdfModule as any)({
     noInitialRun: true,
-    locateFile: (path: string) => (path.endsWith(".wasm") ? qpdfWasmUrl : path),
+    locateFile: (path: string) => (path.endsWith(".wasm") ? QPDF_WASM_URL : path),
     print: (line: string) => logs.push(line),
     printErr: (line: string) => logs.push(line),
   });
+
   (mod as any).__logs = logs;
   return mod as QpdfModule;
 };
