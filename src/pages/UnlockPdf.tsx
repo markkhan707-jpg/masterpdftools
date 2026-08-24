@@ -11,6 +11,7 @@ import { Progress } from "@/components/ui/progress";
 import { Loader2, Unlock } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { pdfjsLib } from "@/lib/pdfjs";
+import { qpdfDecrypt, QpdfPasswordError } from "@/lib/qpdf";
 
 const faqs = [
   {
@@ -102,20 +103,27 @@ const UnlockPdf = () => {
       let outBytes: Uint8Array | null = null;
 
       // Strategy:
-      // A) If a password is provided, try @cantoo/pdf-lib (supports AES-256/RC4
-      //    user-password decryption). If it fails, fall back to pdf.js render.
-      // B) If no password, strip owner restrictions with pdf-lib re-save. If
-      //    that reveals a user-password requirement, prompt for it.
-      if (password) {
+      // 1) qpdf-wasm — the reference PDF engine. Losslessly removes AES-256 (R6),
+      //    AES-128 (R4) and RC4 encryption plus all owner restrictions, keeping
+      //    text selectable and fonts/vectors intact.
+      // 2) @cantoo/pdf-lib — fallback decryption + re-save.
+      // 3) pdf.js render — last-resort raster rebuild for exotic files.
+      try {
+        setProgress(30);
+        outBytes = await qpdfDecrypt(bytes, password);
+        setProgress(85);
+      } catch (e: any) {
+        if (e instanceof QpdfPasswordError || isPasswordError(e)) {
+          if (!password) throw new Error("PASSWORD_REQUIRED");
+        }
         try {
           const pdf = await CantooPDFDocument.load(bytes, {
             password,
-            ignoreEncryption: false,
+            ignoreEncryption: !password,
             throwOnInvalidObject: false,
           } as any);
           setProgress(55);
           const cantooBytes = await pdf.save({ useObjectStreams: false } as any);
-          // Re-save through standard pdf-lib to guarantee a fully unencrypted output.
           try {
             const clean = await PDFDocument.load(cantooBytes as any, {
               ignoreEncryption: true,
@@ -126,36 +134,18 @@ const UnlockPdf = () => {
           } catch {
             outBytes = cantooBytes;
           }
-        } catch (e: any) {
-          if (isPasswordError(e)) {
-            // Wrong password OR cantoo couldn't handle this encryption — try pdf.js render.
-            setProgress(35);
-            try {
-              outBytes = await decryptViaRender(bytes, password);
-            } catch (e2: any) {
-              if (isPasswordError(e2)) throw new Error("WRONG_PASSWORD");
-              throw e2;
-            }
-          } else {
-            // Non-password error — try render as last resort.
-            setProgress(35);
+        } catch (e2: any) {
+          if (!password) throw new Error("PASSWORD_REQUIRED");
+          setProgress(45);
+          try {
             outBytes = await decryptViaRender(bytes, password);
+          } catch (e3: any) {
+            if (isPasswordError(e3)) throw new Error("WRONG_PASSWORD");
+            throw e3;
           }
         }
-      } else {
-        // No password: attempt owner-restriction strip.
-        try {
-          const pdf = await PDFDocument.load(bytes, {
-            ignoreEncryption: true,
-            throwOnInvalidObject: false,
-          } as any);
-          setProgress(60);
-          outBytes = await pdf.save();
-        } catch (e: any) {
-          if (isPasswordError(e)) throw new Error("PASSWORD_REQUIRED");
-          throw e;
-        }
       }
+
 
       if (!outBytes) throw new Error("Unable to unlock");
       setProgress(95);
