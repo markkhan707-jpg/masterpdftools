@@ -4,8 +4,8 @@
 //
 // Everything runs locally in the browser; no file or password ever leaves the device.
 
-// @ts-expect-error - no bundled types
 import createQpdfModule from "@jspawn/qpdf-wasm/qpdf.mjs";
+
 import qpdfWasmUrl from "@jspawn/qpdf-wasm/qpdf.wasm?url";
 
 interface QpdfModule {
